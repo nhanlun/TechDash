@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "272297810716",
+    "firebase_url": "https://techdash.firebaseio.com",
+    "project_id": "techdash",
+    "storage_bucket": "techdash.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:272297810716:android:147ba8c1f1ef1ed36bb8d9",
+        "android_client_info": {
+          "package_name": "com.example.techdash"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "272297810716-3d1ihr69amekac5emm3mrgnvk94hlg6n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQPztn4TFuPpBaSLxliGwghkLtaDYE_7I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "272297810716-3d1ihr69amekac5emm3mrgnvk94hlg6n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
