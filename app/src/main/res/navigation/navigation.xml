@@ -8,26 +8,26 @@
     <fragment
         android:id="@+id/historyFragment"
         android:name="com.example.techdash.HistoryFragment"
-        android:label="fragment_history"
+        android:label="History"
         tools:layout="@layout/fragment_history" />
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.techdash.HomeFragment"
-        android:label="fragment_home"
+        android:label="Home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/runFragment"
         android:name="com.example.techdash.RunFragment"
-        android:label="fragment_run"
+        android:label="Run"
         tools:layout="@layout/fragment_run" />
     <fragment
         android:id="@+id/contestFragment"
         android:name="com.example.techdash.ContestFragment"
-        android:label="fragment_contest"
+        android:label="Contest"
         tools:layout="@layout/fragment_contest" />
     <fragment
         android:id="@+id/friendFragment"
         android:name="com.example.techdash.FriendFragment"
-        android:label="fragment_friend"
+        android:label="Friend"
         tools:layout="@layout/fragment_friend" />
 </navigation>
