@@ -5,6 +5,7 @@
         android:title="Home"
         android:icon="@mipmap/ic_launcher_round" />
     <item
+        android:id="@+id/friendFragment"
         android:title="Friend"
         android:icon="@mipmap/ic_launcher_round"/>
     <item
@@ -12,6 +13,7 @@
         android:title="Run"
         android:icon="@mipmap/ic_launcher_round"/>
     <item
+        android:id="@+id/contestFragment"
         android:title="Contest"
         android:icon="@mipmap/ic_launcher_round"/>
     <item

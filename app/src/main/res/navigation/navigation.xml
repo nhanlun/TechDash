@@ -20,4 +20,14 @@
         android:name="com.example.techdash.RunFragment"
         android:label="fragment_run"
         tools:layout="@layout/fragment_run" />
+    <fragment
+        android:id="@+id/contestFragment"
+        android:name="com.example.techdash.ContestFragment"
+        android:label="fragment_contest"
+        tools:layout="@layout/fragment_contest" />
+    <fragment
+        android:id="@+id/friendFragment"
+        android:name="com.example.techdash.FriendFragment"
+        android:label="fragment_friend"
+        tools:layout="@layout/fragment_friend" />
 </navigation>
