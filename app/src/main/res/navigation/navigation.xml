@@ -19,7 +19,11 @@
         android:id="@+id/runFragment"
         android:name="com.example.techdash.RunFragment"
         android:label="Run"
-        tools:layout="@layout/fragment_run" />
+        tools:layout="@layout/fragment_run" >
+        <action
+            android:id="@+id/action_runFragment_to_recordRunActivity"
+            app:destination="@id/recordRunActivity" />
+    </fragment>
     <fragment
         android:id="@+id/contestFragment"
         android:name="com.example.techdash.ContestFragment"
@@ -30,4 +34,9 @@
         android:name="com.example.techdash.FriendFragment"
         android:label="Friend"
         tools:layout="@layout/fragment_friend" />
+    <activity
+        android:id="@+id/recordRunActivity"
+        android:name="com.example.techdash.RecordRunActivity"
+        android:label="activity_record_run"
+        tools:layout="@layout/activity_record_run" />
 </navigation>
