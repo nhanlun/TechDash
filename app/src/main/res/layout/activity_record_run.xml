@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RecordRunActivity"
+    tools:context=".activities.RecordRunActivity"
     android:orientation="vertical">
 
     <fragment
@@ -20,7 +20,7 @@
         android:id="@+id/stop_button_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:name="com.example.techdash.StopFragment"
+        android:name="com.example.techdash.fragments.StopFragment"
         app:layout_constraintTop_toBottomOf="@id/fragment"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

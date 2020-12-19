@@ -1,23 +1,19 @@
-package com.example.techdash;
+package com.example.techdash.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.PermissionChecker;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.techdash.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.security.Permission;
 
 public class MainActivity extends AppCompatActivity {
 

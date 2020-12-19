@@ -1,4 +1,4 @@
-package com.example.techdash;
+package com.example.techdash.fragments;
 
 import android.os.Bundle;
 
@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.techdash.R;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link FriendFragment#newInstance} factory method to
+ * Use the {@link ContestFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FriendFragment extends Fragment {
+public class ContestFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +26,7 @@ public class FriendFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public FriendFragment() {
+    public ContestFragment() {
         // Required empty public constructor
     }
 
@@ -34,11 +36,11 @@ public class FriendFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment FriendFragment.
+     * @return A new instance of fragment ContestFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static FriendFragment newInstance(String param1, String param2) {
-        FriendFragment fragment = new FriendFragment();
+    public static ContestFragment newInstance(String param1, String param2) {
+        ContestFragment fragment = new ContestFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +61,6 @@ public class FriendFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_friend, container, false);
+        return inflater.inflate(R.layout.fragment_contest, container, false);
     }
 }
