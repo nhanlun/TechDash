@@ -12,4 +12,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="being_developed">Being developed</string>
+    <string name="facebook_app_id">937432266791553</string>
+    <string name="fb_login_protocol_scheme">fb937432266791553</string>
 </resources>

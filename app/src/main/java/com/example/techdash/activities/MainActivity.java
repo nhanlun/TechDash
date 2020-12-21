@@ -40,9 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
         NavigationUI.setupActionBarWithNavController(this, navController);
-
-//        Intent intent = new Intent(MainActivity.this, RecordRunActivity.class);
-//        startActivity(intent);
     }
 
     @Override
