@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
             requestPermissions(
                     new String[]{
                             Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_BACKGROUND_LOCATION,
                     },
                     REQUEST_CODE
             );

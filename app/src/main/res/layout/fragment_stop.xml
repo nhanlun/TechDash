@@ -8,10 +8,11 @@
     android:orientation="vertical">
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/stopButton"
         android:layout_width="100dp"
         android:layout_height="100dp"
         style="@style/Widget.MaterialComponents.Button"
-        android:text="STOP"
+        android:text="@string/STOP"
         android:textSize="30sp"
         app:iconSize="30dp"
         app:iconGravity="textStart"
