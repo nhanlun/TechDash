@@ -19,10 +19,11 @@
     <string name="START">START</string>
     <string name="GUIDANCE">GUIDANCE</string>
     <string name="ROUTE">ROUTE NEARBY</string>
+
     <string name="intent_action" translatable="false">com.example.techdash.SEND_ROUTE</string>
     <string name="techdash_is_working" translatable="false">"TechDash is working"</string>
     <string name="your_location_is_being_recorded" translatable="false">"Your location is being recorded for activity tracking"</string>
-    <string name="time">Running time</string>
+    <string name="runtime">Running time</string>
     <string name="distance">Distance</string>
     <string name="pace">Pace</string>
     <string name="home">Home</string>
@@ -30,4 +31,9 @@
     <string name="run">Run</string>
     <string name="contest">Contest</string>
     <string name="history">History</string>
+
+    <string name="total_distance" translatable="false">Total distance</string>
+    <string name="average_speed" translatable="false">Average speed</string>
+    <string name="FINISH" translatable="false">FINISH</string>
+    <string name="time">Time</string>
 </resources>

@@ -27,4 +27,7 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <style name="Button.Round_corner." parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/yellow</item>
+    </style>
 </resources>
