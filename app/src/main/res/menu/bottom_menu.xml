@@ -4,25 +4,27 @@
         android:id="@+id/homeFragment"
         android:title="Home"
         android:label="Home"
-        android:icon="@mipmap/ic_launcher_round" />
+        android:icon="@drawable/home"
+        />
     <item
         android:id="@+id/friendFragment"
         android:title="Friend"
         android:label="Friend"
-        android:icon="@mipmap/ic_launcher_round"/>
+        android:icon="@drawable/friend"/>
     <item
         android:id="@+id/runFragment"
         android:title="Run"
         android:label="Run"
-        android:icon="@mipmap/ic_launcher_round"/>
+        android:enabled="false"
+        />
     <item
         android:id="@+id/contestFragment"
         android:title="Contest"
         android:label="Contest"
-        android:icon="@mipmap/ic_launcher_round"/>
+        android:icon="@drawable/ic_contest"/>
     <item
         android:id="@+id/historyFragment"
         android:title="History"
         android:label="History"
-        android:icon="@mipmap/ic_launcher_round"/>
+        android:icon="@drawable/history"/>
 </menu>
