@@ -10,12 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="This is home" />
+
     <Button
+        android:id="@+id/logout_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/log_out"
-        android:layout_gravity="center_horizontal|bottom"
-        android:id="@+id/logout_button"
-        />
+        android:layout_gravity="center_horizontal"
+        android:text="@string/log_out" />
 
 </FrameLayout>
