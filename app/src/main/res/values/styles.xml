@@ -12,4 +12,8 @@
     <style name="Button.Circle" parent="Widget.MaterialComponents.Button">
         <item name="backgroundTint">@color/main_color</item>
     </style>
+
+    <style name="Button.Round_corner." parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/yellow</item>
+    </style>
 </resources>
