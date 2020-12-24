@@ -2,29 +2,29 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/homeFragment"
-        android:title="Home"
-        android:label="Home"
+        android:title="@string/home"
+        android:label="@string/home"
         android:icon="@drawable/home"
         />
     <item
         android:id="@+id/friendFragment"
-        android:title="Friend"
-        android:label="Friend"
+        android:title="@string/friend"
+        android:label="@string/friend"
         android:icon="@drawable/friend"/>
     <item
         android:id="@+id/runFragment"
-        android:title="Run"
-        android:label="Run"
+        android:title="@string/run"
+        android:label="@string/run"
         android:enabled="true"
         />
     <item
         android:id="@+id/contestFragment"
-        android:title="Contest"
-        android:label="Contest"
+        android:title="@string/contest"
+        android:label="@string/contest"
         android:icon="@drawable/ic_contest"/>
     <item
         android:id="@+id/historyFragment"
-        android:title="History"
-        android:label="History"
+        android:title="@string/history"
+        android:label="@string/history"
         android:icon="@drawable/history"/>
 </menu>

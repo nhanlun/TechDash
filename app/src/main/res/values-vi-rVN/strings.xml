@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TechDash</string>
+    <string name="home">Nhà</string>
+    <string name="friend">Bạn bè</string>
+    <string name="run">Chạy</string>
+    <string name="contest">Cuộc thi</string>
+    <string name="history">Lịch sử</string>
+    <string name="pace">Tốc độ</string>
+    <string name="distance">Quãng đường</string>
+    <string name="time">Thời gian chạy</string>
+    <string name="GUIDANCE">CHỈ DẪN</string>
+    <string name="ROUTE">LỘ TRÌNH GẦN ĐÂY</string>
+    <string name="START">BẮT ĐẦU</string>
+    <string name="prompt_password">Mật khẩu</string>
+    <string name="action_sign_in">Đăng nhập hoặc Đăng kí</string>
+    <string name="action_sign_in_short">Đăng nhập</string>
+    <string name="welcome">Chào mừng!</string>
+    <string name="log_out">Đăng xuất</string>
+    <string name="being_developed">Đang phát triển</string>
+    <string name="STOP">DỪNG</string>
+</resources>

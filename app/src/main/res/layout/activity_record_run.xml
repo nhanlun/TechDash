@@ -1,34 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.RecordRunActivity"
-    android:orientation="vertical">
-
-<!--    <fragment-->
-<!--        android:id="@+id/fragment"-->
-<!--        android:name="androidx.navigation.fragment.NavHostFragment"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:defaultNavHost="true"-->
-<!--        android:layout_weight="4"-->
-<!--        tools:layout_editor_absoluteX="0dp" />-->
+    tools:context=".fragments.RunFragment">
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="3"
-        />
+        android:layout_above="@id/guidanceButton"
+        android:layout_alignParentTop="true" />
 
-    <fragment
-        android:id="@+id/stop_button_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:name="com.example.techdash.fragments.StopFragment"
-        android:layout_weight="1"
-        />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/routeButton"
+        style="@style/Button.Circle"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="30dp"
+        android:layout_toStartOf="@+id/startButton"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        android:padding="0dp"
+        android:text="@string/ROUTE"
+        android:textSize="12sp"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:iconSize="90dp"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
 
-</LinearLayout>
+    <ImageButton
+        android:id="@+id/startButton"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_below="@+id/mapView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:background="#FFFFFF"
+        android:scaleType="fitCenter"
+        android:src="@drawable/start_button" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/guidanceButton"
+        style="@style/Button.Circle"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="30dp"
+        android:layout_toEndOf="@+id/startButton"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        android:padding="0dp"
+        android:text="@string/GUIDANCE"
+        android:textSize="12sp"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:iconSize="90dp"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
+
+</RelativeLayout>
