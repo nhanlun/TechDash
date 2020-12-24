@@ -1,5 +1,6 @@
 package com.example.techdash.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.techdash.R;
+import com.example.techdash.activities.RecordRunActivity;
 import com.example.techdash.models.User;
 import com.example.techdash.viewmodels.UserViewModel;
 
@@ -36,6 +38,10 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // TODO: remove this test code
+//        Intent intent = new Intent(requireActivity(), RecordRunActivity.class);
+//        startActivity(intent);
+
         // TODO: remove this test code
 //        Intent intent = new Intent(getActivity(), LoginActivity.class);
 //        startActivityForResult(intent, 123);
