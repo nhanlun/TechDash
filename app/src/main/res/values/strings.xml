@@ -22,4 +22,9 @@
     <string name="intent_action">com.example.techdash.SEND_ROUTE</string>
     <string name="techdash_is_working">"TechDash is working"</string>
     <string name="your_location_is_being_recorded">"Your location is being recorded for activity tracking"</string>
+    <string name="total_distance">Total distance</string>
+    <string name="average_speed">Average speed</string>
+    <string name="time">Time</string>
+    <string name="FINISH">FINISH</string>
+
 </resources>
