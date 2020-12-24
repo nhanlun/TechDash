@@ -39,8 +39,8 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // TODO: remove this test code
-        Intent intent = new Intent(requireActivity(), RecordRunActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(requireActivity(), RecordRunActivity.class);
+//        startActivity(intent);
 
         // TODO: remove this test code
 //        Intent intent = new Intent(getActivity(), LoginActivity.class);
