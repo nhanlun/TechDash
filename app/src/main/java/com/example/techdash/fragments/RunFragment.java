@@ -1,17 +1,14 @@
 package com.example.techdash.fragments;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.example.techdash.R;
 import com.google.android.gms.maps.CameraUpdate;
@@ -45,23 +42,15 @@ public class RunFragment extends Fragment {
         mapView = view.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(new OnMapReadyCallback() {
+            @SuppressLint("MissingPermission")
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 Log.d(TAG, "The map is on");
                 map = googleMap;
-                if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) !=
-                        PackageManager.PERMISSION_GRANTED &&
-                        ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) !=
-                                PackageManager.PERMISSION_GRANTED) {
-                    requestPermissions(new String[]{
-                            Manifest.permission.ACCESS_FINE_LOCATION
-                    }, REQUEST_CODE);
-                    return;
-                }
                 map.setMyLocationEnabled(true);
                 CameraUpdate cameraUpdate = CameraUpdateFactory
                         .newLatLngZoom(new LatLng(10.762966027040138, 106.68216741087505), 15);
-                map.animateCamera(cameraUpdate);
+                map.moveCamera(cameraUpdate);
             }
         });
         return view;
@@ -71,8 +60,7 @@ public class RunFragment extends Fragment {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_CODE) {
 
-        }
-        else {
+        } else {
 
         }
     }

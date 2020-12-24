@@ -28,24 +28,24 @@ import java.util.Map;
 
 public class UserViewModel extends ViewModel {
     private static final String TAG = UserViewModel.class.getSimpleName();
-    private MutableLiveData<User> user ;
+    private MutableLiveData<User> user;
     private FirebaseAuth mAuth;
 
     private FirebaseFirestore db;
+
     public UserViewModel() {
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         user = new MutableLiveData<>(null);
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser == null){
+        if (currentUser == null) {
             Log.e(TAG, "OK");
-        }
-        else{
+        } else {
             initiateUser(currentUser);
         }
     }
 
-    private void debug(){
+    private void debug() {
         db.collection("users").document("yolo").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -67,7 +67,7 @@ public class UserViewModel extends ViewModel {
         });
     }
 
-    public void initiateUser(FirebaseUser FBuser){
+    public void initiateUser(FirebaseUser FBuser) {
         String uid = FBuser.getUid();
         String name = FBuser.getDisplayName();
         // TODO; Create user from uid
@@ -75,9 +75,9 @@ public class UserViewModel extends ViewModel {
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
                     DocumentSnapshot snapshot = task.getResult();
-                    if (snapshot.exists()){
+                    if (snapshot.exists()) {
                         //TODO: Fetch data
                         Map<String, Object> map = snapshot.getData();
                         if (map != null) {
@@ -87,16 +87,13 @@ public class UserViewModel extends ViewModel {
                             Log.e(TAG, name + " " + uid);
                             User loadUser = new User(uid, name, energy);
                             user.postValue(loadUser);
-                        }
-                        else{
+                        } else {
                             Log.e(TAG, "Parsing document snapshot error");
                         }
-                    }
-                    else {
+                    } else {
                         createNewProfile(FBuser);
                     }
-                }
-                else{
+                } else {
                     Log.e(TAG, "Failed with " + task.getException());
                 }
             }
@@ -117,7 +114,7 @@ public class UserViewModel extends ViewModel {
         mAuth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
                     FirebaseUser user = mAuth.getCurrentUser();
                     initiateUser(user);
                     Log.d(TAG, "User sign in successfully with Uid: " + user.getUid());
@@ -130,7 +127,7 @@ public class UserViewModel extends ViewModel {
         return user;
     }
 
-    private String getCurrentUid(){
+    private String getCurrentUid() {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user == null)
             return null;
@@ -149,7 +146,7 @@ public class UserViewModel extends ViewModel {
         user = new MutableLiveData<>(null);
     }
 
-    private void createProfileDocument(FirebaseUser user){
+    private void createProfileDocument(FirebaseUser user) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String uid = user.getUid();
         HashMap<String, Object> map = new HashMap<>();
