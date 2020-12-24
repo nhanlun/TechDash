@@ -3,6 +3,7 @@ package com.example.techdash.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ComponentActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
@@ -16,6 +17,7 @@ import android.util.Log;
 
 import com.example.techdash.R;
 import com.example.techdash.broadcasts.RecordBroadcast;
+import com.example.techdash.models.Route;
 import com.example.techdash.repositories.RecordRunRepository;
 import com.example.techdash.services.RecordService;
 import com.example.techdash.viewmodels.RecordViewModel;
@@ -24,6 +26,11 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 public class RecordRunActivity extends AppCompatActivity {
 
@@ -55,6 +62,7 @@ public class RecordRunActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         unregisterReceiver(broadcast);
+        RecordRunRepository.getInstance().removeDataSource(broadcast.getRoute());
         super.onStop();
     }
 }
