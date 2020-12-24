@@ -8,6 +8,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Point;
 import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
@@ -19,11 +20,16 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
 import com.example.techdash.R;
+import com.example.techdash.models.Route;
+import com.example.techdash.models.RoutePoint;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+
+import java.util.ArrayList;
+import java.util.Calendar;
 
 public class RecordService extends Service {
     private static final String TAG = RecordService.class.getSimpleName();
@@ -31,30 +37,34 @@ public class RecordService extends Service {
     private LocationCallback locationCallback;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private Notification notification;
-    private Binder binder = new LocalBinder();
-
-    public class LocalBinder extends Binder {
-        RecordService getService() {
-            return RecordService.this;
-        }
-    }
+    private Route route;
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return binder;
+        return null;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onCreate() {
         super.onCreate();
+        route = new Route();
         locationRequest = LocationRequest.create();
         locationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
                 // TODO: do somthing here, put a timer in here
                 Log.d(TAG, "Location received " + locationResult.getLastLocation().getLatitude() + " " + locationResult.getLastLocation().getLongitude());
+                double lat = locationResult.getLastLocation().getLatitude();
+                double lng = locationResult.getLastLocation().getLongitude();
+                long time = Calendar.getInstance().getTimeInMillis();
+                route.add(new RoutePoint(lat, lng, time));
+                // TODO: send broadcast
+                Intent intent = new Intent();
+                intent.setAction(getString(R.string.intent_action));
+                intent.putExtra("route", route);
+                sendBroadcast(intent);
             }
         };
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);

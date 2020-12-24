@@ -16,4 +16,5 @@
     <string name="facebook_app_id">937432266791553</string>
     <string name="fb_login_protocol_scheme">fb937432266791553</string>
     <string name="STOP">STOP</string>
+    <string name="intent_action">com.example.techdash.SEND_ROUTE</string>
 </resources>
