@@ -47,7 +47,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="30dp"
-                android:text="@string/time"
+                android:text="@string/runtime"
                 android:id="@+id/tvRunTime"/>
 
             <TextView
