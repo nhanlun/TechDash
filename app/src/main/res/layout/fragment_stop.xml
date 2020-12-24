@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.StopFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".fragments.StopFragment">
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/stopButton"
+        style="@style/Widget.MaterialComponents.Button"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        style="@style/Widget.MaterialComponents.Button"
-        android:text="@string/STOP"
-        android:textSize="30sp"
-        app:iconSize="20dp"
-        app:iconGravity="textStart"
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle"
-        android:padding="0dp"
-        app:iconPadding="0dp"
+        android:layout_gravity="center"
         android:insetLeft="0dp"
         android:insetTop="0dp"
         android:insetRight="0dp"
         android:insetBottom="0dp"
-        android:layout_gravity="center" />
+        android:onClick="stopRecordActivity"
+        android:padding="0dp"
+        android:text="@string/STOP"
+        android:textSize="30sp"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:iconSize="20dp"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
 </LinearLayout>
