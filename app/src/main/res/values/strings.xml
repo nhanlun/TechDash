@@ -16,6 +16,9 @@
     <string name="facebook_app_id">937432266791553</string>
     <string name="fb_login_protocol_scheme">fb937432266791553</string>
     <string name="STOP">STOP</string>
+    <string name="START">START</string>
+    <string name="GUIDANCE">GUIDANCE</string>
+    <string name="ROUTE">ROUTE</string>
     <string name="intent_action">com.example.techdash.SEND_ROUTE</string>
     <string name="techdash_is_working">"TechDash is working"</string>
     <string name="your_location_is_being_recorded">"Your location is being recorded for activity tracking"</string>
