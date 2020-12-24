@@ -1,19 +1,21 @@
 package com.example.techdash.fragments;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.example.techdash.R;
+import com.example.techdash.activities.RecordRunActivity;
+import com.example.techdash.models.Route;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -27,6 +29,8 @@ public class RunFragment extends Fragment {
     private static final int REQUEST_CODE = 123;
     private MapView mapView;
     private GoogleMap map;
+    private ImageButton startButton;
+    private Route route;
 
     public RunFragment() {
         // Required empty public constructor
@@ -42,38 +46,41 @@ public class RunFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_run, container, false);
+        startButton = view.findViewById(R.id.startButton);
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(requireActivity(), RecordRunActivity.class);
+                startActivityForResult(intent, REQUEST_CODE);
+            }
+        });
+
         mapView = view.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(new OnMapReadyCallback() {
+            @SuppressLint("MissingPermission")
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 Log.d(TAG, "The map is on");
                 map = googleMap;
-                if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) !=
-                        PackageManager.PERMISSION_GRANTED &&
-                        ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) !=
-                                PackageManager.PERMISSION_GRANTED) {
-                    requestPermissions(new String[]{
-                            Manifest.permission.ACCESS_FINE_LOCATION
-                    }, REQUEST_CODE);
-                    return;
-                }
                 map.setMyLocationEnabled(true);
                 CameraUpdate cameraUpdate = CameraUpdateFactory
                         .newLatLngZoom(new LatLng(10.762966027040138, 106.68216741087505), 15);
-                map.animateCamera(cameraUpdate);
+                map.moveCamera(cameraUpdate);
             }
         });
         return view;
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE) {
-
-        }
-        else {
-
+            if (resultCode == 11111) {
+                route = (Route) data.getSerializableExtra("route");
+                Log.d(TAG, "Successfully receive the route");
+                // TODO: encode and save
+            }
         }
     }
 

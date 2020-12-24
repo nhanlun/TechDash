@@ -8,4 +8,8 @@
     <style name="AppBarTheme" parent="Theme.MaterialComponents">
 
     </style>
+
+    <style name="Button.Circle" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/main_color</item>
+    </style>
 </resources>

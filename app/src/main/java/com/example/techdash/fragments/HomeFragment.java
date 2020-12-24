@@ -1,6 +1,11 @@
 package com.example.techdash.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,12 +15,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-
 import com.example.techdash.R;
 import com.example.techdash.models.User;
 import com.example.techdash.viewmodels.UserViewModel;
@@ -23,6 +22,7 @@ import com.example.techdash.viewmodels.UserViewModel;
 public class HomeFragment extends Fragment {
     final static String TAG = HomeFragment.class.getSimpleName();
     private UserViewModel userViewModel;
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -37,6 +37,10 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // TODO: remove this test code
+//        Intent intent = new Intent(requireActivity(), RecordRunActivity.class);
+//        startActivity(intent);
+
+        // TODO: remove this test code
 //        Intent intent = new Intent(getActivity(), LoginActivity.class);
 //        startActivityForResult(intent, 123);
 
@@ -48,6 +52,7 @@ public class HomeFragment extends Fragment {
 
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -63,7 +68,7 @@ public class HomeFragment extends Fragment {
         userViewModel.getUser().observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
             public void onChanged(User user) {
-                if (user == null){
+                if (user == null) {
                     Log.e(TAG, "Cai d gi the nay");
                     navController.navigate(R.id.loginFragment);
                 }

@@ -4,26 +4,27 @@ import android.Manifest;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
 import com.example.techdash.R;
+import com.example.techdash.models.Route;
+import com.example.techdash.models.RoutePoint;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+
+import java.util.Calendar;
 
 public class RecordService extends Service {
     private static final String TAG = RecordService.class.getSimpleName();
@@ -31,44 +32,51 @@ public class RecordService extends Service {
     private LocationCallback locationCallback;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private Notification notification;
-    private Binder binder = new LocalBinder();
-
-    public class LocalBinder extends Binder {
-        RecordService getService() {
-            return RecordService.this;
-        }
-    }
+    private Route route;
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return binder;
+        return null;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onCreate() {
         super.onCreate();
+        route = new Route();
         locationRequest = LocationRequest.create();
         locationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
                 // TODO: do somthing here, put a timer in here
-                Log.d(TAG, "Location received " + locationResult.getLastLocation().getLatitude() + " " + locationResult.getLastLocation().getLongitude());
+                Log.d(TAG, "Location: " + locationResult.getLastLocation().getLatitude() + " " + locationResult.getLastLocation().getLongitude());
+                double lat = locationResult.getLastLocation().getLatitude();
+                double lng = locationResult.getLastLocation().getLongitude();
+                long time = Calendar.getInstance().getTimeInMillis();
+                route.add(new RoutePoint(lat, lng, time));
+
+                Intent intent = new Intent();
+                intent.setAction(getString(R.string.intent_action));
+                intent.putExtra("route", route);
+                intent.setPackage("com.example.techdash");
+                sendBroadcast(intent);
             }
         };
+
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        NotificationManager service = (NotificationManager) getSystemService(getBaseContext().NOTIFICATION_SERVICE);
-        service.createNotificationChannel(new NotificationChannel("my_service", "back ground service", NotificationManager.IMPORTANCE_DEFAULT));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notification = new Notification.Builder(this, "my_service")
-                    .setContentTitle("TechDash is working")
-                    .setContentText("Your location is being recorded for activity tracking")
-                    .setSmallIcon(R.mipmap.ic_launcher)
+            NotificationManager service = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            NotificationChannel channel = new NotificationChannel("techdash_service", "back ground service", NotificationManager.IMPORTANCE_DEFAULT);
+            service.createNotificationChannel(channel);
+            notification = new Notification.Builder(this, "techdash_service")
+                    .setContentTitle(getString(R.string.techdash_is_working))
+                    .setContentText(getString(R.string.your_location_is_being_recorded))
                     .build();
-        }
-        else {
-            // TODO: Do something here
+        } else {
+            notification = new NotificationCompat.Builder(this)
+                    .setContentTitle(getString(R.string.techdash_is_working))
+                    .setContentText(getString(R.string.your_location_is_being_recorded))
+                    .build();
         }
     }
 
@@ -85,8 +93,8 @@ public class RecordService extends Service {
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY).setFastestInterval(1000)
-                .setInterval(5000).setMaxWaitTime(0);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY).setFastestInterval(500)
+                .setInterval(3000).setMaxWaitTime(0);
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null);
     }
 

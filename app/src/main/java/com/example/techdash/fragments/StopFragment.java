@@ -2,13 +2,12 @@ package com.example.techdash.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.techdash.R;
 import com.example.techdash.services.RecordService;
@@ -32,12 +31,19 @@ public class StopFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_stop, container, false);
-        recordViewModel = new ViewModelProvider(requireActivity()).get(RecordViewModel.class);
         stopButton = v.findViewById(R.id.stopButton);
+        recordViewModel = new ViewModelProvider(requireActivity()).get(RecordViewModel.class);
+
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recordViewModel.stopRecording();
+                Intent intent = new Intent(requireActivity(), RecordService.class);
+                requireActivity().stopService(intent);
+
+                Intent result = new Intent();
+                result.putExtra("route", recordViewModel.getRoute().getValue());
+                requireActivity().setResult(11111, result);
+                requireActivity().finish();
             }
         });
         return v;

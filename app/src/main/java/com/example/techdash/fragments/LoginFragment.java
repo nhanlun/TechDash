@@ -2,21 +2,18 @@ package com.example.techdash.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.Navigator;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.techdash.R;
 import com.example.techdash.models.User;
@@ -33,6 +30,7 @@ public class LoginFragment extends Fragment {
     private UserViewModel userViewModel;
     private LoginButton fbButton;
     private CallbackManager callbackManager;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -50,7 +48,7 @@ public class LoginFragment extends Fragment {
         userViewModel.getUser().observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
             public void onChanged(User user) {
-                if (user != null){
+                if (user != null) {
                     navController.navigate(R.id.homeFragment);
                 }
             }
