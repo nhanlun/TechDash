@@ -35,6 +35,7 @@ public class FinishFragment extends Fragment {
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // TODO: save record
                 requireActivity().finish();
             }
         });
