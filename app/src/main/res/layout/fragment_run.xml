@@ -35,18 +35,7 @@
         app:iconSize="90dp"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
 
-    <ImageButton
-        android:id="@+id/startButton"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_below="@+id/mapView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:background="#FFFFFF"
-        android:scaleType="fitCenter"
-        android:src="@drawable/start_button" />
-
-    <!--<com.google.android.material.button.MaterialButton
+    <com.google.android.material.button.MaterialButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:cornerRadius="10dp"
@@ -57,7 +46,7 @@
         android:layout_alignParentBottom="true"
         style="@style/Button.Round_corner."
         android:layout_marginBottom="50dp"
-        android:layout_centerInParent="true"/>!-->
+        android:layout_centerInParent="true"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/guidanceButton"

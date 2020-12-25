@@ -1,18 +1,18 @@
 package com.example.techdash.fragments;
 
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.fragment.app.Fragment;
-
 import com.example.techdash.R;
 
-public class FriendFragment extends Fragment {
-    private static final String TAG = FriendFragment.class.getSimpleName();
+public class TrackingMapFragment extends Fragment {
 
-    public FriendFragment() {
+    public TrackingMapFragment() {
         // Required empty public constructor
     }
 
@@ -25,6 +25,6 @@ public class FriendFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_friend, container, false);
+        return inflater.inflate(R.layout.fragment_tracking_map, container, false);
     }
 }

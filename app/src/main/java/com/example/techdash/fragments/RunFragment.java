@@ -22,6 +22,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.material.button.MaterialButton;
 
 public class RunFragment extends Fragment {
 
@@ -29,7 +30,7 @@ public class RunFragment extends Fragment {
     private static final int REQUEST_CODE = 123;
     private MapView mapView;
     private GoogleMap map;
-    private ImageButton startButton;
+    private MaterialButton startButton;
     private Route route;
 
     public RunFragment() {

@@ -1,5 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation_run_record">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_run_record"
+    app:startDestination="@id/trackingNoMapFragment">
 
+    <fragment
+        android:id="@+id/finishFragment"
+        android:name="com.example.techdash.fragments.FinishFragment"
+        android:label="fragment_finish"
+        tools:layout="@layout/fragment_finish" />
+    <fragment
+        android:id="@+id/trackingMapFragment"
+        android:name="com.example.techdash.fragments.TrackingMapFragment"
+        android:label="fragment_tracking_map"
+        tools:layout="@layout/fragment_tracking_map" >
+        <action
+            android:id="@+id/action_trackingMapFragment_to_trackingNoMapFragment"
+            app:destination="@id/trackingNoMapFragment" />
+        <action
+            android:id="@+id/action_trackingMapFragment_to_finishFragment"
+            app:destination="@id/finishFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/trackingNoMapFragment"
+        android:name="com.example.techdash.fragments.TrackingNoMapFragment"
+        android:label="fragment_tracking_no_map"
+        tools:layout="@layout/fragment_tracking_no_map" >
+        <action
+            android:id="@+id/action_trackingNoMapFragment_to_trackingMapFragment"
+            app:destination="@id/trackingMapFragment" />
+        <action
+            android:id="@+id/action_trackingNoMapFragment_to_finishFragment"
+            app:destination="@id/finishFragment" />
+    </fragment>
 </navigation>
