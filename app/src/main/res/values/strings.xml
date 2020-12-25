@@ -1,30 +1,39 @@
 <resources>
-    <string name="app_name">TechDash</string>
-    <string name="title_activity_login">LoginActivity</string>
-    <string name="prompt_email">Email</string>
+    <string name="app_name" translatable="false">TechDash</string>
+    <string name="title_activity_login" translatable="false">LoginActivity</string>
+    <string name="prompt_email" translatable="false">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
+    <string name="invalid_username" translatable="false">Not a valid username</string>
+    <string name="invalid_password" translatable="false">Password must be >5 characters</string>
+    <string name="login_failed" translatable="false">"Login failed"</string>
     <string name="log_out">Log out</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="being_developed">Being developed</string>
-    <string name="facebook_app_id">937432266791553</string>
-    <string name="fb_login_protocol_scheme">fb937432266791553</string>
+    <string name="facebook_app_id" translatable="false">937432266791553</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb937432266791553</string>
     <string name="STOP">STOP</string>
     <string name="START">START</string>
     <string name="GUIDANCE">GUIDANCE</string>
     <string name="ROUTE">ROUTE NEARBY</string>
-    <string name="intent_action">com.example.techdash.SEND_ROUTE</string>
-    <string name="techdash_is_working">"TechDash is working"</string>
-    <string name="your_location_is_being_recorded">"Your location is being recorded for activity tracking"</string>
-    <string name="total_distance">Total distance</string>
-    <string name="average_speed">Average speed</string>
-    <string name="time">Time</string>
-    <string name="FINISH">FINISH</string>
 
+    <string name="intent_action" translatable="false">com.example.techdash.SEND_ROUTE</string>
+    <string name="techdash_is_working" translatable="false">"TechDash is working"</string>
+    <string name="your_location_is_being_recorded" translatable="false">"Your location is being recorded for activity tracking"</string>
+    <string name="runtime">Running time</string>
+    <string name="distance">Distance</string>
+    <string name="pace">Pace</string>
+    <string name="home">Home</string>
+    <string name="friend">Friend</string>
+    <string name="run">Run</string>
+    <string name="contest">Contest</string>
+    <string name="history">History</string>
+
+    <string name="total_distance" translatable="false">Total distance</string>
+    <string name="average_speed" translatable="false">Average speed</string>
+    <string name="FINISH" translatable="false">FINISH</string>
+    <string name="time">Time</string>
 </resources>
