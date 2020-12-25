@@ -1,10 +1,14 @@
 package com.example.techdash.fragments;
 
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Chronometer;
+import android.widget.Chronometer.OnChronometerTickListener;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,6 +29,7 @@ public class RunStatFragment extends Fragment {
     private NavController navController;
     private TextView textViewDistance;
     private RecordViewModel recordViewModel;
+    private Chronometer chronometer;
 
     public RunStatFragment() {
 
@@ -64,6 +69,26 @@ public class RunStatFragment extends Fragment {
                 recordViewModel.storeRoute(route);
             }
         });
+
+        chronometer = (Chronometer) v.findViewById(R.id.chronoTime);
+        if (recordViewModel.getStartTime()==null){
+            long startTime = SystemClock.elapsedRealtime();
+            recordViewModel.setStartTime(startTime);
+            chronometer.setBase(startTime);
+        } else {
+            // Otherwise set the chronometer's base to the original
+            // starting time.
+            chronometer.setBase(recordViewModel.getStartTime());
+
+        }
+        chronometer.start();
+        chronometer.setOnChronometerTickListener(new OnChronometerTickListener() {
+            @Override
+            public void onChronometerTick(Chronometer chronometer) {
+                Log.d("timmmm","a");
+            }
+        });
         return v;
     }
+
 }
