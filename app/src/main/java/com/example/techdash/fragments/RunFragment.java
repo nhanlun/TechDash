@@ -7,15 +7,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.techdash.R;
 import com.example.techdash.activities.RecordRunActivity;
-import com.example.techdash.models.Route;
+import com.example.techdash.viewmodels.UserViewModel;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -31,7 +30,7 @@ public class RunFragment extends Fragment {
     private MapView mapView;
     private GoogleMap map;
     private MaterialButton startButton;
-    private Route route;
+    private UserViewModel userViewModel;
 
     public RunFragment() {
         // Required empty public constructor
@@ -40,19 +39,22 @@ public class RunFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_run, container, false);
         startButton = view.findViewById(R.id.startButton);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // TODO: start tracking
                 Intent intent = new Intent(requireActivity(), RecordRunActivity.class);
-                startActivityForResult(intent, REQUEST_CODE);
+//                intent.putExtra("uid", userViewModel.getUser().getValue().getUid());
+                intent.putExtra("uid", "1SpP1UPb0JOvjhBzKkZzIyxq98y2");
+                startActivity(intent);
             }
         });
 
@@ -71,18 +73,6 @@ public class RunFragment extends Fragment {
             }
         });
         return view;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE) {
-            if (resultCode == 11111) {
-                route = (Route) data.getSerializableExtra("route");
-                Log.d(TAG, "Successfully receive the route");
-                // TODO: encode and save
-            }
-        }
     }
 
     @Override

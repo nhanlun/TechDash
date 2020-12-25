@@ -7,14 +7,17 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.techdash.R;
+import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -24,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private FloatingActionButton fab;
+    private BottomNavigationView bottomNavigationView;
+    private BottomAppBar bottomAppBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +37,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar myToolBar = (Toolbar)findViewById(R.id.topAppBar);
         setSupportActionBar(myToolBar);
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setBackground(null);
+        bottomAppBar = findViewById(R.id.bottomAppBar);
 
         NavController navController = Navigation.findNavController(this, R.id.fragment);
         fab = findViewById(R.id.runButton);
@@ -41,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(MainActivity.this, R.id.fragment).navigate(R.id.runFragment);
+                navController.popBackStack();
+                navController.navigate(R.id.runFragment);
             }
         });
 
@@ -58,6 +65,23 @@ public class MainActivity extends AppCompatActivity {
 
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
         NavigationUI.setupActionBarWithNavController(this, navController);
+        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+            @Override
+            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+                int id = destination.getId();
+                // TODO: remove login fragment in this condition
+                if (id == R.id.loginFragment || id == R.id.homeFragment || id == R.id.friendFragment ||
+                        id == R.id.runFragment || id == R.id.contestFragment || id == R.id.historyFragment) {
+                    bottomNavigationView.setVisibility(View.VISIBLE);
+                    bottomAppBar.setVisibility(View.VISIBLE);
+                    fab.setVisibility(View.VISIBLE);
+                } else {
+                    bottomNavigationView.setVisibility(View.GONE);
+                    bottomAppBar.setVisibility(View.GONE);
+                    fab.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     @Override

@@ -71,6 +71,7 @@ public class RecordService extends Service {
                     .setContentTitle(getString(R.string.techdash_is_working))
                     .setContentText(getString(R.string.your_location_is_being_recorded))
                     .build();
+            Log.d(TAG, "Created notification channel");
         } else {
             notification = new NotificationCompat.Builder(this)
                     .setContentTitle(getString(R.string.techdash_is_working))

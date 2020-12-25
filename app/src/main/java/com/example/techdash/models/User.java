@@ -3,6 +3,8 @@ package com.example.techdash.models;
 public class User {
     private String uid;
     private String name;
+    private int energy;
+
 
     public User(String uid, String name, int energy) {
         this.uid = uid;
@@ -10,5 +12,7 @@ public class User {
         this.energy = energy;
     }
 
-    private int energy;
+    public String getUid() {
+        return uid;
+    }
 }

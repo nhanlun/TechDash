@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_run_record"
-    app:startDestination="@id/trackingNoMapFragment">
+    app:startDestination="@id/runStatFragment">
 
     <fragment
         android:id="@+id/finishFragment"
@@ -11,27 +11,25 @@
         android:label="fragment_finish"
         tools:layout="@layout/fragment_finish" />
     <fragment
-        android:id="@+id/trackingMapFragment"
-        android:name="com.example.techdash.fragments.TrackingMapFragment"
-        android:label="fragment_tracking_map"
-        tools:layout="@layout/fragment_tracking_map" >
+        android:id="@+id/runMapFragment"
+        android:name="com.example.techdash.fragments.RunMapFragment"
+        android:label="RunMapFragment" >
         <action
-            android:id="@+id/action_trackingMapFragment_to_trackingNoMapFragment"
-            app:destination="@id/trackingNoMapFragment" />
+            android:id="@+id/action_runMapFragment_to_runStatFragment"
+            app:destination="@id/runStatFragment" />
         <action
-            android:id="@+id/action_trackingMapFragment_to_finishFragment"
+            android:id="@+id/action_runMapFragment_to_finishFragment"
             app:destination="@id/finishFragment" />
     </fragment>
     <fragment
-        android:id="@+id/trackingNoMapFragment"
-        android:name="com.example.techdash.fragments.TrackingNoMapFragment"
-        android:label="fragment_tracking_no_map"
-        tools:layout="@layout/fragment_tracking_no_map" >
+        android:id="@+id/runStatFragment"
+        android:name="com.example.techdash.fragments.RunStatFragment"
+        android:label="RunStatFragment" >
         <action
-            android:id="@+id/action_trackingNoMapFragment_to_trackingMapFragment"
-            app:destination="@id/trackingMapFragment" />
+            android:id="@+id/action_runStatFragment_to_runMapFragment"
+            app:destination="@id/runMapFragment" />
         <action
-            android:id="@+id/action_trackingNoMapFragment_to_finishFragment"
+            android:id="@+id/action_runStatFragment_to_finishFragment"
             app:destination="@id/finishFragment" />
     </fragment>
 </navigation>

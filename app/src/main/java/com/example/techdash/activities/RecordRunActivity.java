@@ -64,9 +64,12 @@ public class RecordRunActivity extends AppCompatActivity {
 
     public void stopRecordActivity(View view) {
         stopService(intent);
-        Route route = recordViewModel.getRoute().getValue();
-        String encoded = PolyUtil.encode(route.getListLatLng());
-        Log.d(TAG, encoded);
-        RecordRunRepository.getInstance().save(uid, encoded);
+        navController.popBackStack();
+        navController.navigate(R.id.finishFragment);
+    }
+
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
     }
 }

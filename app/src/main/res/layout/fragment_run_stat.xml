@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="21">
+    android:weightSum="21"
+    tools:context=".fragments.RunStatFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="15"
         android:orientation="vertical"
-        android:weightSum="3"
-        >
+        android:weightSum="3">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            >
+            android:layout_weight="1">
+
             <TextView
+                android:id="@+id/tvRunTime"
                 style="@style/TextTitleRun"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -27,31 +29,30 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="30dp"
-                android:text="@string/runtime"
-                android:id="@+id/tvRunTime"/>
+                android:text="@string/runtime" />
 
             <TextView
                 android:id="@+id/tvTime"
                 style="@style/TextFrameRun"
-                android:layout_below="@+id/tvRunTime"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
                 android:layout_height="100dp"
+                android:layout_below="@+id/tvRunTime"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
                 android:background="@drawable/frame"
-                android:text="30:00 mins"
-                />
+                android:text="30:00 mins" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            >
+            android:layout_weight="1">
+
             <TextView
+                android:id="@+id/tvRunDistance"
                 style="@style/TextTitleRun"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -59,31 +60,30 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="30dp"
-                android:text="@string/distance"
-                android:id="@+id/tvRunDistance"/>
+                android:text="@string/distance" />
 
             <TextView
                 android:id="@+id/tvDistance"
                 style="@style/TextFrameRun"
-                android:layout_below="@+id/tvRunDistance"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
                 android:layout_height="100dp"
+                android:layout_below="@+id/tvRunDistance"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
                 android:background="@drawable/frame"
-                android:text="5.0 km"
-                />
+                android:text="5.0 km" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            >
+            android:layout_weight="1">
+
             <TextView
+                android:id="@+id/tvRunPace"
                 style="@style/TextTitleRun"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -91,23 +91,21 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="30dp"
-                android:text="@string/pace"
-                android:id="@+id/tvRunPace"/>
+                android:text="@string/pace" />
 
             <TextView
                 android:id="@+id/tvPace"
                 style="@style/TextFrameRun"
-                android:layout_below="@+id/tvRunPace"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
                 android:layout_height="100dp"
+                android:layout_below="@+id/tvRunPace"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
                 android:background="@drawable/frame"
-                android:text="5 m/s"
-                />
+                android:text="10.0 /km" />
         </RelativeLayout>
 
 
@@ -116,16 +114,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="4"
-        >
+        android:layout_weight="4">
 
         <Button
-            style="@style/Button.Circle"
             android:id="@+id/stopButton"
+            style="@style/Button.Circle"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:background="@drawable/ic_stop"
             android:gravity="center"
+            android:onClick="stopRecordActivity"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -137,12 +135,11 @@
             android:layout_width="30dp"
             android:layout_height="40dp"
             android:background="@drawable/map_button"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/stopButton"
-            app:layout_constraintTop_toTopOf="parent"
-            android:gravity="center"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
