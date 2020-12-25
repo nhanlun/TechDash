@@ -74,7 +74,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="30dp"
                 android:background="@drawable/frame"
-                android:text="5.0 km" />
+                android:text="@string/default_distance" />
         </RelativeLayout>
 
         <RelativeLayout

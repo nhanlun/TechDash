@@ -18,9 +18,12 @@ import androidx.navigation.Navigation;
 import com.example.techdash.R;
 import com.example.techdash.models.Route;
 import com.example.techdash.viewmodels.RecordViewModel;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
@@ -64,6 +67,9 @@ public class RunMapFragment extends Fragment {
             public void onMapReady(GoogleMap googleMap) {
                 map = googleMap;
                 map.setMyLocationEnabled(true);
+                CameraUpdate cameraUpdate = CameraUpdateFactory
+                        .newLatLngZoom(new LatLng(10.762966027040138, 106.68216741087505), 15);
+                map.moveCamera(cameraUpdate);
             }
         });
 
@@ -75,8 +81,9 @@ public class RunMapFragment extends Fragment {
                 polyline = map.addPolyline(new PolylineOptions()
                         .addAll(route.getListLatLng())
                         .clickable(false)
-                        .width(20)
+                        .width(15)
                 );
+                recordViewModel.storeRoute(route);
             }
         });
         return v;

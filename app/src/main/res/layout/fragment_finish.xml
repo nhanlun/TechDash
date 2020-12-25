@@ -45,12 +45,13 @@
                 <!--android:layout_weight=""!-->
 
                 <TextView
+                    android:id="@+id/tvTotalDistance"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="40dp"
                     android:gravity="center_horizontal"
-                    android:text="5 km"
+                    android:text="@string/default_distance"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="60sp" />
@@ -94,7 +95,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/average_speed"
+                    android:text="@string/pace"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="30sp" />
@@ -105,7 +106,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="40dp"
                     android:gravity="center_horizontal"
-                    android:text="60 m/s"
+                    android:text="10.0 /km"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="60sp" />

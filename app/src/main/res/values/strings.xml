@@ -36,4 +36,5 @@
     <string name="average_speed" translatable="false">Average speed</string>
     <string name="FINISH" translatable="false">FINISH</string>
     <string name="time">Time</string>
+    <string name="default_distance">0.00 km</string>
 </resources>
