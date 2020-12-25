@@ -5,10 +5,8 @@
         <item name="cornerSize">50%</item>
     </style>
 
-    <style name="AppBarTheme" parent="Theme.MaterialComponents">
+    <style name="AppBarTheme" parent="Theme.MaterialComponents.NoActionBar">
     </style>
-
-
 
     <style name="Button.Circle" parent="Widget.MaterialComponents.Button">
         <item name="backgroundTint">@color/main_color</item>
@@ -30,4 +28,5 @@
     <style name="Button.Round_corner." parent="Widget.MaterialComponents.Button">
         <item name="backgroundTint">@color/yellow</item>
     </style>
+
 </resources>

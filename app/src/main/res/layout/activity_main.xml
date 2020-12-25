@@ -5,7 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context=".activities.MainActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:fitsSystemWindows="true">
+
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            android:background="@drawable/app_bar"
+            />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
 
     <fragment
@@ -16,6 +34,7 @@
         android:layout_gravity="top"
         app:defaultNavHost="true"
         app:navGraph="@navigation/navigation"
+        android:layout_marginTop="55dp"
         tools:layout_editor_absoluteX="0dp"
         />
 

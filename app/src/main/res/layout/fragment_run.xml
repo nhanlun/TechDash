@@ -10,24 +10,6 @@
     android:weightSum="21"
     tools:context=".fragments.RunFragment">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2">
-
-        <ImageView
-            android:id="@+id/appBar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/app_bar" />
-
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:background="@drawable/run_text" />
-    </FrameLayout>
-
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
