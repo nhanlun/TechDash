@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
 import com.example.techdash.models.History;
@@ -115,8 +116,8 @@ public class RecordRunRepository {
                 });
     }
 
-    public ArrayList<History> fetch(String uid) {
-        ArrayList<History> histories = new ArrayList<>();
+    public LiveData<ArrayList<History>> fetch(String uid) {
+        MutableLiveData<ArrayList<History>> histories = new MutableLiveData<>();
         db.collection("users").document(uid)
                 .collection("records").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -124,10 +125,12 @@ public class RecordRunRepository {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "Fetched data successfully " + task.getResult().size());
+                            ArrayList<History> newHistory = new ArrayList<>();
                             for (QueryDocumentSnapshot doc : task.getResult()) {
                                 Map<String, Object> data = doc.getData();
-                                histories.add(new History(data));
+                                newHistory.add(new History(data));
                             }
+                            histories.setValue(newHistory);
                         } else {
                             Log.d(TAG, "Failed to fetch data");
                         }
