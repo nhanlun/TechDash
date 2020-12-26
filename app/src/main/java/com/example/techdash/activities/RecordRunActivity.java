@@ -3,8 +3,8 @@ package com.example.techdash.activities;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.Chronometer;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -13,11 +13,9 @@ import androidx.navigation.Navigation;
 
 import com.example.techdash.R;
 import com.example.techdash.broadcasts.RecordBroadcast;
-import com.example.techdash.models.Route;
 import com.example.techdash.repositories.RecordRunRepository;
 import com.example.techdash.services.RecordService;
 import com.example.techdash.viewmodels.RecordViewModel;
-import com.google.maps.android.PolyUtil;
 
 public class RecordRunActivity extends AppCompatActivity {
 
@@ -45,6 +43,7 @@ public class RecordRunActivity extends AppCompatActivity {
         recordViewModel = new ViewModelProvider(this).get(RecordViewModel.class);
 
         navController = Navigation.findNavController(this, R.id.fragment);
+
     }
 
     @Override
@@ -64,7 +63,6 @@ public class RecordRunActivity extends AppCompatActivity {
 
     public void stopRecordActivity(View view) {
         stopService(intent);
-        navController.popBackStack();
         navController.navigate(R.id.finishFragment);
     }
 

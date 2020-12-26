@@ -25,6 +25,7 @@ public class RecordBroadcast extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d(TAG, "Received broadcast");
-        route.setValue((Route) intent.getSerializableExtra("route"));
+        Route route = (Route) intent.getSerializableExtra("route");
+        this.route.setValue(route);
     }
 }
