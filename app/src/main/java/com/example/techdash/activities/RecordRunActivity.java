@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Chronometer;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -42,6 +43,7 @@ public class RecordRunActivity extends AppCompatActivity {
         recordViewModel = new ViewModelProvider(this).get(RecordViewModel.class);
 
         navController = Navigation.findNavController(this, R.id.fragment);
+
     }
 
     @Override
