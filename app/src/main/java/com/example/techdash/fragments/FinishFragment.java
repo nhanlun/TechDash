@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -17,12 +19,21 @@ import com.example.techdash.viewmodels.RecordViewModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.maps.android.PolyUtil;
 
+import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
+
 public class FinishFragment extends Fragment {
     private static final String TAG = FinishFragment.class.getSimpleName();
     private RecordViewModel recordViewModel;
     private MaterialButton finishButton;
     private TextView totalDistance;
     private TextView textViewPace;
+    private TextView textViewTotalTime;
 
     public FinishFragment() {
         // Required empty public constructor
@@ -70,6 +81,16 @@ public class FinishFragment extends Fragment {
                 textViewPace.setText(String.format("%.1f /km", pace));
             }
         });
+
+        textViewTotalTime = v.findViewById(R.id.tvRunTime);
+        long totalTime = recordViewModel.getTotalTime();
+        String data = String.format("%02d:%02d:%02d",
+                TimeUnit.SECONDS.toHours(totalTime),
+                TimeUnit.SECONDS.toMinutes(totalTime),
+                TimeUnit.SECONDS.toSeconds(totalTime)
+                );
+
+        textViewTotalTime.setText(data);
         return v;
     }
 }
