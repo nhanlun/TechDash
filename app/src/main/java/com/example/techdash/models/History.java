@@ -29,4 +29,44 @@ public class History {
             e.printStackTrace();
         }
     }
+
+    public List<LatLng> getLatLngs() {
+        return latLngs;
+    }
+
+    public void setLatLngs(List<LatLng> latLngs) {
+        this.latLngs = latLngs;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    public long getTotalTime() {
+        return totalTime;
+    }
+
+    public void setTotalTime(long totalTime) {
+        this.totalTime = totalTime;
+    }
+
+    public double getPace() {
+        return pace;
+    }
+
+    public void setPace(double pace) {
+        this.pace = pace;
+    }
+
+    public String getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
+    }
 }

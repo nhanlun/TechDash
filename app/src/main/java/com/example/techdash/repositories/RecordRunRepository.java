@@ -133,6 +133,7 @@ public class RecordRunRepository {
                         }
                     }
                 });
+        Log.d("AAA",String.valueOf(histories.size()));
         return histories;
     }
 }
