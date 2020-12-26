@@ -15,6 +15,14 @@ public class RoutePoint implements Serializable {
         this.time = time;
     }
 
+    public double getLat() {
+        return lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
     public LatLng getLatLng() {
         return new LatLng(lat, lng);
     }

@@ -1,6 +1,9 @@
 package com.example.techdash.models;
 
+import android.location.Location;
+
 import com.google.android.gms.maps.model.LatLng;
+import com.google.maps.android.PolyUtil;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,6 +17,43 @@ public class Route implements Serializable {
 
     public void add(RoutePoint point) {
         route.add(point);
+    }
+
+    public RoutePoint getRoutePoint(int index) {
+        return route.get(index);
+    }
+
+    public double calculatePace() {
+        // TODO: calculate pace
+        long time = getTotalTime();
+        double dis = calculateDistance();
+        return 1.0 * time / 60 / dis;
+    }
+
+    public double calculateDistance() {
+        RoutePoint cur = route.get(0);
+        float[] res = new float[5];
+        double dis = 0;
+        for (int i = 1; i < route.size(); ++i) {
+            RoutePoint next = route.get(i);
+            Location.distanceBetween(cur.getLat(), cur.getLng(), next.getLat(), next.getLng(), res);
+            if (res[0] > 1.5 * (next.getTime() - cur.getTime()) / 1000) {
+                dis += res[0];
+            }
+            cur = next;
+        }
+        return dis / 1000;
+    }
+
+    public long getTotalTime() {
+        long time = 0;
+        if (route.size() <= 1) return 0;
+        time = route.get(route.size() - 1).getTime() - route.get(0).getTime();
+        return time / 1000;
+    }
+
+    public String encodeRoute() {
+        return PolyUtil.encode(getListLatLng());
     }
 
     public ArrayList<LatLng> getListLatLng() {

@@ -23,8 +23,12 @@ public class RecordViewModel extends ViewModel {
         return RecordRunRepository.getInstance().getDistance();
     }
 
-    public void save(String uid, String encoded) {
-        RecordRunRepository.getInstance().save(uid, encoded);
+    public LiveData<Double> getPace() {
+        return RecordRunRepository.getInstance().getPace();
+    }
+
+    public void save(String uid, Route route) {
+        RecordRunRepository.getInstance().save(uid, route);
     }
 
     public void storeRoute(Route route) {

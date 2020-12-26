@@ -93,7 +93,7 @@ public class RecordService extends Service {
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY).setFastestInterval(500)
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY).setFastestInterval(1000)
                 .setInterval(3000).setMaxWaitTime(0);
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null);
     }

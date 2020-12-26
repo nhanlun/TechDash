@@ -22,6 +22,7 @@ public class FinishFragment extends Fragment {
     private RecordViewModel recordViewModel;
     private MaterialButton finishButton;
     private TextView totalDistance;
+    private TextView textViewPace;
 
     public FinishFragment() {
         // Required empty public constructor
@@ -48,8 +49,7 @@ public class FinishFragment extends Fragment {
                 Route route = recordViewModel.getStoredRoute();
                 if (route == null)
                     Log.d(TAG, "Why is the route null when pressing finish");
-                String encoded = PolyUtil.encode(route.getListLatLng());
-                recordViewModel.save("X5P3gKcD6CUETVxiXIDDZ4arNwh2", encoded);
+                recordViewModel.save("X5P3gKcD6CUETVxiXIDDZ4arNwh2", route);
                 requireActivity().finish();
             }
         });
@@ -60,6 +60,14 @@ public class FinishFragment extends Fragment {
             @Override
             public void onChanged(Double distance) {
                 totalDistance.setText(String.format("%.2f km", distance));
+            }
+        });
+
+        textViewPace = v.findViewById(R.id.tvPace);
+        recordViewModel.getPace().observe(getViewLifecycleOwner(), new Observer<Double>() {
+            @Override
+            public void onChanged(Double pace) {
+                textViewPace.setText(String.format("%.1f /km", pace));
             }
         });
         return v;

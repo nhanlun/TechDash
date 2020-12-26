@@ -24,6 +24,7 @@ public class RunStatFragment extends Fragment {
     private Button mapButton;
     private NavController navController;
     private TextView textViewDistance;
+    private TextView textViewPace;
     private RecordViewModel recordViewModel;
 
     public RunStatFragment() {
@@ -62,6 +63,14 @@ public class RunStatFragment extends Fragment {
             @Override
             public void onChanged(Route route) {
                 recordViewModel.storeRoute(route);
+            }
+        });
+
+        textViewPace = v.findViewById(R.id.tvPace);
+        recordViewModel.getPace().observe(getViewLifecycleOwner(), new Observer<Double>() {
+            @Override
+            public void onChanged(Double pace) {
+                textViewPace.setText(String.format("%.1f /km", pace));
             }
         });
         return v;
