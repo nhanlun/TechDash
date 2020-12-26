@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -62,6 +63,11 @@ public class HomeFragment extends Fragment {
         Log.e(TAG, "Created bro");
         setupConditionalNavigation(navController);
         setupButton(navController);
+        User user = userViewModel.getUser().getValue();
+        if(user != null)
+            displayUserProfile(user);
+        else
+            Log.d("null","nn");
     }
 
     private void setupConditionalNavigation(NavController navController) {
@@ -86,5 +92,12 @@ public class HomeFragment extends Fragment {
                 navController.navigate(R.id.loginFragment);
             }
         });
+    }
+
+    private void displayUserProfile(User user){
+        TextView tvUserName = getView().findViewById(R.id.tvUserName);
+        tvUserName.setText(user.getName());
+        TextView tvUserEnergy = getView().findViewById(R.id.tvEnergy);
+        tvUserEnergy.setText(String.valueOf(user.getEnergy()));
     }
 }

@@ -15,4 +15,12 @@ public class User {
     public String getUid() {
         return uid;
     }
+
+    public String getName(){
+        return name;
+    }
+
+    public int getEnergy(){
+        return energy;
+    }
 }
