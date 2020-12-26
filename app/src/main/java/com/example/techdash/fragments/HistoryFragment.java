@@ -33,7 +33,11 @@ public class HistoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_history, container, false);
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
-        String uid = userViewModel.getUser().getValue().getUid();
+        String uid = null;
+        if (userViewModel.getUser().getValue() == null)
+            uid = "X5P3gKcD6CUETVxiXIDDZ4arNwh2";
+        else
+            uid = userViewModel.getUser().getValue().getUid();
         ArrayList<History> histories = RecordRunRepository.getInstance().fetch(uid);
         return v;
     }
