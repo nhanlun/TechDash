@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.appcompat.widget.Toolbar;
 
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
-        NavigationUI.setupActionBarWithNavController(this, navController);
+        NavigationUI.setupWithNavController(myToolBar, navController);
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
@@ -72,10 +73,12 @@ public class MainActivity extends AppCompatActivity {
                 // TODO: remove login fragment in this condition
                 if (id == R.id.loginFragment || id == R.id.homeFragment || id == R.id.friendFragment ||
                         id == R.id.runFragment || id == R.id.contestFragment || id == R.id.historyFragment) {
+                    myToolBar.setVisibility(View.VISIBLE);
                     bottomNavigationView.setVisibility(View.VISIBLE);
                     bottomAppBar.setVisibility(View.VISIBLE);
                     fab.setVisibility(View.VISIBLE);
                 } else {
+                    myToolBar.setVisibility(View.GONE);
                     bottomNavigationView.setVisibility(View.GONE);
                     bottomAppBar.setVisibility(View.GONE);
                     fab.setVisibility(View.GONE);

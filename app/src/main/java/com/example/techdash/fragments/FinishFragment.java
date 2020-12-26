@@ -49,7 +49,7 @@ public class FinishFragment extends Fragment {
                 Route route = recordViewModel.getStoredRoute();
                 if (route == null)
                     Log.d(TAG, "Why is the route null when pressing finish");
-                recordViewModel.save("X5P3gKcD6CUETVxiXIDDZ4arNwh2", route);
+                recordViewModel.save(route);
                 requireActivity().finish();
             }
         });
