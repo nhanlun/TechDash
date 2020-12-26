@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingBottom="40dp"
-    android:weightSum="21"
+    android:weightSum="19"
     tools:context=".fragments.RunFragment">
 
     <com.google.android.gms.maps.MapView
@@ -46,13 +46,11 @@
             style="@style/Button.Round_corner."
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerInParent="true"
-            android:layout_marginBottom="50dp"
             android:text="@string/START"
             android:textColor="@color/black"
             android:textSize="20sp"
-            app:cornerRadius="10dp" />
+            app:cornerRadius="10dp"
+            android:layout_centerInParent="true"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/guidanceButton"
@@ -77,9 +75,10 @@
 
     </RelativeLayout>
 
-
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text=""
+        android:layout_weight="1"
+        />
 </LinearLayout>

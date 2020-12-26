@@ -20,4 +20,7 @@
     <string name="being_developed">Đang phát triển</string>
     <string name="STOP">DỪNG</string>
     <string name="time">Thời gian</string>
+    <string name="total_distance">Tổng quãng đường</string>
+    <string name="average_speed">Tốc độ trung bình</string>
+    <string name="FINISH">HOÀN THÀNH</string>
 </resources>

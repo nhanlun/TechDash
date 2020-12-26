@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">TechDash</string>
+    <string name="app_name">TechDash</string>
     <string name="title_activity_login" translatable="false">LoginActivity</string>
     <string name="prompt_email" translatable="false">Email</string>
     <string name="prompt_password">Password</string>
@@ -32,8 +32,8 @@
     <string name="contest">Contest</string>
     <string name="history">History</string>
 
-    <string name="total_distance" translatable="false">Total distance</string>
-    <string name="average_speed" translatable="false">Average speed</string>
-    <string name="FINISH" translatable="false">FINISH</string>
+    <string name="total_distance">Total distance</string>
+    <string name="average_speed">Average speed</string>
+    <string name="FINISH">FINISH</string>
     <string name="time">Time</string>
 </resources>
