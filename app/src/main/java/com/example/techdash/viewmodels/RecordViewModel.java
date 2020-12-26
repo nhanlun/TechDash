@@ -47,6 +47,10 @@ public class RecordViewModel extends ViewModel {
         RecordRunRepository.getInstance().save(uid, route);
     }
 
+    public long getTotalTime() {
+        return mRoute.getTotalTime();
+    }
+
     public void storeRoute(Route route) {
         mRoute = route;
     }
