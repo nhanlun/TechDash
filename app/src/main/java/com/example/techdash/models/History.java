@@ -1,5 +1,7 @@
 package com.example.techdash.models;
 
+import android.util.Log;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.PolyUtil;
 
@@ -16,6 +18,7 @@ public class History {
     public History() {
 
     }
+
 
     public History(Map<String, Object> data) {
         try {
