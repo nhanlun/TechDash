@@ -52,8 +52,9 @@ public class RunFragment extends Fragment {
             public void onClick(View v) {
                 // TODO: start tracking
                 Intent intent = new Intent(requireActivity(), RecordRunActivity.class);
-//                intent.putExtra("uid", userViewModel.getUser().getValue().getUid());
-                intent.putExtra("uid", "1SpP1UPb0JOvjhBzKkZzIyxq98y2");
+                if (userViewModel.getUser().getValue() != null) {
+                    intent.putExtra("uid", userViewModel.getUser().getValue().getUid());
+                }
                 startActivity(intent);
             }
         });

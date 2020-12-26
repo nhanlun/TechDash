@@ -1,7 +1,8 @@
 package com.example.techdash.viewmodels;
 
+import android.os.Parcelable;
+
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.techdash.models.Route;
@@ -12,12 +13,21 @@ import javax.annotation.Nullable;
 public class RecordViewModel extends ViewModel {
     private static final String TAG = RecordViewModel.class.getSimpleName();
 
+    private String uid;
     private Route mRoute;
     @Nullable
     private Long mStartTime;
 
     public RecordViewModel() {
         mRoute = new Route();
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getUid() {
+        return uid;
     }
 
     public LiveData<Route> getRoute() {
@@ -32,8 +42,13 @@ public class RecordViewModel extends ViewModel {
         return RecordRunRepository.getInstance().getPace();
     }
 
-    public void save(String uid, Route route) {
+    public void save(Route route) {
+        if (uid == null) uid = "X5P3gKcD6CUETVxiXIDDZ4arNwh2";
         RecordRunRepository.getInstance().save(uid, route);
+    }
+
+    public long getTotalTime() {
+        return mRoute.getTotalTime();
     }
 
     public void storeRoute(Route route) {
@@ -56,5 +71,9 @@ public class RecordViewModel extends ViewModel {
     @Override
     protected void onCleared() {
         super.onCleared();
+    }
+
+    public void resetVariables() {
+        RecordRunRepository.getInstance().resetVariables();
     }
 }
