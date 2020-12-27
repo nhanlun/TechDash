@@ -77,10 +77,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         holder.distance.setText(R.string.distance+": "+String.format("%.2f km", historyArrayList.get(position).getDistance()));
 
         long totalTime = historyArrayList.get(position).getTotalTime();
-        holder.timeRun.setText(R.string.time+": "+String.format("%02d:%02d:%02d",
+        holder.timeRun.setText(R.string.time+": "+String.format(Locale.getDefault(), "%02d:%02d:%02d",
                 TimeUnit.SECONDS.toHours(totalTime),
-                TimeUnit.SECONDS.toMinutes(totalTime),
-                TimeUnit.SECONDS.toSeconds(totalTime)
+                TimeUnit.SECONDS.toMinutes(totalTime) % 60,
+                TimeUnit.SECONDS.toSeconds(totalTime) % 60
         ));
         holder.pace.setText(R.string.pace+": "+String.format("%.1f /km", historyArrayList.get(position).getPace()));
     }

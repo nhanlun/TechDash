@@ -24,6 +24,7 @@ import java.text.FieldPosition;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
@@ -70,7 +71,7 @@ public class FinishFragment extends Fragment {
         recordViewModel.getDistance().observe(getViewLifecycleOwner(), new Observer<Double>() {
             @Override
             public void onChanged(Double distance) {
-                totalDistance.setText(String.format("%.2f km", distance));
+                totalDistance.setText(String.format(Locale.getDefault(), "%.2f km", distance));
             }
         });
 
@@ -78,16 +79,16 @@ public class FinishFragment extends Fragment {
         recordViewModel.getPace().observe(getViewLifecycleOwner(), new Observer<Double>() {
             @Override
             public void onChanged(Double pace) {
-                textViewPace.setText(String.format("%.1f /km", pace));
+                textViewPace.setText(String.format(Locale.getDefault(), "%.1f /km", pace));
             }
         });
 
         textViewTotalTime = v.findViewById(R.id.tvRunTime);
         long totalTime = recordViewModel.getTotalTime();
-        String data = String.format("%02d:%02d:%02d",
+        String data = String.format(Locale.getDefault(), "%02d:%02d:%02d",
                 TimeUnit.SECONDS.toHours(totalTime),
-                TimeUnit.SECONDS.toMinutes(totalTime),
-                TimeUnit.SECONDS.toSeconds(totalTime)
+                TimeUnit.SECONDS.toMinutes(totalTime) % 60,
+                TimeUnit.SECONDS.toSeconds(totalTime) % 60
                 );
 
         textViewTotalTime.setText(data);
