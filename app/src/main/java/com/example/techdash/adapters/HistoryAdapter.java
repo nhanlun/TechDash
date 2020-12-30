@@ -3,8 +3,7 @@ package com.example.techdash.adapters;
 import android.content.Context;
 import android.icu.util.LocaleData;
 import android.os.Build;
-import android.text.format.DateFormat;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +12,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.techdash.fragments.HistoryFragmentDirections;
 import com.example.techdash.models.History;
 
 import com.example.techdash.R;
@@ -30,8 +31,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
-
+public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder>{
     ArrayList<History> historyArrayList;
     Context context;
     int layout;
@@ -52,8 +52,15 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(layout,parent,false);
+        ViewHolder viewHolder = new  ViewHolder(view);
+        view.setOnClickListener(v -> {
+            int position = viewHolder.getAdapterPosition();
+            History history = historyArrayList.get(position);
 
-        return new ViewHolder(view);
+            HistoryFragmentDirections.DisplayMap action = HistoryFragmentDirections.displayMap(history);
+            Navigation.findNavController(v).navigate(action);
+        });
+        return viewHolder ;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -71,8 +78,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             Date date = simpleDateFormat.parse(datetime);
             String dateText = sdateFormat.format(date);
             String timeText = stimeFormat.format(date);
-            Log.d("AAA",dateText);
-            Log.d("AAA",timeText);
             holder.date.setText(dateText);
             holder.time.setText(timeText);
         } catch (ParseException e) {
