@@ -9,7 +9,15 @@
         android:id="@+id/historyFragment"
         android:name="com.example.techdash.fragments.HistoryFragment"
         android:label="History"
-        tools:layout="@layout/fragment_history" />
+        tools:layout="@layout/fragment_history" >
+        <action
+            android:id="@+id/display_map"
+            app:destination="@id/displayMapFragment">
+            <argument
+                android:name="history"
+                app:argType="com.example.techdash.models.History"/>
+        </action>
+    </fragment>
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.techdash.fragments.HomeFragment"
@@ -44,4 +52,13 @@
         android:name="com.example.techdash.fragments.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/displayMapFragment"
+        android:name="com.example.techdash.fragments.DisplayHistoryMapFragment"
+        android:label="fragment_display_map"
+        tools:layout="@layout/fragment_display_history_map" >
+        <argument
+            android:name="history"
+            app:argType="com.example.techdash.models.History" />
+    </fragment>
 </navigation>
