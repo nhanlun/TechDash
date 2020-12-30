@@ -69,7 +69,8 @@
         android:scaleType="fitXY"
         android:src="@drawable/ic_run"
         app:layout_anchor="@id/bottomAppBar"
-        app:tint="@color/main_color" />
+        app:tint="@color/main_color"
+        />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -15,7 +15,7 @@
         android:id="@+id/runFragment"
         android:title="@string/run"
         android:label="@string/run"
-        android:enabled="true"
+        android:enabled="false"
         />
     <item
         android:id="@+id/contestFragment"

@@ -3,6 +3,7 @@ package com.example.techdash.adapters;
 import android.content.Context;
 import android.icu.util.LocaleData;
 import android.os.Build;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,27 +63,43 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             return;
         String datetime = historyArrayList.get(position).getDateTime();
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
-        LocalDateTime date = LocalDateTime.parse(datetime, formatter);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy",Locale.ENGLISH);
+        SimpleDateFormat sdateFormat = new SimpleDateFormat("EEE, MMM dd, yyyy",Locale.ENGLISH);
+        SimpleDateFormat stimeFormat = new SimpleDateFormat("HH:mm:ss",Locale.ENGLISH);
 
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("E, MMM dd, yyyy",Locale.ENGLISH);
-        String mDate = dateFormat.format(date);
-        holder.date.setText(mDate);
-        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss",Locale.ENGLISH);
-        String mTime = timeFormat.format(date);
-        holder.time.setText(mTime);
+        try {
+            Date date = simpleDateFormat.parse(datetime);
+            String dateText = sdateFormat.format(date);
+            String timeText = stimeFormat.format(date);
+            Log.d("AAA",dateText);
+            Log.d("AAA",timeText);
+            holder.date.setText(dateText);
+            holder.time.setText(timeText);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+//        LocalDateTime date = LocalDateTime.parse(datetime, formatter);
+//
+//        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("E, MMM dd, yyyy",Locale.ENGLISH);
+//        String mDate = dateFormat.format(date);
+//        holder.date.setText(mDate);
+//        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss",Locale.ENGLISH);
+//        String mTime = timeFormat.format(date);
+//        holder.time.setText(mTime);
 
 
         holder.imageView.setImageResource(R.drawable.map_button);
-        holder.distance.setText(R.string.distance+": "+String.format("%.2f km", historyArrayList.get(position).getDistance()));
+        holder.distance.setText(context.getString(R.string.distance)+": "+String.format("%.2f km", historyArrayList.get(position).getDistance()));
 
         long totalTime = historyArrayList.get(position).getTotalTime();
-        holder.timeRun.setText(R.string.time+": "+String.format(Locale.getDefault(), "%02d:%02d:%02d",
+        holder.timeRun.setText(context.getString(R.string.time)+": "+String.format(Locale.getDefault(), "%02d:%02d:%02d",
                 TimeUnit.SECONDS.toHours(totalTime),
                 TimeUnit.SECONDS.toMinutes(totalTime) % 60,
                 TimeUnit.SECONDS.toSeconds(totalTime) % 60
         ));
-        holder.pace.setText(R.string.pace+": "+String.format("%.1f /km", historyArrayList.get(position).getPace()));
+        holder.pace.setText(context.getString(R.string.pace)+": "+String.format("%.1f /km", historyArrayList.get(position).getPace()));
     }
 
 
