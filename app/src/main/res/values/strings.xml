@@ -37,4 +37,5 @@
     <string name="FINISH">FINISH</string>
     <string name="time">Time</string>
     <string name="default_distance">0.00 km</string>
+    <string name="share">Share</string>
 </resources>

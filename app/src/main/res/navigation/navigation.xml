@@ -8,17 +8,26 @@
     <fragment
         android:id="@+id/historyFragment"
         android:name="com.example.techdash.fragments.HistoryFragment"
-        android:label="History"
-        tools:layout="@layout/fragment_history" />
+        android:label="@string/history"
+        tools:layout="@layout/fragment_history" >
+        <action
+            android:id="@+id/display_map"
+            app:destination="@id/displayMapFragment">
+            <argument
+                android:name="history"
+                app:argType="com.example.techdash.models.History"/>
+        </action>
+    </fragment>
+
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.techdash.fragments.HomeFragment"
-        android:label="Home"
+        android:label="@string/home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/runFragment"
         android:name="com.example.techdash.fragments.RunFragment"
-        android:label="Run"
+        android:label="@string/run"
         tools:layout="@layout/fragment_run" >
         <action
             android:id="@+id/action_runFragment_to_recordRunActivity"
@@ -27,12 +36,12 @@
     <fragment
         android:id="@+id/contestFragment"
         android:name="com.example.techdash.fragments.ContestFragment"
-        android:label="Contest"
+        android:label="@string/contest"
         tools:layout="@layout/fragment_contest" />
     <fragment
         android:id="@+id/friendFragment"
         android:name="com.example.techdash.fragments.FriendFragment"
-        android:label="Friend"
+        android:label="@string/friend"
         tools:layout="@layout/fragment_friend" />
     <activity
         android:id="@+id/recordRunActivity"
@@ -42,6 +51,15 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.techdash.fragments.LoginFragment"
-        android:label="fragment_login"
+        android:label="@string/title_activity_login"
         tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/displayMapFragment"
+        android:name="com.example.techdash.fragments.DisplayHistoryMapFragment"
+        android:label="fragment_display_map"
+        tools:layout="@layout/fragment_display_history_map" >
+        <argument
+            android:name="history"
+            app:argType="com.example.techdash.models.History" />
+    </fragment>
 </navigation>

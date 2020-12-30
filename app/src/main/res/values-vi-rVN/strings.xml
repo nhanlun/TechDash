@@ -23,4 +23,6 @@
     <string name="total_distance">Tổng quãng đường</string>
     <string name="average_speed">Tốc độ trung bình</string>
     <string name="FINISH">HOÀN THÀNH</string>
+    <string name="default_distance">0.00 km</string>
+    <string name="share">Chia sẻ</string>
 </resources>
