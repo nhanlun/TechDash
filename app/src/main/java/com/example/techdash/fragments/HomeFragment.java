@@ -37,20 +37,6 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // TODO: remove this test code
-//        Intent intent = new Intent(requireActivity(), RecordRunActivity.class);
-//        startActivity(intent);
-
-        // TODO: remove this test code
-//        Intent intent = new Intent(getActivity(), LoginActivity.class);
-//        startActivityForResult(intent, 123);
-
-        // TODO: remove this test code
-//        UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
-//        userViewModel.fetchData("IoGKF8dtNZWMOnAwWRsWnVgvVoI3");
-
-        // TODO: get UserViewModel and observe
-
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -75,7 +61,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onChanged(User user) {
                 if (user == null) {
-                    Log.e(TAG, "Cai d gi the nay");
                     navController.navigate(R.id.loginFragment);
                 }
             }

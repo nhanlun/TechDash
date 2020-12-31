@@ -88,6 +88,7 @@ public class RecordRunRepository {
     public void save(String uid, Route route) {
         String dateTime = Calendar.getInstance().getTime().toString();
 
+        String dateTimeInMillis = String.valueOf(Calendar.getInstance().getTimeInMillis());
         String encoded = route.encodeRoute();
         long totalTime = route.getTotalTime();
         double pace = route.calculatePace();
@@ -100,7 +101,7 @@ public class RecordRunRepository {
         map.put("date", dateTime);
 
         db.collection("users").document(uid)
-                .collection("records").document(dateTime)
+                .collection("records").document(dateTimeInMillis)
                 .set(map)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
