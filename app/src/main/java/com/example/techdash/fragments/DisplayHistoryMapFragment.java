@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.techdash.R;
 import com.example.techdash.models.History;
@@ -22,7 +23,6 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Polyline;
@@ -36,8 +36,7 @@ public class DisplayHistoryMapFragment extends Fragment {
     private Button shareButton;
     private Polyline polyline;
     private List<LatLng> route;
-    private Bitmap bitmap;
-
+    private Bitmap bitmap = null;
 
     public DisplayHistoryMapFragment() {
         // Required empty public constructor
@@ -51,28 +50,33 @@ public class DisplayHistoryMapFragment extends Fragment {
         shareButton = view.findViewById(R.id.share_button);
         shareButton.setOnClickListener(v -> {
             // This code snippet is used to capture and share photo via facebook
-            Log.e("CLICK", "CLICKED");
-            captureImage();
+            share();
         });
         return view;
+    }
+
+    private void share(){
+        if (bitmap == null){
+            Toast toast = Toast.makeText(getContext(), R.string.loading, Toast.LENGTH_LONG);
+            toast.show();
+        }
+        SharePhoto photo = new SharePhoto.Builder()
+                .setBitmap(bitmap)
+                .build();
+        SharePhotoContent content = new SharePhotoContent.Builder()
+                .addPhoto(photo)
+                .build();
+        ShareDialog dialog = new ShareDialog(getActivity());
+        dialog.show(content);
     }
 
     private void captureImage() {
         moveToCenter(polyline);
         GoogleMap.SnapshotReadyCallback callback = snapshot -> {
-            Log.e("CAPTURE", "CAPTURE COMPLETE");
             bitmap = snapshot;
-            SharePhoto photo = new SharePhoto.Builder()
-                    .setBitmap(bitmap)
-                    .setCaption("Yo đua không bạn ei??")
-                    .build();
-            SharePhotoContent content = new SharePhotoContent.Builder()
-                    .addPhoto(photo)
-                    .build();
-            ShareDialog dialog = new ShareDialog(getActivity());
-            dialog.show(content);
         };
         map.snapshot(callback);
+
     }
 
     @Override
@@ -101,7 +105,17 @@ public class DisplayHistoryMapFragment extends Fragment {
         int padding = 100; // offset from edges of the map in pixels
 
         CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-        map.animateCamera(cu);
+        map.animateCamera(cu, new GoogleMap.CancelableCallback() {
+            @Override
+            public void onFinish() {
+                if (bitmap == null){
+                    captureImage();
+                }
+            }
+            @Override
+            public void onCancel() {
+            }
+        });
     }
 
     @Override
