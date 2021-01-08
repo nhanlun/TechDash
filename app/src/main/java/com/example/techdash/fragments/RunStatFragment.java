@@ -23,6 +23,8 @@ import com.example.techdash.R;
 import com.example.techdash.models.Route;
 import com.example.techdash.viewmodels.RecordViewModel;
 
+import java.util.Locale;
+
 public class RunStatFragment extends Fragment {
 
     private Button mapButton;
@@ -50,7 +52,6 @@ public class RunStatFragment extends Fragment {
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.popBackStack();
                 navController.navigate(R.id.runMapFragment);
             }
         });
@@ -60,7 +61,7 @@ public class RunStatFragment extends Fragment {
         recordViewModel.getDistance().observe(getViewLifecycleOwner(), new Observer<Double>() {
             @Override
             public void onChanged(Double distance) {
-                textViewDistance.setText(String.format("%.2f km", distance));
+                textViewDistance.setText(String.format(Locale.getDefault(), "%.2f km", distance));
             }
         });
 
@@ -75,7 +76,7 @@ public class RunStatFragment extends Fragment {
         recordViewModel.getPace().observe(getViewLifecycleOwner(), new Observer<Double>() {
             @Override
             public void onChanged(Double pace) {
-                textViewPace.setText(String.format("%.1f /km", pace));
+                textViewPace.setText(String.format(Locale.getDefault(), "%.1f /km", pace));
             }
         });
 

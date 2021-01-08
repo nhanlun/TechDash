@@ -3,7 +3,6 @@ package com.example.techdash.fragments;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -19,6 +18,8 @@ import com.example.techdash.adapters.HistoryAdapter;
 import com.example.techdash.models.History;
 import com.example.techdash.repositories.RecordRunRepository;
 import com.example.techdash.viewmodels.UserViewModel;
+import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -29,6 +30,9 @@ public class HistoryFragment extends Fragment {
     private UserViewModel userViewModel;
     RecyclerView recyclerView;
     HistoryAdapter historyAdapter;
+    private FloatingActionButton fab;
+    private View v;
+
     public HistoryFragment() {
         // Required empty public constructor
     }
@@ -41,9 +45,14 @@ public class HistoryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_history, container, false);
+        if (v == null) {
+            v = inflater.inflate(R.layout.fragment_history, container, false);
+            Log.d(TAG, "New view inflated");
+        }
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         String uid = userViewModel.getUser().getValue().getUid();
+
+        fab = requireActivity().findViewById(R.id.runButton);
 
         if (uid != null) {
 
@@ -62,7 +71,6 @@ public class HistoryFragment extends Fragment {
                 @Override
                 public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
-                    FloatingActionButton fab = getActivity().findViewById(R.id.runButton);
                     if (dy > 0 && fab.getVisibility() == View.VISIBLE) {
                         fab.hide();
                     } else if (dy < 0 && fab.getVisibility() != View.VISIBLE) {
@@ -81,5 +89,11 @@ public class HistoryFragment extends Fragment {
             });
         }
         return v;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        fab.show();
     }
 }

@@ -1,5 +1,6 @@
 package com.example.techdash.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -49,11 +50,18 @@ public class HomeFragment extends Fragment {
         Log.e(TAG, "Created bro");
         setupConditionalNavigation(navController);
         setupButton(navController);
-        User user = userViewModel.getUser().getValue();
-        if(user != null)
-            displayUserProfile(user);
-        else
-            Log.d("null","nn");
+        userViewModel.getUser().observe(getViewLifecycleOwner(), new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                Log.d("null", "user changed");
+                if(user != null){
+                    displayUserProfile(user);
+                    Log.d("null", "user is not null");
+                }
+                else
+                    Log.d("null","nn");
+            }
+        });
     }
 
     private void setupConditionalNavigation(NavController navController) {
@@ -74,7 +82,6 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 Log.d(TAG, "Logging out");
                 userViewModel.logout();
-                navController.navigate(R.id.loginFragment);
             }
         });
     }

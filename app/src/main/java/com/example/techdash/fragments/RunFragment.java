@@ -23,14 +23,16 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.button.MaterialButton;
 
+import org.jetbrains.annotations.NotNull;
+
 public class RunFragment extends Fragment {
 
     private static final String TAG = RunFragment.class.getSimpleName();
-    private static final int REQUEST_CODE = 123;
     private MapView mapView;
     private GoogleMap map;
     private MaterialButton startButton;
     private UserViewModel userViewModel;
+    private View view;
 
     public RunFragment() {
         // Required empty public constructor
@@ -43,9 +45,12 @@ public class RunFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_run, container, false);
+        if (view == null) {
+            view = inflater.inflate(R.layout.fragment_run, container, false);
+            Log.d(TAG, "New view inflated");
+        }
         startButton = view.findViewById(R.id.startButton);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override

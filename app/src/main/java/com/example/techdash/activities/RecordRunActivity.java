@@ -7,12 +7,15 @@ import android.view.View;
 import android.widget.Chronometer;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.techdash.R;
 import com.example.techdash.broadcasts.RecordBroadcast;
+import com.example.techdash.fragments.CustomFragmentNavigator;
 import com.example.techdash.repositories.RecordRunRepository;
 import com.example.techdash.services.RecordService;
 import com.example.techdash.viewmodels.RecordViewModel;
@@ -45,6 +48,10 @@ public class RecordRunActivity extends AppCompatActivity {
         recordViewModel.setUid(uid);
 
         navController = Navigation.findNavController(this, R.id.fragment);
+        Fragment mNavHostFragment = getSupportFragmentManager().findFragmentById(R.id.fragment);
+        CustomFragmentNavigator customNavigator = new CustomFragmentNavigator(this, mNavHostFragment.getChildFragmentManager(), R.id.fragment);
+        navController.getNavigatorProvider().addNavigator(customNavigator);
+        navController.setGraph(R.navigation.navigation_run_record);
     }
 
     @Override
@@ -65,10 +72,5 @@ public class RecordRunActivity extends AppCompatActivity {
     public void stopRecordActivity(View view) {
         stopService(intent);
         navController.navigate(R.id.finishFragment);
-    }
-
-    @Override
-    public void onBackPressed() {
-//        super.onBackPressed();
     }
 }

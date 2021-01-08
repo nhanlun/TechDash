@@ -9,15 +9,16 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.appcompat.widget.Toolbar;
 
 import com.example.techdash.R;
+import com.example.techdash.fragments.CustomFragmentNavigator;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -30,25 +31,31 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private BottomNavigationView bottomNavigationView;
     private BottomAppBar bottomAppBar;
+    private NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar myToolBar = (Toolbar)findViewById(R.id.topAppBar);
+        Toolbar myToolBar = (Toolbar) findViewById(R.id.topAppBar);
         setSupportActionBar(myToolBar);
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setBackground(null);
         bottomAppBar = findViewById(R.id.bottomAppBar);
 
-        NavController navController = Navigation.findNavController(this, R.id.fragment);
+        navController = Navigation.findNavController(this, R.id.navHostFragment);
+        // Create custom navigator for efficiency
+        Fragment navHostFragment = getSupportFragmentManager().findFragmentById(R.id.navHostFragment);
+        CustomFragmentNavigator customNavigator = new CustomFragmentNavigator(this, navHostFragment.getChildFragmentManager(), R.id.navHostFragment);
+        navController.getNavigatorProvider().addNavigator(customNavigator);
+        navController.setGraph(R.navigation.navigation);
+
         fab = findViewById(R.id.runButton);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.popBackStack();
                 navController.navigate(R.id.runFragment);
             }
         });

@@ -54,7 +54,6 @@ public class RunMapFragment extends Fragment {
         statButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.popBackStack();
                 navController.navigate(R.id.runStatFragment);
             }
         });

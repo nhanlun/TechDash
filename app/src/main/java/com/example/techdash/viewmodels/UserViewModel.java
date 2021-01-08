@@ -123,6 +123,10 @@ public class UserViewModel extends ViewModel {
         });
     }
 
+    public void setUser(User user) {
+        this.user.setValue(user);
+    }
+
     public LiveData<User> getUser() {
         return user;
     }
@@ -143,7 +147,7 @@ public class UserViewModel extends ViewModel {
          ********************************/
         mAuth.signOut();
         LoginManager.getInstance().logOut();
-        user = new MutableLiveData<>(null);
+        user.setValue(null);
     }
 
     private void createProfileDocument(FirebaseUser user) {

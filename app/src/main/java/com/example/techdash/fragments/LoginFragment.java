@@ -59,8 +59,9 @@ public class LoginFragment extends Fragment {
             public void onSuccess(LoginResult loginResult) {
                 Log.d("Login facebook", "Login success");
                 AccessToken accessToken = loginResult.getAccessToken();
+                userViewModel.setUser(new User("", "", 0));
                 userViewModel.createNewUserFromToken(accessToken);
-                Navigation.findNavController(getView()).popBackStack();
+                navController.popBackStack();
             }
 
             @Override
