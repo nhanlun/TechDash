@@ -3,13 +3,17 @@ package com.example.techdash.activities;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -80,16 +84,20 @@ public class MainActivity extends AppCompatActivity {
                 // TODO: remove login fragment in this condition
                 if (id == R.id.homeFragment || id == R.id.friendFragment ||
                         id == R.id.runFragment || id == R.id.contestFragment || id == R.id.historyFragment) {
-                    myToolBar.setVisibility(View.VISIBLE);
-                    bottomNavigationView.setVisibility(View.VISIBLE);
-                    bottomAppBar.setVisibility(View.VISIBLE);
-                    fab.setVisibility(View.VISIBLE);
+                    if (myToolBar.getVisibility() != View.VISIBLE) {
+                        myToolBar.setVisibility(View.VISIBLE);
+                        bottomNavigationView.setVisibility(View.VISIBLE);
+                        bottomAppBar.setVisibility(View.VISIBLE);
+                        fab.show();
+                    }
                 } else {
                     Log.d("gone","gone");
-                    myToolBar.setVisibility(View.GONE);
-                    bottomNavigationView.setVisibility(View.GONE);
-                    bottomAppBar.setVisibility(View.GONE);
-                    fab.setVisibility(View.GONE);
+                    if (myToolBar.getVisibility() != View.GONE) {
+                        myToolBar.setVisibility(View.GONE);
+                        bottomNavigationView.setVisibility(View.GONE);
+                        bottomAppBar.setVisibility(View.GONE);
+                        fab.hide();
+                    }
                 }
             }
         });

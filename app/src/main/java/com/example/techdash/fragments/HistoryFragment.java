@@ -31,6 +31,8 @@ public class HistoryFragment extends Fragment {
     RecyclerView recyclerView;
     HistoryAdapter historyAdapter;
     private FloatingActionButton fab;
+    private BottomAppBar bottomAppBar;
+    private BottomNavigationView bottomNavigationView;
     private View v;
 
     public HistoryFragment() {
@@ -53,6 +55,8 @@ public class HistoryFragment extends Fragment {
         String uid = userViewModel.getUser().getValue().getUid();
 
         fab = requireActivity().findViewById(R.id.runButton);
+        bottomAppBar = requireActivity().findViewById(R.id.bottomAppBar);
+        bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
 
         if (uid != null) {
 
@@ -72,8 +76,12 @@ public class HistoryFragment extends Fragment {
                 public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
                     if (dy > 0 && fab.getVisibility() == View.VISIBLE) {
+                        bottomNavigationView.setVisibility(View.GONE);
+                        bottomAppBar.setVisibility(View.GONE);
                         fab.hide();
                     } else if (dy < 0 && fab.getVisibility() != View.VISIBLE) {
+                        bottomNavigationView.setVisibility(View.VISIBLE);
+                        bottomAppBar.setVisibility(View.VISIBLE);
                         fab.show();
                     }
                 }
@@ -90,10 +98,4 @@ public class HistoryFragment extends Fragment {
         }
         return v;
     }
-
-//    @Override
-//    public void onPause() {
-//        super.onPause();
-//        fab.show();
-//    }
 }
