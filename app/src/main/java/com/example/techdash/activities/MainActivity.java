@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                     bottomAppBar.setVisibility(View.VISIBLE);
                     fab.setVisibility(View.VISIBLE);
                 } else {
+                    Log.d("gone","gone");
                     myToolBar.setVisibility(View.GONE);
                     bottomNavigationView.setVisibility(View.GONE);
                     bottomAppBar.setVisibility(View.GONE);

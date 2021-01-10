@@ -91,9 +91,9 @@ public class HistoryFragment extends Fragment {
         return v;
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        fab.show();
-    }
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        fab.show();
+//    }
 }
