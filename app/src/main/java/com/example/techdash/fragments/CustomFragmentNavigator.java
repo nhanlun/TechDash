@@ -44,8 +44,11 @@ public class CustomFragmentNavigator extends FragmentNavigator {
 
         String tag = String.valueOf(destination.getId());
 
-        if (currentFragment != null) {
-            transaction.detach(currentFragment);
+        if (currentFragment != null && !tag.equals(currentFragment.getTag())) {
+            if (currentFragment.getTag() != null && currentFragment.getTag().equals(String.valueOf(R.id.runFragment)))
+                transaction.detach(currentFragment);
+            else
+                transaction.remove(currentFragment);
         }
 
         Fragment nextFragment = mFragmentManager.findFragmentByTag(tag);
