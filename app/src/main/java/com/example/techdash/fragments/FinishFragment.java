@@ -83,7 +83,7 @@ public class FinishFragment extends Fragment {
             }
         });
 
-        textViewTotalTime = v.findViewById(R.id.tvRunTime);
+        textViewTotalTime = v.findViewById(R.id.tvTime);
         long totalTime = recordViewModel.getTotalTime();
         String data = String.format(Locale.getDefault(), "%02d:%02d:%02d",
                 TimeUnit.SECONDS.toHours(totalTime),
