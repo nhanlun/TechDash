@@ -5,7 +5,7 @@
     android:id="@+id/navigation"
     app:startDestination="@id/homeFragment">
 
-    <custom_fragment_navigator
+    <fragment
         android:id="@+id/historyFragment"
         android:name="com.example.techdash.fragments.HistoryFragment"
         android:label="@string/history"
@@ -17,14 +17,14 @@
                 android:name="history"
                 app:argType="com.example.techdash.models.History"/>
         </action>
-    </custom_fragment_navigator>
+    </fragment>
 
-    <custom_fragment_navigator
+    <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.techdash.fragments.HomeFragment"
         android:label="@string/home"
         tools:layout="@layout/fragment_home" />
-    <custom_fragment_navigator
+    <fragment
         android:id="@+id/runFragment"
         android:name="com.example.techdash.fragments.RunFragment"
         android:label="@string/run"
@@ -32,17 +32,19 @@
         <action
             android:id="@+id/action_runFragment_to_recordRunActivity"
             app:destination="@id/recordRunActivity" />
-    </custom_fragment_navigator>
-    <custom_fragment_navigator
+    </fragment>
+    <fragment
         android:id="@+id/contestFragment"
         android:name="com.example.techdash.fragments.ContestFragment"
         android:label="@string/contest"
         tools:layout="@layout/fragment_contest" />
-    <custom_fragment_navigator
+    <fragment
         android:id="@+id/friendFragment"
         android:name="com.example.techdash.fragments.FriendFragment"
         android:label="@string/friend"
         tools:layout="@layout/fragment_friend" />
+
+
     <activity
         android:id="@+id/recordRunActivity"
         android:name="com.example.techdash.activities.RecordRunActivity"

@@ -71,28 +71,27 @@ public class HistoryFragment extends Fragment {
             recyclerView.setAdapter(historyAdapter);
 
 
-            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                @Override
-                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                    super.onScrolled(recyclerView, dx, dy);
-                    if (dy > 0 && fab.getVisibility() == View.VISIBLE) {
-                        bottomNavigationView.setVisibility(View.GONE);
-                        bottomAppBar.setVisibility(View.GONE);
-                        fab.hide();
-                    } else if (dy < 0 && fab.getVisibility() != View.VISIBLE) {
-                        bottomNavigationView.setVisibility(View.VISIBLE);
-                        bottomAppBar.setVisibility(View.VISIBLE);
-                        fab.show();
-                    }
-                }
-            });
+//            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//                @Override
+//                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+//                    super.onScrolled(recyclerView, dx, dy);
+//                    if (dy > 0 && fab.getVisibility() == View.VISIBLE) {
+//                        bottomNavigationView.setVisibility(View.GONE);
+//                        bottomAppBar.setVisibility(View.GONE);
+//                        fab.hide();
+//                    } else if (dy < 0 && fab.getVisibility() != View.VISIBLE) {
+//                        bottomNavigationView.setVisibility(View.VISIBLE);
+//                        bottomAppBar.setVisibility(View.VISIBLE);
+//                        fab.show();
+//                    }
+//                }
+//            });
 
             RecordRunRepository.getInstance().fetch(uid).observe(getViewLifecycleOwner(), new Observer<ArrayList<History>>() {
                 @Override
                 public void onChanged(ArrayList<History> histories) {
                     historyAdapter.setHistoryArrayList(histories);
                     historyAdapter.notifyDataSetChanged();
-
                 }
             });
         }

@@ -52,7 +52,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(layout,parent,false);
-        ViewHolder viewHolder = new  ViewHolder(view);
+        ViewHolder viewHolder = new ViewHolder(view);
         view.setOnClickListener(v -> {
             int position = viewHolder.getAdapterPosition();
             History history = historyArrayList.get(position);
@@ -113,7 +113,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         return historyArrayList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView date, time, distance, timeRun, pace;
 

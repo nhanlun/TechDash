@@ -49,7 +49,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onChanged(User user) {
                 if (user != null) {
-                    navController.navigate(R.id.homeFragment);
+                    navController.popBackStack();
                 }
             }
         });
