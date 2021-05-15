@@ -1,7 +1,9 @@
 package com.example.techdash.fragments;
 
-import android.annotation.SuppressLint;
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -71,13 +74,39 @@ public class RunFragment extends Fragment {
             public void onMapReady(GoogleMap googleMap) {
                 Log.d(TAG, "The map is on");
                 map = googleMap;
-//                map.setMyLocationEnabled(true);
+                if (ActivityCompat.checkSelfPermission(requireContext(),
+                        Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                        ActivityCompat.checkSelfPermission(requireContext(),
+                                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    if (Build.VERSION.SDK_INT >= 29)
+                        requestPermissions(new String[]{
+                                Manifest.permission.ACCESS_FINE_LOCATION,
+                                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                        }, 12345);
+                    else
+                        requestPermissions(new String[]{
+                                Manifest.permission.ACCESS_FINE_LOCATION
+                        }, 12345);
+                    return;
+                }
+                map.setMyLocationEnabled(true);
                 CameraUpdate cameraUpdate = CameraUpdateFactory
                         .newLatLngZoom(new LatLng(10.762966027040138, 106.68216741087505), 15);
                 map.moveCamera(cameraUpdate);
             }
         });
         return view;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == 12345) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.d(TAG, "Permission granted");
+            } else {
+
+            }
+        }
     }
 
     @Override

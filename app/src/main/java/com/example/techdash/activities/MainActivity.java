@@ -59,17 +59,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
-                PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(
-                    new String[]{
-                            Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_BACKGROUND_LOCATION,
-                    },
-                    REQUEST_CODE
-            );
-        }
-
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
         NavigationUI.setupWithNavController(myToolBar, navController);
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
@@ -96,16 +85,5 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_CODE) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Log.d(TAG, "Permission granted");
-            } else {
-//                finish();
-            }
-        }
     }
 }
