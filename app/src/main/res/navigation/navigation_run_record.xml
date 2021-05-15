@@ -10,7 +10,7 @@
         android:name="com.example.techdash.fragments.FinishFragment"
         android:label="fragment_finish"
         tools:layout="@layout/fragment_finish" />
-    <custom_fragment_navigator
+    <fragment
         android:id="@+id/runMapFragment"
         android:name="com.example.techdash.fragments.RunMapFragment"
         android:label="RunMapFragment" >
@@ -20,8 +20,8 @@
         <action
             android:id="@+id/action_runMapFragment_to_finishFragment"
             app:destination="@id/finishFragment" />
-    </custom_fragment_navigator>
-    <custom_fragment_navigator
+    </fragment>
+    <fragment
         android:id="@+id/runStatFragment"
         android:name="com.example.techdash.fragments.RunStatFragment"
         android:label="RunStatFragment" >
@@ -31,5 +31,5 @@
         <action
             android:id="@+id/action_runStatFragment_to_finishFragment"
             app:destination="@id/finishFragment" />
-    </custom_fragment_navigator>
+    </fragment>
 </navigation>

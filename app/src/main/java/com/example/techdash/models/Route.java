@@ -31,6 +31,7 @@ public class Route implements Serializable {
     }
 
     public double calculateDistance() {
+        if (route.isEmpty()) return 0;
         RoutePoint cur = route.get(0);
         float[] res = new float[5];
         double dis = 0;
@@ -39,8 +40,8 @@ public class Route implements Serializable {
             Location.distanceBetween(cur.getLat(), cur.getLng(), next.getLat(), next.getLng(), res);
             if (res[0] > 1.5 * (next.getTime() - cur.getTime()) / 1000) {
                 dis += res[0];
+                cur = next;
             }
-            cur = next;
         }
         return dis / 1000;
     }

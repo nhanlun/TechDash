@@ -9,6 +9,7 @@ import com.google.maps.android.PolyUtil;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +30,9 @@ public class History implements Parcelable {
             distance = (double) data.get("distance");
             totalTime = (long) data.get("total_time");
             pace = (double) data.get("pace");
-            dateTime = (String) data.get("date");
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis((long)data.get("timeInMillis"));
+            dateTime = calendar.getTime().toString();
             String encoded = (String) data.get("route");
             List<LatLng> tmp = PolyUtil.decode(encoded);
             latLngs = new ArrayList<>(tmp);

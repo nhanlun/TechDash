@@ -18,7 +18,7 @@ import com.example.techdash.R;
 
 import java.util.Stack;
 
-@Navigator.Name("custom_fragment_navigator")
+//@Navigator.Name("custom_fragment_navigator")
 public class CustomFragmentNavigator extends FragmentNavigator {
     private static final String TAG = CustomFragmentNavigator.class.getSimpleName();
     private Context mContext;

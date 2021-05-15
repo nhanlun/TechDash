@@ -48,10 +48,6 @@ public class RecordRunActivity extends AppCompatActivity {
         recordViewModel.setUid(uid);
 
         navController = Navigation.findNavController(this, R.id.fragment);
-        Fragment mNavHostFragment = getSupportFragmentManager().findFragmentById(R.id.fragment);
-        CustomFragmentNavigator customNavigator = new CustomFragmentNavigator(this, mNavHostFragment.getChildFragmentManager(), R.id.fragment);
-        navController.getNavigatorProvider().addNavigator(customNavigator);
-        navController.setGraph(R.navigation.navigation_run_record);
     }
 
     @Override

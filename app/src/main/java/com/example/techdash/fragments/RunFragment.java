@@ -67,12 +67,11 @@ public class RunFragment extends Fragment {
         mapView = view.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(new OnMapReadyCallback() {
-            @SuppressLint("MissingPermission")
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 Log.d(TAG, "The map is on");
                 map = googleMap;
-                map.setMyLocationEnabled(true);
+//                map.setMyLocationEnabled(true);
                 CameraUpdate cameraUpdate = CameraUpdateFactory
                         .newLatLngZoom(new LatLng(10.762966027040138, 106.68216741087505), 15);
                 map.moveCamera(cameraUpdate);

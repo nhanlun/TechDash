@@ -13,21 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:defaultNavHost="true"
+        app:navGraph="@navigation/navigation_run_record"
         tools:layout_editor_absoluteX="0dp" />
 
-    <!--    <com.google.android.gms.maps.MapView-->
-    <!--        android:id="@+id/mapView"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_weight="3"-->
-    <!--        />-->
-
-    <!--    <fragment-->
-    <!--        android:id="@+id/stop_button_fragment"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        android:name="com.example.techdash.fragments.StopFragment"-->
-    <!--        android:layout_weight="1"-->
-    <!--        />-->
 
 </RelativeLayout>

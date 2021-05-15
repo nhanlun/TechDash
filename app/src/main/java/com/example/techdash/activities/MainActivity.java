@@ -49,11 +49,6 @@ public class MainActivity extends AppCompatActivity {
         bottomAppBar = findViewById(R.id.bottomAppBar);
 
         navController = Navigation.findNavController(this, R.id.navHostFragment);
-        // Create custom navigator for efficiency
-        Fragment navHostFragment = getSupportFragmentManager().findFragmentById(R.id.navHostFragment);
-        CustomFragmentNavigator customNavigator = new CustomFragmentNavigator(this, navHostFragment.getChildFragmentManager(), R.id.navHostFragment);
-        navController.getNavigatorProvider().addNavigator(customNavigator);
-        navController.setGraph(R.navigation.navigation);
 
         fab = findViewById(R.id.runButton);
 

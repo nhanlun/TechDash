@@ -14,7 +14,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -32,6 +34,7 @@ public class RecordRunRepository {
     private FirebaseFirestore db;
 
     RecordRunRepository() {
+        Log.d(TAG, "Record Run Repository created");
         route = new MediatorLiveData<>();
         distance = new MediatorLiveData<>();
         pace = new MediatorLiveData<>();
@@ -98,14 +101,14 @@ public class RecordRunRepository {
         map.put("route", encoded);
         map.put("total_time", totalTime);
         map.put("pace", pace);
-        map.put("date", dateTime);
+        map.put("timeInMillis", Calendar.getInstance().getTimeInMillis());
 
         db.collection("users").document(uid)
-                .collection("records").document(dateTimeInMillis)
-                .set(map)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                .collection("records")
+                .add(map)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
-                    public void onSuccess(Void aVoid) {
+                    public void onSuccess(DocumentReference documentReference) {
                         Log.d(TAG, "Saved record successfully");
                     }
                 })
@@ -120,7 +123,9 @@ public class RecordRunRepository {
     public LiveData<ArrayList<History>> fetch(String uid) {
         MutableLiveData<ArrayList<History>> histories = new MutableLiveData<>();
         db.collection("users").document(uid)
-                .collection("records").get()
+                .collection("records")
+                .orderBy("timeInMillis", Query.Direction.DESCENDING)
+                .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -131,7 +136,7 @@ public class RecordRunRepository {
                                 Map<String, Object> data = doc.getData();
                                 newHistory.add(new History(data));
                             }
-                            histories.setValue(newHistory);
+                            histories.postValue(newHistory);
                         } else {
                             Log.d(TAG, "Failed to fetch data");
                         }
