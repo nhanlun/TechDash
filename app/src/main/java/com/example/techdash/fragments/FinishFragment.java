@@ -44,7 +44,6 @@ public class FinishFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        recordViewModel = new ViewModelProvider(requireActivity()).get(RecordViewModel.class);
     }
 
     @Override
@@ -52,6 +51,7 @@ public class FinishFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_finish, container, false);
 
+        recordViewModel = new ViewModelProvider(requireActivity()).get(RecordViewModel.class);
         finishButton = v.findViewById(R.id.finishButon);
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +60,7 @@ public class FinishFragment extends Fragment {
                 Route route = recordViewModel.getRoute().getValue();
                 if (route == null)
                     Log.d(TAG, "Why is the route null when pressing finish");
-                recordViewModel.save(route);
+                recordViewModel.save();
                 requireActivity().finish();
             }
         });

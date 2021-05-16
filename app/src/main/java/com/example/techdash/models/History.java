@@ -31,7 +31,7 @@ public class History implements Parcelable {
             totalTime = (long) data.get("total_time");
             pace = (double) data.get("pace");
             Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis((long)data.get("timeInMillis"));
+            calendar.setTimeInMillis((long)data.get("time_in_millis"));
             dateTime = calendar.getTime().toString();
             String encoded = (String) data.get("route");
             List<LatLng> tmp = PolyUtil.decode(encoded);

@@ -7,6 +7,7 @@ import com.google.maps.android.PolyUtil;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Route implements Serializable {
     private ArrayList<RoutePoint> route;
@@ -63,5 +64,14 @@ public class Route implements Serializable {
             res.add(i.getLatLng());
         }
         return res;
+    }
+
+    public HashMap<String, Object> toHashMap() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("distance", calculateDistance());
+        map.put("pace", calculatePace());
+        map.put("total_time", getTotalTime());
+        map.put("route", encodeRoute());
+        return map;
     }
 }
