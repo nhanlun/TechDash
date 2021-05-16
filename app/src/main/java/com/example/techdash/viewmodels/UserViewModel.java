@@ -45,6 +45,10 @@ public class UserViewModel extends ViewModel {
         UserRepository.getInstance().loginWithFacebook(accessToken);
     }
 
+    public void loginWithAccount(AuthResult authResult) {
+        UserRepository.getInstance().loginWithAccount(authResult);
+    }
+
     public void logout() {
         UserRepository.getInstance().logout();
     }

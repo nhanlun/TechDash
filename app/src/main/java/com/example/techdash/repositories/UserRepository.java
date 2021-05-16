@@ -106,6 +106,11 @@ public class UserRepository {
         });
     }
 
+    public void loginWithAccount(AuthResult authResult) {
+        FirebaseUser currentUser = auth.getCurrentUser();
+        fetchUser(currentUser);
+    }
+
     public void logout() {
         auth.signOut();
         LoginManager.getInstance().logOut();

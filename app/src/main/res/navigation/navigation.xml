@@ -56,6 +56,11 @@
         android:label="@string/title_activity_login"
         tools:layout="@layout/fragment_login" />
     <fragment
+        android:id="@+id/signupFragment"
+        android:name="com.example.techdash.fragments.SignupFragment"
+        android:label="SignupActivity"
+        tools:layout="@layout/fragment_signup" />
+    <fragment
         android:id="@+id/displayMapFragment"
         android:name="com.example.techdash.fragments.DisplayHistoryMapFragment"
         android:label="fragment_display_map"
