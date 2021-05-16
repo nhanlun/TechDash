@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="main_color">#FF6176EE</color>
     <color name="yellow">#FFFFd455</color>
+    <color name="tint_black">#48000000</color>
 </resources>

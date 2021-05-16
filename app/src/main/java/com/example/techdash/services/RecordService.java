@@ -33,6 +33,7 @@ public class RecordService extends Service {
     private FusedLocationProviderClient fusedLocationProviderClient;
     private Notification notification;
     private Route route;
+    private String uid;
 
     @Nullable
     @Override
@@ -56,6 +57,7 @@ public class RecordService extends Service {
 
                 Intent intent = new Intent();
                 intent.setAction(getString(R.string.intent_action));
+                intent.putExtra("uid", uid);
                 intent.putExtra("route", route);
                 intent.setPackage("com.example.techdash");
                 sendBroadcast(intent);
@@ -82,6 +84,7 @@ public class RecordService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        uid = intent.getStringExtra("uid");
         Log.d(TAG, "Start tracking");
         requestLocationUpdate();
         startForeground(12345, notification);

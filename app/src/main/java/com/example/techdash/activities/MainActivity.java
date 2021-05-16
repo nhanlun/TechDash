@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
                 int id = destination.getId();
                 // TODO: remove login fragment in this condition
-                if (id == R.id.homeFragment || id == R.id.friendFragment ||
+                if (id == R.id.homeFragment || id == R.id.friendFragment || id == R.id.displayMapFragment ||
                         id == R.id.runFragment || id == R.id.contestFragment || id == R.id.historyFragment) {
                     if (myToolBar.getVisibility() != View.VISIBLE) {
                         myToolBar.setVisibility(View.VISIBLE);

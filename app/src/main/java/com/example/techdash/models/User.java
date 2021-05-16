@@ -7,17 +7,20 @@ public class User {
     private String uid;
     private String name;
     private long energy;
+    private double score;
 
     public User(Map<String, Object> map) {
         name = (String) map.get("name");
         uid = (String) map.get("uid");
         energy = (long) map.get("energy");
+//        score = (double) map.get("score");
     }
 
     public User(String uid, String name, long energy) {
         this.uid = uid;
         this.name = name;
         this.energy = energy;
+        this.score = 0;
     }
 
     public String getUid() {

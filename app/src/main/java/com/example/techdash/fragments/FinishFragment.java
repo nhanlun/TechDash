@@ -16,6 +16,15 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.techdash.R;
 import com.example.techdash.models.Route;
 import com.example.techdash.viewmodels.RecordViewModel;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.button.MaterialButton;
 import com.google.maps.android.PolyUtil;
 
@@ -24,6 +33,7 @@ import java.text.FieldPosition;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
@@ -35,6 +45,9 @@ public class FinishFragment extends Fragment {
     private TextView totalDistance;
     private TextView textViewPace;
     private TextView textViewTotalTime;
+    private MapView mapView;
+    private GoogleMap map;
+    private Polyline polyline;
 
     public FinishFragment() {
         // Required empty public constructor
@@ -43,30 +56,40 @@ public class FinishFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        recordViewModel = new ViewModelProvider(requireActivity()).get(RecordViewModel.class);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_finish, container, false);
+
         recordViewModel = new ViewModelProvider(requireActivity()).get(RecordViewModel.class);
+        mapView = v.findViewById(R.id.mapView);
+        mapView.onCreate(savedInstanceState);
+        mapView.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                map = googleMap;
+                PolylineOptions option = new PolylineOptions();
+                option.addAll(recordViewModel.getRoute().getValue().getListLatLng());
+                polyline = map.addPolyline(option);
+                moveToCenter(polyline);
+            }
+        });
 
         finishButton = v.findViewById(R.id.finishButon);
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                 TODO: save record
-                Route route = recordViewModel.getStoredRoute();
+                Route route = recordViewModel.getRoute().getValue();
                 if (route == null)
                     Log.d(TAG, "Why is the route null when pressing finish");
-                recordViewModel.save(route);
+                recordViewModel.save();
                 requireActivity().finish();
             }
         });
 
-        // TODO: observe data
         totalDistance = v.findViewById(R.id.tvTotalDistance);
         recordViewModel.getDistance().observe(getViewLifecycleOwner(), new Observer<Double>() {
             @Override
@@ -93,5 +116,60 @@ public class FinishFragment extends Fragment {
 
         textViewTotalTime.setText(data);
         return v;
+    }
+
+    private void moveToCenter(Polyline polyline) {
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        for (LatLng i : polyline.getPoints()) {
+            builder.include(i);
+        }
+
+        LatLngBounds bounds = builder.build();
+        int padding = 100;
+
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+        map.animateCamera(cameraUpdate);
+    }
+
+    @Override
+    public void onStart() {
+        mapView.onStart();
+        super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        mapView.onResume();
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        mapView.onPause();
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        mapView.onStop();
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        mapView.onDestroy();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        mapView.onLowMemory();
+        super.onLowMemory();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        mapView.onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
     }
 }

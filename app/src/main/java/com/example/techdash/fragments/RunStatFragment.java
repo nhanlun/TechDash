@@ -65,13 +65,6 @@ public class RunStatFragment extends Fragment {
             }
         });
 
-        recordViewModel.getRoute().observe(getViewLifecycleOwner(), new Observer<Route>() {
-            @Override
-            public void onChanged(Route route) {
-                recordViewModel.storeRoute(route);
-            }
-        });
-
         textViewPace = v.findViewById(R.id.tvPace);
         recordViewModel.getPace().observe(getViewLifecycleOwner(), new Observer<Double>() {
             @Override

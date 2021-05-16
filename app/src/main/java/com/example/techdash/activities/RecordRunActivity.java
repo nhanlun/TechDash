@@ -9,6 +9,7 @@ import android.widget.Chronometer;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -16,6 +17,7 @@ import androidx.navigation.Navigation;
 import com.example.techdash.R;
 import com.example.techdash.broadcasts.RecordBroadcast;
 import com.example.techdash.fragments.CustomFragmentNavigator;
+import com.example.techdash.models.Route;
 import com.example.techdash.repositories.RecordRunRepository;
 import com.example.techdash.services.RecordService;
 import com.example.techdash.viewmodels.RecordViewModel;
@@ -40,12 +42,24 @@ public class RecordRunActivity extends AppCompatActivity {
         uid = intent.getStringExtra("uid");
 
         intent = new Intent(this, RecordService.class);
+        intent.putExtra("uid", uid);
         intentFilter = new IntentFilter();
         intentFilter.addAction(getString(R.string.intent_action));
         broadcast = new RecordBroadcast();
         recordViewModel = new ViewModelProvider(this).get(RecordViewModel.class);
-        recordViewModel.resetVariables();
-        recordViewModel.setUid(uid);
+
+        recordViewModel.getRoute().observe(this, new Observer<Route>() {
+            @Override
+            public void onChanged(Route route) {
+                recordViewModel.saveRoute(route);
+            }
+        });
+        recordViewModel.getUid().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                recordViewModel.saveUid(s);
+            }
+        });
 
         navController = Navigation.findNavController(this, R.id.fragment);
     }
@@ -53,7 +67,7 @@ public class RecordRunActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         startService(intent);
-        RecordRunRepository.getInstance().addDataSource(broadcast.getRoute());
+        RecordRunRepository.getInstance().addDataSource(broadcast);
         registerReceiver(broadcast, intentFilter);
         super.onStart();
     }
@@ -61,12 +75,18 @@ public class RecordRunActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         unregisterReceiver(broadcast);
-        RecordRunRepository.getInstance().removeDataSource(broadcast.getRoute());
+        RecordRunRepository.getInstance().removeDataSource(broadcast);
         super.onStop();
     }
 
     public void stopRecordActivity(View view) {
+        RecordRunRepository.getInstance().removeDataSource(broadcast);
         stopService(intent);
         navController.navigate(R.id.finishFragment);
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
     }
 }

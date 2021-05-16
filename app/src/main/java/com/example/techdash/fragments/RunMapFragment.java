@@ -54,7 +54,7 @@ public class RunMapFragment extends Fragment {
         statButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.runStatFragment);
+                navController.popBackStack();
             }
         });
 
@@ -82,7 +82,6 @@ public class RunMapFragment extends Fragment {
                         .clickable(false)
                         .width(15)
                 );
-                recordViewModel.storeRoute(route);
             }
         });
         return v;

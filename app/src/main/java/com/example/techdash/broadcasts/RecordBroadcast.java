@@ -12,20 +12,26 @@ import com.example.techdash.models.Route;
 
 public class RecordBroadcast extends BroadcastReceiver {
     private static final String TAG = RecordBroadcast.class.getSimpleName();
-    private MutableLiveData<Route> route;
+    private MutableLiveData<Route> route = new MutableLiveData<>();
+    private MutableLiveData<String> uid = new MutableLiveData<>();
 
     public RecordBroadcast() {
-        route = new MutableLiveData<>();
     }
 
     public LiveData<Route> getRoute() {
         return route;
     }
 
+    public LiveData<String> getUid() {
+        return uid;
+    }
+
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d(TAG, "Received broadcast");
         Route route = (Route) intent.getSerializableExtra("route");
+        String uid = intent.getStringExtra("uid");
+        Log.d(TAG, "Received broadcast " + uid);
         this.route.setValue(route);
+        this.uid.setValue(uid);
     }
 }
