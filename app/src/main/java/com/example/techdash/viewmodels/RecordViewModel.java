@@ -1,8 +1,10 @@
 package com.example.techdash.viewmodels;
 
+import android.media.DrmInitData;
 import android.os.Parcelable;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.techdash.models.Route;
@@ -14,12 +16,16 @@ public class RecordViewModel extends ViewModel {
     private static final String TAG = RecordViewModel.class.getSimpleName();
 
     private String uid;
-    private Route mRoute;
+    private MediatorLiveData<Route> mRoute = new MediatorLiveData<>();
+    private MediatorLiveData<Double> mDistance = new MediatorLiveData<>();
+    private MediatorLiveData<Double> mPace = new MediatorLiveData<>();
     @Nullable
     private Long mStartTime;
 
     public RecordViewModel() {
-        mRoute = new Route();
+        mRoute.addSource(RecordRunRepository.getInstance().getRoute(), newRoute -> mRoute.setValue(newRoute));
+        mDistance.addSource(RecordRunRepository.getInstance().getDistance(), newDistance -> mDistance.setValue(newDistance));
+        mPace.addSource(RecordRunRepository.getInstance().getPace(), newPace -> mPace.setValue(newPace));
     }
 
     public void setUid(String uid) {
@@ -31,32 +37,25 @@ public class RecordViewModel extends ViewModel {
     }
 
     public LiveData<Route> getRoute() {
-        return RecordRunRepository.getInstance().getRoute();
+        return mRoute;
     }
 
     public LiveData<Double> getDistance() {
-        return RecordRunRepository.getInstance().getDistance();
+        return mDistance;
     }
 
     public LiveData<Double> getPace() {
-        return RecordRunRepository.getInstance().getPace();
+        return mPace;
     }
 
     public void save(Route route) {
-        if (uid == null) uid = "X5P3gKcD6CUETVxiXIDDZ4arNwh2";
         RecordRunRepository.getInstance().save(uid, route);
     }
 
     public long getTotalTime() {
-        return mRoute.getTotalTime();
-    }
-
-    public void storeRoute(Route route) {
-        mRoute = route;
-    }
-
-    public Route getStoredRoute() {
-        return mRoute;
+        if (mRoute.getValue() != null)
+            return mRoute.getValue().getTotalTime();
+        return 0;
     }
 
     @Nullable
@@ -71,9 +70,5 @@ public class RecordViewModel extends ViewModel {
     @Override
     protected void onCleared() {
         super.onCleared();
-    }
-
-    public void resetVariables() {
-        RecordRunRepository.getInstance().resetVariables();
     }
 }

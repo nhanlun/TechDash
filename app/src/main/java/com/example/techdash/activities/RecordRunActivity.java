@@ -44,7 +44,6 @@ public class RecordRunActivity extends AppCompatActivity {
         intentFilter.addAction(getString(R.string.intent_action));
         broadcast = new RecordBroadcast();
         recordViewModel = new ViewModelProvider(this).get(RecordViewModel.class);
-        recordViewModel.resetVariables();
         recordViewModel.setUid(uid);
 
         navController = Navigation.findNavController(this, R.id.fragment);
@@ -68,5 +67,10 @@ public class RecordRunActivity extends AppCompatActivity {
     public void stopRecordActivity(View view) {
         stopService(intent);
         navController.navigate(R.id.finishFragment);
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
     }
 }

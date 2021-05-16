@@ -51,14 +51,13 @@ public class FinishFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_finish, container, false);
-        recordViewModel = new ViewModelProvider(requireActivity()).get(RecordViewModel.class);
 
         finishButton = v.findViewById(R.id.finishButon);
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                 TODO: save record
-                Route route = recordViewModel.getStoredRoute();
+                Route route = recordViewModel.getRoute().getValue();
                 if (route == null)
                     Log.d(TAG, "Why is the route null when pressing finish");
                 recordViewModel.save(route);
@@ -66,7 +65,6 @@ public class FinishFragment extends Fragment {
             }
         });
 
-        // TODO: observe data
         totalDistance = v.findViewById(R.id.tvTotalDistance);
         recordViewModel.getDistance().observe(getViewLifecycleOwner(), new Observer<Double>() {
             @Override

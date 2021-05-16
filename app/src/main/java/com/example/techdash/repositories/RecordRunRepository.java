@@ -57,12 +57,6 @@ public class RecordRunRepository {
         });
     }
 
-    public void resetVariables() {
-        route.setValue(new Route());
-        distance.setValue((double) 0);
-        pace.setValue((double) 0);
-    }
-
     public void removeDataSource(LiveData<Route> route) {
         this.route.removeSource(route);
         this.distance.removeSource(route);
