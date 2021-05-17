@@ -1,5 +1,6 @@
 package com.example.techdash.fragments;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -48,6 +49,7 @@ public class FinishFragment extends Fragment {
     private MapView mapView;
     private GoogleMap map;
     private Polyline polyline;
+    private Bitmap bitmap = null;
 
     public FinishFragment() {
         // Required empty public constructor
@@ -85,7 +87,7 @@ public class FinishFragment extends Fragment {
                 Route route = recordViewModel.getRoute().getValue();
                 if (route == null)
                     Log.d(TAG, "Why is the route null when pressing finish");
-                recordViewModel.save();
+                recordViewModel.save(bitmap);
                 requireActivity().finish();
             }
         });
@@ -128,7 +130,23 @@ public class FinishFragment extends Fragment {
         int padding = 100;
 
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-        map.animateCamera(cameraUpdate);
+        map.animateCamera(cameraUpdate, 500, new GoogleMap.CancelableCallback() {
+            @Override
+            public void onFinish() {
+                if (bitmap == null) {
+                    map.snapshot(new GoogleMap.SnapshotReadyCallback() {
+                        @Override
+                        public void onSnapshotReady(Bitmap newBitmap) {
+                            bitmap = newBitmap;
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancel() {
+            }
+        });
     }
 
     @Override

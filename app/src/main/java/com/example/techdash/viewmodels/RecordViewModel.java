@@ -1,5 +1,6 @@
 package com.example.techdash.viewmodels;
 
+import android.graphics.Bitmap;
 import android.media.DrmInitData;
 import android.os.Parcelable;
 import android.util.Log;
@@ -58,8 +59,8 @@ public class RecordViewModel extends ViewModel {
         return mPace;
     }
 
-    public void save() {
-        RecordRunRepository.getInstance().save(mStoredUid, mStoredRoute);
+    public void save(Bitmap bitmap) {
+        RecordRunRepository.getInstance().save(mStoredUid, mStoredRoute, bitmap);
     }
 
     public long getTotalTime() {

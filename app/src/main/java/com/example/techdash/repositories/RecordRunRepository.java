@@ -1,5 +1,6 @@
 package com.example.techdash.repositories;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -21,7 +22,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -36,10 +40,12 @@ public class RecordRunRepository {
     private MediatorLiveData<String> uid = new MediatorLiveData<>();
 
     private FirebaseFirestore db;
+    private FirebaseStorage storage;
 
     RecordRunRepository() {
         Log.d(TAG, "Record Run Repository created");
         db = FirebaseFirestore.getInstance();
+        storage = FirebaseStorage.getInstance();
     }
 
     public void addDataSource(RecordBroadcast broadcast) {
@@ -93,21 +99,26 @@ public class RecordRunRepository {
         return uid;
     }
 
-    public void save(String uid, Route route) {
+    public void save(String uid, Route route, Bitmap bitmap) {
         if (uid == null || route == null) {
             Log.d(TAG, "Oh no wtf " + uid);
             return;
         }
 
         Map<String, Object> map = route.toHashMap();
-        map.put("time_in_millis", Calendar.getInstance().getTimeInMillis());
+        long timeInMillis = Calendar.getInstance().getTimeInMillis();
+        map.put("time_in_millis", timeInMillis);
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] data = byteArrayOutputStream.toByteArray();
 
         db.collection("users").document(uid)
                 .collection("records")
-                .add(map)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                .document(String.valueOf(timeInMillis)).set(map)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onSuccess(DocumentReference documentReference) {
+                    public void onSuccess(Void aVoid) {
                         Log.d(TAG, "Saved record successfully");
                     }
                 })
@@ -115,6 +126,15 @@ public class RecordRunRepository {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.d(TAG, "Failed to save record");
+                    }
+                });
+
+        storage.getReference().child("images/" + timeInMillis)
+                .putBytes(data)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Log.d(TAG, "Upload image successful");
                     }
                 });
     }
