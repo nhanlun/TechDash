@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -48,21 +49,26 @@ public class LoginFragment extends Fragment {
         String password = edtPassword.getText().toString();
 
         mAuth = FirebaseAuth.getInstance();
-
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Log.d("Sign in", "Sign in success");
-                            AuthResult authResult = task.getResult();
-                            userViewModel.loginWithAccount(authResult);
-                            navController.popBackStack();
-                        } else {
-                            Log.w("Sign in", task.getException());
+        if (email.equals("") || password.equals("")) {
+            Toast.makeText(getActivity(), "please provide your email and password", Toast.LENGTH_LONG).show();
+        } else {
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Log.d("Sign in", "Sign in success");
+                                userViewModel.loginWithAccount(null);
+                                navController.popBackStack();
+                            } else {
+                                Log.w("Sign in", task.getException());
+                                Toast.makeText(getActivity(), "your email or password is wrong", Toast.LENGTH_LONG).show();
+                                edtEmail.setText("");
+                                edtPassword.setText("");
+                            }
                         }
-                    }
-                });
+                    });
+        }
     }
 
     @Override

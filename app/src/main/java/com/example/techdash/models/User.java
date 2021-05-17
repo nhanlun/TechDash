@@ -35,6 +35,10 @@ public class User {
         return energy;
     }
 
+    public void setName(String _name) {
+        name = _name;
+    }
+
     public HashMap<String, Object> toHashMap() {
         HashMap<String, Object> map = new HashMap<>();
         map.put("uid", uid);

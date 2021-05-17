@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -18,6 +19,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.techdash.R;
+import com.example.techdash.models.User;
 import com.example.techdash.viewmodels.UserViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -28,7 +30,7 @@ import java.util.concurrent.Executor;
 
 public class SignupFragment extends Fragment {
     private final static String TAG = SignupFragment.class.getSimpleName();
-    private EditText edtEmail, edtPassword, edtPassword2;
+    private EditText edtEmail, edtPassword, edtPassword2, edtName;
     private UserViewModel userViewModel;
     private Button btnSignin, btnSignup;
     private FirebaseAuth mAuth;
@@ -40,25 +42,29 @@ public class SignupFragment extends Fragment {
         String email = edtEmail.getText().toString();
         String password = edtPassword.getText().toString();
         String password2 = edtPassword2.getText().toString();
-        if (password.equals(password2)) {
-            mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                Log.d("Sign up", "Sign up success");
-                                AuthResult authResult = task.getResult();
-                                userViewModel.loginWithAccount(authResult);
-                                navController.popBackStack();
-                            } else {
-                                Log.w("Sign up", task.getException());
-                            }
-                        }
-                    });
+        String name = edtName.getText().toString();
+        if (name == null || name.equals("")) {
+            Toast.makeText(getActivity(), "please provide your username", Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(getActivity(), "re-typed password must be same as password", Toast.LENGTH_LONG).show();
-            edtPassword.setText("");
-            edtPassword2.setText("");
+            if (password.equals(password2)) {
+                mAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d("Sign up", "Sign up success");
+                                    userViewModel.loginWithAccount(name);
+                                    navController.popBackStack();
+                                } else {
+                                    Log.w("Sign up", task.getException());
+                                }
+                            }
+                        });
+            } else {
+                Toast.makeText(getActivity(), "re-typed password must be same as password", Toast.LENGTH_LONG).show();
+                edtPassword.setText("");
+                edtPassword2.setText("");
+            }
         }
     }
 
@@ -68,6 +74,7 @@ public class SignupFragment extends Fragment {
 
         final NavController navController = Navigation.findNavController(view);
         edtEmail = getView().findViewById(R.id.su_email);
+        edtName = getView().findViewById(R.id.su_name);
         edtPassword = getView().findViewById(R.id.su_password);
         edtPassword2 = getView().findViewById(R.id.su_password2);
         btnSignin = getView().findViewById(R.id.su_signin);

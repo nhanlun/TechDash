@@ -35,6 +35,21 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="username"
+        android:textSize="50px"
+        android:textStyle="bold"
+        android:paddingVertical="10dp"
+        android:textColor="@color/main_color"/>
+
+    <EditText
+        android:id="@+id/su_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="username" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="password"
         android:textStyle="bold"
         android:textSize="50px"
@@ -45,8 +60,8 @@
         android:id="@+id/su_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="password"
-        android:inputType="textPassword"/>
+        android:inputType="textPassword"
+        android:hint="password"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -61,7 +76,7 @@
         android:id="@+id/su_password2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="password"
+        android:hint="re-typed password"
         android:inputType="textPassword"/>
 
     <LinearLayout

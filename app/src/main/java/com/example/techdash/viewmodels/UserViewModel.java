@@ -41,12 +41,13 @@ public class UserViewModel extends ViewModel {
         return user;
     }
 
+
     public void loginWithFacebook(AccessToken accessToken) {
         UserRepository.getInstance().loginWithFacebook(accessToken);
     }
 
-    public void loginWithAccount(AuthResult authResult) {
-        UserRepository.getInstance().loginWithAccount(authResult);
+    public void loginWithAccount(String name) {
+        UserRepository.getInstance().loginWithAccount(name);
     }
 
     public void logout() {
