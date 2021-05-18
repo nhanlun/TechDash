@@ -2,6 +2,7 @@ package com.example.techdash.adapters;
 
 import android.content.Context;
 import android.icu.util.LocaleData;
+import android.net.Uri;
 import android.os.Build;
 
 import android.view.LayoutInflater;
@@ -15,10 +16,16 @@ import androidx.annotation.RequiresApi;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.techdash.fragments.HistoryFragmentDirections;
 import com.example.techdash.models.History;
 
 import com.example.techdash.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,12 +42,13 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     ArrayList<History> historyArrayList;
     Context context;
     int layout;
+    FirebaseStorage firebaseStorage;
 
     public HistoryAdapter(ArrayList<History> historyArrayList, Context context, int layout) {
         this.historyArrayList = historyArrayList;
         this.context = context;
         this.layout = layout;
-
+        firebaseStorage = FirebaseStorage.getInstance();
     }
 
     public void setHistoryArrayList(ArrayList<History> historyArrayList) {
@@ -68,7 +76,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if(historyArrayList.size()==0)
             return;
-        String datetime = historyArrayList.get(position).getDateTime();
+        History history = historyArrayList.get(position);
+        String datetime = history.getDateTime();
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy",Locale.ENGLISH);
         SimpleDateFormat sdateFormat = new SimpleDateFormat("EEE, MMM dd, yyyy",Locale.ENGLISH);
@@ -84,27 +93,24 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             e.printStackTrace();
         }
 
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
-//        LocalDateTime date = LocalDateTime.parse(datetime, formatter);
-//
-//        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("E, MMM dd, yyyy",Locale.ENGLISH);
-//        String mDate = dateFormat.format(date);
-//        holder.date.setText(mDate);
-//        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss",Locale.ENGLISH);
-//        String mTime = timeFormat.format(date);
-//        holder.time.setText(mTime);
-
-
+        Task<Uri> url = firebaseStorage.getReference().child("images/" + history.getId()).getDownloadUrl();
         holder.imageView.setImageResource(R.drawable.map_button);
-        holder.distance.setText(context.getString(R.string.distance)+": "+String.format("%.2f km", historyArrayList.get(position).getDistance()));
+        url.addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(context).load(uri.toString()).into(holder.imageView);
+            }
+        });
+//        holder.imageView.setImageResource(R.drawable.map_button);
+        holder.distance.setText(context.getString(R.string.distance)+": "+String.format("%.2f km", history.getDistance()));
 
-        long totalTime = historyArrayList.get(position).getTotalTime();
+        long totalTime = history.getTotalTime();
         holder.timeRun.setText(context.getString(R.string.time)+": "+String.format(Locale.getDefault(), "%02d:%02d:%02d",
                 TimeUnit.SECONDS.toHours(totalTime),
                 TimeUnit.SECONDS.toMinutes(totalTime) % 60,
                 TimeUnit.SECONDS.toSeconds(totalTime) % 60
         ));
-        holder.pace.setText(context.getString(R.string.pace)+": "+String.format("%.1f /km", historyArrayList.get(position).getPace()));
+        holder.pace.setText(context.getString(R.string.pace)+": "+String.format("%.1f /km", history.getPace()));
     }
 
 

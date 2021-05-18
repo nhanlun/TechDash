@@ -2,12 +2,10 @@ package com.example.techdash.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.PolyUtil;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -19,6 +17,7 @@ public class History implements Parcelable {
     private long totalTime;
     private double pace;
     private String dateTime;
+    private String id;
 
     public History() {
 
@@ -27,11 +26,12 @@ public class History implements Parcelable {
 
     public History(Map<String, Object> data) {
         try {
+            id = String.valueOf((long) data.get("time_in_millis"));
             distance = (double) data.get("distance");
             totalTime = (long) data.get("total_time");
             pace = (double) data.get("pace");
             Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis((long)data.get("time_in_millis"));
+            calendar.setTimeInMillis((long) data.get("time_in_millis"));
             dateTime = calendar.getTime().toString();
             String encoded = (String) data.get("route");
             List<LatLng> tmp = PolyUtil.decode(encoded);
@@ -42,11 +42,27 @@ public class History implements Parcelable {
     }
 
     protected History(Parcel in) {
+        id = in.readString();
         latLngs = in.createTypedArrayList(LatLng.CREATOR);
         distance = in.readDouble();
         totalTime = in.readLong();
         pace = in.readDouble();
         dateTime = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeTypedList(latLngs);
+        dest.writeDouble(distance);
+        dest.writeLong(totalTime);
+        dest.writeDouble(pace);
+        dest.writeString(dateTime);
     }
 
     public static final Creator<History> CREATOR = new Creator<History>() {
@@ -60,6 +76,10 @@ public class History implements Parcelable {
             return new History[size];
         }
     };
+
+    public String getId() {
+        return id;
+    }
 
     public ArrayList<LatLng> getLatLngs() {
         return latLngs;
@@ -99,19 +119,5 @@ public class History implements Parcelable {
 
     public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeTypedList(latLngs);
-        dest.writeDouble(distance);
-        dest.writeLong(totalTime);
-        dest.writeDouble(pace);
-        dest.writeString(dateTime);
     }
 }

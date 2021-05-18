@@ -19,6 +19,7 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -79,6 +80,23 @@ public class UserRepository {
                 });
     }
 
+    private void updateName(FirebaseUser firebaseUser, String name) {
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                .setDisplayName(name)
+                .build();
+
+        firebaseUser.updateProfile(profileUpdates)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "User name updated.");
+                            fetchUser(firebaseUser);
+                        }
+                    }
+                });
+    }
+
     void createUser(FirebaseUser firebaseUser) {
         String uid = firebaseUser.getUid();
         String name = firebaseUser.getDisplayName();
@@ -110,6 +128,13 @@ public class UserRepository {
                 }
             }
         });
+    }
+
+    public void loginWithAccount(String name) {
+        FirebaseUser currentUser = auth.getCurrentUser();
+        if (name != null) updateName(currentUser, name);
+        else fetchUser(currentUser);
+
     }
 
     public void logout() {

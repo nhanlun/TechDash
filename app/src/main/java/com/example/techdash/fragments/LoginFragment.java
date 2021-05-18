@@ -6,6 +6,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,12 +27,49 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.util.concurrent.Executor;
 
 public class LoginFragment extends Fragment {
     private final static String TAG = LoginFragment.class.getSimpleName();
     private UserViewModel userViewModel;
     private LoginButton fbButton;
     private CallbackManager callbackManager;
+    private EditText edtEmail, edtPassword;
+    private Button btnSignin, btnSignup;
+    private FirebaseAuth mAuth;
+
+    private void Signin(NavController navController) {
+        String email = edtEmail.getText().toString();
+        String password = edtPassword.getText().toString();
+
+        mAuth = FirebaseAuth.getInstance();
+        if (email.equals("") || password.equals("")) {
+            Toast.makeText(getActivity(), "please provide your email and password", Toast.LENGTH_LONG).show();
+        } else {
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Log.d("Sign in", "Sign in success");
+                                userViewModel.loginWithAccount(null);
+                                navController.popBackStack();
+                            } else {
+                                Log.w("Sign in", task.getException());
+                                Toast.makeText(getActivity(), "your email or password is wrong", Toast.LENGTH_LONG).show();
+                                edtEmail.setText("");
+                                edtPassword.setText("");
+                            }
+                        }
+                    });
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,11 +80,10 @@ public class LoginFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
-        fbButton = getView().findViewById(R.id.loginFacebook);
-        fbButton.setFragment(this);
-        callbackManager = CallbackManager.Factory.create();
+        super.onViewCreated(view, savedInstanceState);
+
         final NavController navController = Navigation.findNavController(view);
+        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         userViewModel.getUser().observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
             public void onChanged(User user) {
@@ -54,6 +93,31 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        edtEmail = getView().findViewById(R.id.si_email);
+        edtPassword = getView().findViewById(R.id.si_password);
+        //Dang nhap
+
+        btnSignin = getView().findViewById(R.id.si_signin);
+        btnSignin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Signin(navController);
+            }
+        });
+
+        //Dang ky
+        btnSignup = getView().findViewById(R.id.si_signup);
+        btnSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.signupFragment);
+            }
+        });
+
+        //Dang nhap facebook
+        fbButton = getView().findViewById(R.id.loginFacebook);
+        fbButton.setFragment(this);
+        callbackManager = CallbackManager.Factory.create();
         fbButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {

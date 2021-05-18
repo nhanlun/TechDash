@@ -82,6 +82,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 Log.d(TAG, "Logging out");
                 userViewModel.logout();
+                navController.navigate(R.id.loginFragment);
             }
         });
     }
