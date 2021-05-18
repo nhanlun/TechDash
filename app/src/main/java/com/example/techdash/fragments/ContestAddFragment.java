@@ -31,7 +31,6 @@ public class ContestAddFragment extends Fragment {
     final static String TAG = HomeFragment.class.getSimpleName();
     String time = "", name, member;
     Calendar start, end;
-    int selectedYear, selectedMonth, selectedDayOfMonth, lastSelectedHour, lastSelectedMinute;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -90,7 +89,7 @@ public class ContestAddFragment extends Fragment {
 
     private boolean checkSave() {
         if (name == null || name.equals("")) {
-            Toast.makeText(getActivity(), "Please input name", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Please input Contest name", Toast.LENGTH_LONG).show();
             return false;
         }
         if (!inputS) {
@@ -103,6 +102,10 @@ public class ContestAddFragment extends Fragment {
         }
         if (end.before(start)) {
             Toast.makeText(getActivity(), "End time must be after Start time", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (member == null || member.equals("")) {
+            Toast.makeText(getActivity(), "Please input some members", Toast.LENGTH_LONG).show();
             return false;
         }
         return true;
