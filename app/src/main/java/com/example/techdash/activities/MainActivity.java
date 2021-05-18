@@ -23,6 +23,8 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.techdash.R;
 import com.example.techdash.fragments.CustomFragmentNavigator;
+import com.example.techdash.models.Contest;
+import com.example.techdash.repositories.ContestRepository;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
