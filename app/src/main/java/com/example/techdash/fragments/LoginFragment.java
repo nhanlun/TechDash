@@ -110,8 +110,7 @@ public class LoginFragment extends Fragment {
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.contestAddFragment);
-                //navController.navigate(R.id.signupFragment);
+                navController.navigate(R.id.signupFragment);
             }
         });
 
