@@ -44,6 +44,7 @@ public class User {
         map.put("uid", uid);
         map.put("name", name);
         map.put("energy", energy);
+        map.put("score", score);
         return map;
     }
 }
