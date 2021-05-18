@@ -10,15 +10,21 @@ import com.example.techdash.models.User;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -111,4 +117,69 @@ public class UserRepository {
         LoginManager.getInstance().logOut();
         user.setValue(null);
     }
+
+    public LiveData<ArrayList<User>> searchUserToAddFriend(String key) {
+        MutableLiveData<ArrayList<User>> friend = new MutableLiveData<>();
+        ArrayList<User> friendArrayList = new ArrayList<>();
+
+        DocumentReference docRef = db.collection("users").document(key);//find by uid
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "document snapshot" + document.getData());
+                        friendArrayList.add(new User(document.getData()));
+                        friend.postValue(friendArrayList);
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "Task failed with " + task.getException());
+                }
+                if (friendArrayList.size() == 0) {// find by name
+                    db.collection("users").whereEqualTo("name", key).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                    //Map<String, Object> map = documentSnapshot.getData();
+                                    User tmp = new User(documentSnapshot.getData());
+                                    friendArrayList.add(tmp);
+                                    Log.d("Hihi", documentSnapshot.getData().toString());
+                                }
+                                Log.d("UserRepo 152", friendArrayList.toString() + task.getResult().size());
+                                friend.postValue(friendArrayList);
+                            } else {
+                                Log.d(TAG, "Error getting list of document", task.getException());
+                            }
+                        }
+                    });
+                }
+            }
+        });
+        Log.d("Friend lits", friendArrayList.toString());
+        return friend;
+    }
+
+
+    public void addFriend(User friend) {
+        db.collection("users").document(user.getValue().getUid()).collection("friends")
+                .document(friend.getUid()).set(friend.toHashMap()).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "Add friend successfully");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "Fail to add friend");
+            }
+        });
+    }
+
+//    public LiveData<ArrayList<User>> getFriendList(){
+//
+//    }
 }
