@@ -28,6 +28,9 @@ public class FriendViewModel extends ViewModel {
         userRepository.addFriend(friend);
     }
 
+    public LiveData<ArrayList<User>> getFriendList(){
+        return userRepository.getFriendList();
+    }
 
 
 }

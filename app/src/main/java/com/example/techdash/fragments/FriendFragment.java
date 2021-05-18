@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.techdash.R;
 import com.example.techdash.adapters.FriendAdapter;
+import com.example.techdash.adapters.FriendListAdapter;
 import com.example.techdash.models.User;
 import com.example.techdash.repositories.UserRepository;
 import com.example.techdash.viewmodels.FriendViewModel;
@@ -27,8 +28,9 @@ public class FriendFragment extends Fragment {
     private FriendViewModel friendViewModel;
     private EditText searchBar;
     private ImageButton searchButton;
-    private RecyclerView searchResultList;
+    private RecyclerView searchResultList, friendList;
     private FriendAdapter friendAdapter;
+    private FriendListAdapter friendListAdapter;
 
     public FriendFragment() {
         // Required empty public constructor
@@ -61,6 +63,8 @@ public class FriendFragment extends Fragment {
                     public void onChanged(ArrayList<User> users) {
                         friendAdapter.setFriendArrayList(users);
                         friendAdapter.notifyDataSetChanged();
+                        searchResultList.setVisibility(View.VISIBLE);
+                        friendList.setVisibility(View.GONE);
                     }
                 });
             }
@@ -73,13 +77,19 @@ public class FriendFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         searchResultList.setLayoutManager(linearLayoutManager);
 
-//        friendViewModel.getFriendList().observe(getViewLifecycleOwner(), new Observer<ArrayList<User>>() {
-//            @Override
-//            public void onChanged(ArrayList<User> friends) {
-//                friendAdapter.setFriendArrayList(friends);
-//                friendAdapter.notifyDataSetChanged();
-//            }
-//        });
+        friendList = v.findViewById(R.id.friendList);
+        LinearLayoutManager linearLayoutManagerForFriendList = new LinearLayoutManager(getContext());
+        friendList.setLayoutManager(linearLayoutManagerForFriendList);
+        ArrayList<User> arrayListForFriendList = new ArrayList<User>();
+        friendListAdapter = new FriendListAdapter(arrayListForFriendList,friendViewModel);
+        friendList.setAdapter(friendListAdapter);
+        friendViewModel.getFriendList().observe(getViewLifecycleOwner(), new Observer<ArrayList<User>>() {
+            @Override
+            public void onChanged(ArrayList<User> users) {
+                friendListAdapter.setFriendArrayList(users);
+                friendListAdapter.notifyDataSetChanged();
+            }
+        });
 
         return v;
     }

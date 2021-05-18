@@ -179,7 +179,23 @@ public class UserRepository {
         });
     }
 
-//    public LiveData<ArrayList<User>> getFriendList(){
-//
-//    }
+    public LiveData<ArrayList<User>> getFriendList() {
+        ArrayList<User> friendList = new ArrayList<>();
+        MutableLiveData<ArrayList<User>> liveDataFriendList = new MutableLiveData<>();
+        db.collection("users").document(user.getValue().getUid()).collection("friends").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                friendList.add(new User(document.getData()));
+                            }
+                            liveDataFriendList.postValue(friendList);
+                        } else {
+                            Log.d(TAG, "U have no friend");
+                        }
+                    }
+                });
+        return liveDataFriendList;
+    }
 }
