@@ -12,11 +12,13 @@
         android:layout_alignParentTop="true"
         android:id="@+id/rvContest"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <ImageButton
         android:id="@+id/addContestBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:src="@drawable/add"
+        android:background="@null"
         android:layout_alignParentRight="true"
         android:layout_margin="20dp"/>
 

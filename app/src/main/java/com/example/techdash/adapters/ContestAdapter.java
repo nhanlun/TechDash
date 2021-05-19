@@ -18,6 +18,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.example.techdash.R;
 import com.example.techdash.models.Contest;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -66,24 +67,21 @@ public class ContestAdapter extends RecyclerView.Adapter<ContestAdapter.ViewHold
             return;
         }
         Contest contest = contestList.get(position);
-        String starttime = contest.getStartTime();
-        String endtime = contest.getEndTime();
+        long start_InMili = Long.parseLong(contest.getStartTime());
+        long end_InMili = Long.parseLong(contest.getEndTime());
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy",Locale.ENGLISH);
+        Calendar calendar = Calendar.getInstance();
+
         SimpleDateFormat sdateFormat = new SimpleDateFormat("EEE, MMM dd, yyyy",Locale.ENGLISH);
         SimpleDateFormat stimeFormat = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
 
-        try {
-            Date date = simpleDateFormat.parse(starttime);
-            String dateText = sdateFormat.format(date);
-            String timeText = stimeFormat.format(date);
-            date = simpleDateFormat.parse(endtime);
-            timeText = timeText + " - " + stimeFormat.format(date);
-            holder.date.setText(dateText);
-            holder.time.setText(timeText);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        calendar.setTimeInMillis(start_InMili);
+        String dateText = sdateFormat.format(calendar.getTime());
+        String timeText = stimeFormat.format(calendar.getTime());
+        calendar.setTimeInMillis(end_InMili);
+        timeText = timeText + " - " + stimeFormat.format(calendar.getTime());
+        holder.date.setText(dateText);
+        holder.time.setText(timeText);
 
         /*Task<Uri> url = firebaseStorage.getReference().child("images/" + history.getId()).getDownloadUrl();
         holder.imageView.setImageResource(R.drawable.map_button);
@@ -93,6 +91,7 @@ public class ContestAdapter extends RecyclerView.Adapter<ContestAdapter.ViewHold
                 Glide.with(context).load(uri.toString()).into(holder.imageView);
             }
         });*/
+
         holder.imageView.setImageResource(R.drawable.map_button);
         holder.destination.setText(contest.getDestination());
         holder.name.setText(contest.getName());

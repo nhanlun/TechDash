@@ -45,13 +45,13 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     public void onBindViewHolder(@NonNull FriendAdapter.ViewHolder holder, int position) {
             holder.tvFriendName.setText(friends.get(position).getName());
             holder.tvFriendId.setText(friends.get(position).getUid());
-            holder.btnAddFriend.setImageResource(R.drawable.ic_baseline_person_add_24);
+            holder.btnAddFriend.setImageResource(R.drawable.add_friend);
             holder.btnAddFriend.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //goi len firestore addfriend nha
                     friendViewModel.addFriend(friends.get(position));
-                    ((ImageButton) v).setImageResource(R.drawable.ic_baseline_check_30);
+                    ((ImageButton) v).setImageResource(R.drawable.check);
                 }
             });
     }

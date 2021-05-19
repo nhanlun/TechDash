@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
@@ -42,7 +43,7 @@ public class ContestFragment extends Fragment {
     ContestAdapter contestAdapter;
     private UserViewModel userViewModel;
     private ContestViewModel contestViewModel;
-    private FloatingActionButton addContestBtn;
+    private ImageButton addContestBtn;
 
     public ContestFragment() {
         // Required empty public constructor

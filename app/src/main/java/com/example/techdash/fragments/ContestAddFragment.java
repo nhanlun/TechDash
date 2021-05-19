@@ -28,8 +28,10 @@ import com.example.techdash.models.Contest;
 import com.example.techdash.viewmodels.ContestViewModel;
 import com.example.techdash.viewmodels.UserViewModel;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.Random;
 
 public class ContestAddFragment extends Fragment {
@@ -38,7 +40,7 @@ public class ContestAddFragment extends Fragment {
     Button btnSave;
     TextView starttime, endtime, creator;
     boolean inputE = false, inputS = false;
-    String time = "", name, member;
+    String name;
     Calendar start, end;
     ContestViewModel contestViewModel;
     UserViewModel userViewModel;
@@ -58,15 +60,13 @@ public class ContestAddFragment extends Fragment {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 start.set(year, monthOfYear, dayOfMonth);
-                time = String.valueOf(dayOfMonth) + '-' + (monthOfYear + 1) + '-' + year;
                 new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         start.set(Calendar.HOUR_OF_DAY, hourOfDay);
                         start.set(Calendar.MINUTE, minute);
-                        if (minute > 10) time = time + ' ' + hourOfDay + ':' + minute;
-                        else time = time + ' ' + hourOfDay + ":0" + minute;
-                        starttime.setText(time);
+                        SimpleDateFormat sf = new SimpleDateFormat("EEE, dd-MM-yyyy, HH:mm", Locale.ENGLISH);
+                        starttime.setText(sf.format(start.getTime()));
                         inputS = true;
                         Log.v(TAG, "The choosen one " + start.getTime());
                     }
@@ -82,15 +82,13 @@ public class ContestAddFragment extends Fragment {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 end.set(year, monthOfYear, dayOfMonth);
-                time = String.valueOf(dayOfMonth) + '-' + (monthOfYear + 1) + '-' + year;
                 new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         end.set(Calendar.HOUR_OF_DAY, hourOfDay);
                         end.set(Calendar.MINUTE, minute);
-                        if (minute > 10) time = time + ' ' + hourOfDay + ':' + minute;
-                        else time = time + ' ' + hourOfDay + ":0" + minute;
-                        endtime.setText(time);
+                        SimpleDateFormat sf = new SimpleDateFormat("EEE, dd-MM-yyyy, HH:mm", Locale.ENGLISH);
+                        endtime.setText(sf.format(end.getTime()));
                         inputE = true;
                         Log.v(TAG, "The choosen one " + end.getTime());
                     }
@@ -132,6 +130,7 @@ public class ContestAddFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        final NavController navController = Navigation.findNavController(view);
         btnSave = getView().findViewById(R.id.ct_save);
         edtName = getView().findViewById(R.id.ct_name);
         starttime = getView().findViewById(R.id.ct_starttime);
@@ -164,9 +163,12 @@ public class ContestAddFragment extends Fragment {
                 if (checkSave()) {
                     String id = randomString();
                     participants.add(userViewModel.getUser().getValue().getUid());
-                    contestViewModel.save(new Contest(id, destination.toString(), name, userViewModel.getUser().getValue().getName(),
-                            start.toString(), end.toString(), participants));
-                    final NavController navController = Navigation.findNavController(view);
+                    String dest = destination.getText().toString();
+                    String username = userViewModel.getUser().getValue().getName();
+                    String startt = String.valueOf(start.getTimeInMillis());
+                    String endd = String.valueOf(end.getTimeInMillis());
+
+                    contestViewModel.save(new Contest(id, dest, name, username, startt, endd, participants));
                     navController.popBackStack();
                 }
             }

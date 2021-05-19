@@ -11,6 +11,7 @@ import com.google.maps.android.PolyUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -131,7 +132,6 @@ public class Contest implements Parcelable {
         map.put("starttime", startTime);
         map.put("endtime", endTime);
         map.put("creator", creator_username);
-        map.put("participants", participants);
         return map;
     }
 }
