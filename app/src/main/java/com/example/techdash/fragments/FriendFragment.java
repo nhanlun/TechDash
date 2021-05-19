@@ -1,12 +1,15 @@
 package com.example.techdash.fragments;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -51,22 +54,33 @@ public class FriendFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_friend, container, false);
 
-        searchBar= v.findViewById(R.id.searchBar);
+        searchBar = v.findViewById(R.id.searchBar);
+        searchBar.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    search();
+                    return true;
+                }
+                return false;
+            }
+        });
         searchButton = v.findViewById(R.id.searchButton);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String key = searchBar.getText().toString();
-                //UserRepository.getInstance().searchUserToAddFriend(key);
-                friendViewModel.searchFriendToAdd(key).observe(getViewLifecycleOwner(), new Observer<ArrayList<User>>() {
-                    @Override
-                    public void onChanged(ArrayList<User> users) {
-                        friendAdapter.setFriendArrayList(users);
-                        friendAdapter.notifyDataSetChanged();
-                        searchResultList.setVisibility(View.VISIBLE);
-                        friendList.setVisibility(View.GONE);
-                    }
-                });
+                search();
+//                String key = searchBar.getText().toString();
+//                //UserRepository.getInstance().searchUserToAddFriend(key);
+//                friendViewModel.searchFriendToAdd(key).observe(getViewLifecycleOwner(), new Observer<ArrayList<User>>() {
+//                    @Override
+//                    public void onChanged(ArrayList<User> users) {
+//                        friendAdapter.setFriendArrayList(users);
+//                        friendAdapter.notifyDataSetChanged();
+//                        searchResultList.setVisibility(View.VISIBLE);
+//                        friendList.setVisibility(View.GONE);
+//                    }
+//                });
             }
         });
 
@@ -81,7 +95,7 @@ public class FriendFragment extends Fragment {
         LinearLayoutManager linearLayoutManagerForFriendList = new LinearLayoutManager(getContext());
         friendList.setLayoutManager(linearLayoutManagerForFriendList);
         ArrayList<User> arrayListForFriendList = new ArrayList<User>();
-        friendListAdapter = new FriendListAdapter(arrayListForFriendList,friendViewModel);
+        friendListAdapter = new FriendListAdapter(arrayListForFriendList, friendViewModel);
         friendList.setAdapter(friendListAdapter);
         friendViewModel.getFriendList().observe(getViewLifecycleOwner(), new Observer<ArrayList<User>>() {
             @Override
@@ -92,5 +106,18 @@ public class FriendFragment extends Fragment {
         });
 
         return v;
+    }
+
+    private void search() {
+        String key = searchBar.getText().toString();
+        friendViewModel.searchFriendToAdd(key).observe(getViewLifecycleOwner(), new Observer<ArrayList<User>>() {
+            @Override
+            public void onChanged(ArrayList<User> users) {
+                friendAdapter.setFriendArrayList(users);
+                friendAdapter.notifyDataSetChanged();
+                searchResultList.setVisibility(View.VISIBLE);
+                friendList.setVisibility(View.GONE);
+            }
+        });
     }
 }
