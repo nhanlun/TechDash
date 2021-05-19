@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -21,20 +20,19 @@ import com.example.techdash.R;
 import com.example.techdash.adapters.FriendAdapter;
 import com.example.techdash.adapters.FriendListAdapter;
 import com.example.techdash.models.User;
-import com.example.techdash.repositories.UserRepository;
 import com.example.techdash.viewmodels.FriendViewModel;
 
 import java.util.ArrayList;
 
-public class FriendFragment extends Fragment {
-    private static final String TAG = FriendFragment.class.getSimpleName();
+public class FriendSearchFragment extends Fragment {
+    private static final String TAG = FriendSearchFragment.class.getSimpleName();
     private FriendViewModel friendViewModel;
     private EditText searchBar;
     private ImageButton searchButton;
-    private RecyclerView friendList;
-    private FriendListAdapter friendListAdapter;
+    private RecyclerView searchResultList;
+    private FriendAdapter friendAdapter;
 
-    public FriendFragment() {
+    public FriendSearchFragment() {
         // Required empty public constructor
     }
 
@@ -43,8 +41,6 @@ public class FriendFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         friendViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
-
-
     }
 
     @Override
@@ -54,19 +50,11 @@ public class FriendFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_friend, container, false);
 
         searchBar = v.findViewById(R.id.searchBar);
-        searchBar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
-                    //change to fragment search friend
-                }
-            }
-        });
         searchBar.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                   // search();
+                    search();
                     return true;
                 }
                 return false;
@@ -76,25 +64,27 @@ public class FriendFragment extends Fragment {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //chuyen fragment search friend
+                search();
             }
         });
 
-        friendList = v.findViewById(R.id.friendList);
-        LinearLayoutManager linearLayoutManagerForFriendList = new LinearLayoutManager(getContext());
-        friendList.setLayoutManager(linearLayoutManagerForFriendList);
-        ArrayList<User> arrayListForFriendList = new ArrayList<User>();
-        friendListAdapter = new FriendListAdapter(arrayListForFriendList, friendViewModel);
-        friendList.setAdapter(friendListAdapter);
-        friendViewModel.getFriendList().observe(getViewLifecycleOwner(), new Observer<ArrayList<User>>() {
-            @Override
-            public void onChanged(ArrayList<User> users) {
-                friendListAdapter.setFriendArrayList(users);
-                friendListAdapter.notifyDataSetChanged();
-            }
-        });
+        searchResultList = v.findViewById(R.id.searchResultfriendList);
+        ArrayList<User> friendArrayList = new ArrayList<User>();
+        friendAdapter = new FriendAdapter(friendArrayList, friendViewModel);
+        searchResultList.setAdapter(friendAdapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        searchResultList.setLayoutManager(linearLayoutManager);
 
         return v;
     }
-
+    private void search() {
+        String key = searchBar.getText().toString();
+        friendViewModel.searchFriendToAdd(key).observe(getViewLifecycleOwner(), new Observer<ArrayList<User>>() {
+            @Override
+            public void onChanged(ArrayList<User> users) {
+                friendAdapter.setFriendArrayList(users);
+                friendAdapter.notifyDataSetChanged();
+            }
+        });
+    }
 }
