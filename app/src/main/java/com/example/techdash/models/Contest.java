@@ -18,7 +18,6 @@ import java.util.Map;
 public class Contest implements Parcelable {
     private String id;
     private String destination;
-    private String date;
     private String name;
     private String creator_username;
     private String startTime;
@@ -32,11 +31,8 @@ public class Contest implements Parcelable {
             id = (String) data.get("id");
             destination = (String) data.get("destination");
             name = (String) data.get("name");
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis((long)data.get("starttime"));
-            startTime = calendar.getTime().toString();
-            calendar.setTimeInMillis((long)data.get("endtime"));
-            endTime = calendar.getTime().toString();
+            startTime = (String) data.get("starttime");
+            endTime = (String) data.get("endtime");
             creator_username = (String) data.get("creator");
             participants = (ArrayList<String>) data.get("participants");
         } catch (NullPointerException e) {
@@ -105,6 +101,13 @@ public class Contest implements Parcelable {
     public void addParticipants(String value) { this.participants.add(value); }
 
     public void removeParticipants(String value) { this.participants.remove(participants.indexOf(value)); }
+
+    public boolean checkParticipant(String uid) {
+        for (String id : participants) {
+            if (uid.equals(id)) return true;
+        }
+        return false;
+    }
 
     @Override
     public int describeContents() { return 0; }

@@ -27,8 +27,6 @@
          <!-- app:layout_constraintHeight_percent="0.08"-->
 
 
-
-
     <EditText
         android:id="@+id/searchBar"
         android:layout_width="0dp"

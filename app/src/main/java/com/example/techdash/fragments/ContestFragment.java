@@ -1,5 +1,6 @@
 package com.example.techdash.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,37 +9,40 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import com.example.techdash.R;
 import com.example.techdash.adapters.ContestAdapter;
 import com.example.techdash.models.Contest;
-import com.google.android.material.tabs.TabItem;
-import com.google.android.material.tabs.TabLayout;
+import com.example.techdash.models.User;
+import com.example.techdash.viewmodels.ContestViewModel;
+import com.example.techdash.viewmodels.UserViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 public class ContestFragment extends Fragment {
     RecyclerView recyclerView;
     private static final String TAG = ContestFragment.class.getSimpleName();
     View v;
+    boolean showEndedContests = true, showOnlyUserContests = false;
     ArrayList<Contest> contestList = new ArrayList<>();
     ContestAdapter contestAdapter;
+    private UserViewModel userViewModel;
+    private ContestViewModel contestViewModel;
+    private FloatingActionButton addContestBtn;
 
     public ContestFragment() {
         // Required empty public constructor
@@ -59,21 +63,6 @@ public class ContestFragment extends Fragment {
             Log.d(TAG, "New view inflated");
         }
 
-        String date = Calendar.getInstance().getTime().toString();
-
-        contestList.add(new Contest("123", "Uni of Science", "HCMUS Marathon", "Admin",
-                date, date, new ArrayList<String>(0)));
-        contestList.add(new Contest("456", "Ho Con Rua", "Rua Marathon", "Admin",
-                date, date, new ArrayList<String>(0)));
-        contestList.add(new Contest("789", "Bitexco Tower", "Bitexco Marathon", "Admin",
-                date, date, new ArrayList<String>(0)));
-        contestList.add(new Contest("111", "Cho Ben Thanh", "Ben Thanh Marathon", "Admin",
-                date, date, new ArrayList<String>(0)));
-        contestList.add(new Contest("222", "Pho di bo Nguyen Hue", "Chay dua o Pho di bo", "Admin",
-                date, date, new ArrayList<String>(0)));
-        contestList.add(new Contest("333", "Song Sai Gon", "Chay dua tren mat song SG", "Admin",
-                date, date, new ArrayList<String>(0)));
-
         recyclerView = v.findViewById(R.id.rvContest);
         contestAdapter = new ContestAdapter(contestList, getContext(), R.layout.fragment_contest_row);
 
@@ -82,14 +71,43 @@ public class ContestFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(contestAdapter);
 
-        /*RecordRunRepository.getInstance().fetch(uid).observe(getViewLifecycleOwner(), new Observer<ArrayList<Contest>>() {
+        addContestBtn = v.findViewById(R.id.addContestBtn);
+        addContestBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final NavController navController = Navigation.findNavController(view);
+                navController.navigate(R.id.contestAddFragment);
+            }
+        });
+
+        contestViewModel = new ViewModelProvider(requireActivity()).get(ContestViewModel.class);
+        contestViewModel.getContests().observe(getViewLifecycleOwner(), new Observer<ArrayList<Contest>>() {
             @Override
             public void onChanged(ArrayList<Contest> contests) {
                 contestAdapter.setContestArrayList(contests);
                 contestAdapter.notifyDataSetChanged();
             }
-        });*/
+        });
         return v;
+    }
+
+    ArrayList<Contest> preFilter() {
+        if (showEndedContests && !showOnlyUserContests) return contestList;
+        ArrayList<Contest> tempList = new ArrayList<Contest>();
+        String currentDate = Calendar.getInstance().getTime().toString();
+        String uid = userViewModel.getUser().getValue().getUid();
+
+        if(contestList != null) {
+            int length = contestList.size();
+            int i=0;
+            while(i < length){
+                Contest item = contestList.get(i);
+                if ((showEndedContests || currentDate.compareTo(item.getEndTime()) < 0) && (!showOnlyUserContests || item.checkParticipant(uid)))
+                    tempList.add(item);
+                i++;
+            }
+        }
+        return tempList;
     }
 
     ArrayList<Contest> filter(String s) {

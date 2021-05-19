@@ -2,11 +2,15 @@ package com.example.techdash.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,17 +24,25 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.techdash.R;
+import com.example.techdash.models.Contest;
+import com.example.techdash.viewmodels.ContestViewModel;
+import com.example.techdash.viewmodels.UserViewModel;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Random;
 
 public class ContestAddFragment extends Fragment {
-    EditText edtName, edtMember;
+    final static String TAG = ContestAddFragment.class.getSimpleName();
+    EditText edtName, edtMember, destination;
     Button btnSave;
-    TextView starttime, endtime;
+    TextView starttime, endtime, creator;
     boolean inputE = false, inputS = false;
-    final static String TAG = HomeFragment.class.getSimpleName();
     String time = "", name, member;
     Calendar start, end;
+    ContestViewModel contestViewModel;
+    UserViewModel userViewModel;
+    ArrayList<String> participants = new ArrayList<String>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -104,36 +116,31 @@ public class ContestAddFragment extends Fragment {
             Toast.makeText(getActivity(), "End time must be after Start time", Toast.LENGTH_LONG).show();
             return false;
         }
-        if (member == null || member.equals("")) {
-            Toast.makeText(getActivity(), "Please input some members", Toast.LENGTH_LONG).show();
-            return false;
-        }
         return true;
     }
 
-    private void SaveMember(String mem) {
-        String tmp = "";
-        for (int i = 0; i < mem.length(); i++) {
-            if (mem.charAt(i) != ' ') {
-                tmp = tmp + mem.charAt(i);
-            } else {
-                //save vao list member
-                tmp = "";
-            }
+    public static String randomString() {
+        Random generator = new Random();
+        StringBuilder randomStringBuilder = new StringBuilder();
+        char tempChar;
+        for (int i = 0; i < 16; i++){
+            tempChar = (char) (generator.nextInt(96) + 32);
+            randomStringBuilder.append(tempChar);
         }
-        if (tmp != null && !tmp.equals("")) {
-            //save vao list member
-        }
+        return randomStringBuilder.toString();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         btnSave = getView().findViewById(R.id.ct_save);
         edtName = getView().findViewById(R.id.ct_name);
         starttime = getView().findViewById(R.id.ct_starttime);
         endtime = getView().findViewById(R.id.ct_endtime);
         edtMember = getView().findViewById(R.id.ct_member);
+        creator = getView().findViewById(R.id.ct_creator);
+        destination = getView().findViewById(R.id.ct_destination);
+        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+        creator.setText(String.format("Created by %s", userViewModel.getUser().getValue().getName()));
 
         starttime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,12 +160,17 @@ public class ContestAddFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 name = edtName.getText().toString();
-                member = edtMember.getText().toString();
+                contestViewModel = new ViewModelProvider(requireActivity()).get(ContestViewModel.class);
                 if (checkSave()) {
-                    //SAVE
-                    SaveMember(member);
+                    String id = randomString();
+                    participants.add(userViewModel.getUser().getValue().getUid());
+                    contestViewModel.save(new Contest(id, destination.toString(), name, userViewModel.getUser().getValue().getName(),
+                            start.toString(), end.toString(), participants));
+                    final NavController navController = Navigation.findNavController(view);
+                    navController.popBackStack();
                 }
             }
         });
+        super.onViewCreated(view, savedInstanceState);
     }
 }

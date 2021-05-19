@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -20,6 +21,7 @@ import com.example.techdash.models.Contest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -53,28 +55,30 @@ public class ContestAdapter extends RecyclerView.Adapter<ContestAdapter.ViewHold
             HistoryFragmentDirections.DisplayMap action = HistoryFragmentDirections.displayMap(history);
             Navigation.findNavController(v).navigate(action);
         });*/
-        return viewHolder ;
+        return viewHolder;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if(contestList.size()==0)
+        if(contestList.size()==0) {
+            Toast.makeText(context, "No results!", Toast.LENGTH_LONG).show();
             return;
+        }
         Contest contest = contestList.get(position);
         String starttime = contest.getStartTime();
         String endtime = contest.getEndTime();
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy",Locale.ENGLISH);
         SimpleDateFormat sdateFormat = new SimpleDateFormat("EEE, MMM dd, yyyy",Locale.ENGLISH);
-        SimpleDateFormat stimeFormat = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
+        SimpleDateFormat stimeFormat = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
 
         try {
             Date date = simpleDateFormat.parse(starttime);
             String dateText = sdateFormat.format(date);
             String timeText = stimeFormat.format(date);
             date = simpleDateFormat.parse(endtime);
-            timeText = timeText + " - " + date;
+            timeText = timeText + " - " + stimeFormat.format(date);
             holder.date.setText(dateText);
             holder.time.setText(timeText);
         } catch (ParseException e) {
@@ -93,6 +97,16 @@ public class ContestAdapter extends RecyclerView.Adapter<ContestAdapter.ViewHold
         holder.destination.setText(contest.getDestination());
         holder.name.setText(contest.getName());
         holder.creator_username.setText(String.format("Created by: %s",contest.getCreator()));
+
+        String currentDate = Calendar.getInstance().getTime().toString();
+        if(currentDate.compareTo(contest.getEndTime()) >= 0) {
+            holder.imageView.setAlpha((float) 0.5);
+            holder.destination.setAlpha((float) 0.5);
+            holder.name.setAlpha((float) 0.5);
+            holder.creator_username.setAlpha((float) 0.5);
+            holder.date.setAlpha((float) 0.5);
+            holder.time.setAlpha((float) 0.5);
+        }
     }
 
     @Override

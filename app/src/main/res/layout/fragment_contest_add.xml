@@ -19,7 +19,9 @@
             android:textColor="@color/main_color"
             android:textSize="55px"
             android:textStyle="bold" />
+
         <TextView
+            android:id="@+id/ct_creator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Created by username"
@@ -104,13 +106,15 @@
                     android:gravity="center"
                     android:textStyle="bold"
                     android:padding="4dp" />
+
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:textSize="40px"
                     android:background="@null"
+                    android:gravity="center"
                     android:id="@+id/ct_destination"/>
+
             </TableRow>
         </TableLayout>
 

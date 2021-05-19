@@ -37,7 +37,11 @@
         android:id="@+id/contestFragment"
         android:name="com.example.techdash.fragments.ContestFragment"
         android:label="@string/contest"
-        tools:layout="@layout/fragment_contest" />
+        tools:layout="@layout/fragment_contest" >
+        <action
+            android:id="@+id/action_contestFragment_to_contestAddFragment"
+            app:destination="@id/contestAddFragment" />
+    </fragment>
     <fragment
         android:id="@+id/contestAddFragment"
         android:name="com.example.techdash.fragments.ContestAddFragment"
