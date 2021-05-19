@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.storage.FirebaseStorage;
@@ -49,13 +50,13 @@ public class ContestAdapter extends RecyclerView.Adapter<ContestAdapter.ViewHold
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(layout,parent,false);
         ViewHolder viewHolder = new ViewHolder(view);
-        /*view.setOnClickListener(v -> {
+        view.setOnClickListener(v -> {
             int position = viewHolder.getAdapterPosition();
-            Contest history = historyArrayList.get(position);
+            Contest contest = contestList.get(position);
 
-            HistoryFragmentDirections.DisplayMap action = HistoryFragmentDirections.displayMap(history);
+            ContestFragmentDirections.DisplayContest action = ContestFragmentDirections.displayContest(contest);
             Navigation.findNavController(v).navigate(action);
-        });*/
+        });
         return viewHolder;
     }
 
