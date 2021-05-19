@@ -80,9 +80,9 @@ public class ContestRepository {
 
     public void save(Contest contest) {
         WriteBatch batch = db.batch();
-        DocumentReference docRef = db.collection("contests").document(contest.getId());
+        DocumentReference docRef = db.collection("contests").document(contest.getID());
         batch.set(docRef, contest.toHashMap());
-        CollectionReference colRef = db.collection("contests").document(contest.getId()).collection("participants");
+        CollectionReference colRef = db.collection("contests").document(contest.getID()).collection("participants");
         ArrayList<String> participants = contest.getParticipants();
         for (String id : participants) {
             HashMap<String, Object> map = new HashMap<>();

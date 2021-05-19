@@ -95,15 +95,11 @@ public class ContestFragment extends Fragment {
     ArrayList<Contest> filter(String s) {
         if (s.equals("")) return contestList;
         ArrayList<Contest> tempList = new ArrayList<Contest>();
-        //constraint is the result from text you want to filter against.
-        //objects is your data set you will filter from
         if(contestList != null) {
             int length = contestList.size();
             int i=0;
             while(i < length){
                 Contest item = contestList.get(i);
-                //do whatever you wanna do here
-                //adding result set output array
                 if (item.getName().startsWith(s))
                     tempList.add(item);
                 i++;
