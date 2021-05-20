@@ -135,7 +135,6 @@ public class ContestAddFragment extends Fragment {
         edtName = getView().findViewById(R.id.ct_name);
         starttime = getView().findViewById(R.id.ct_starttime);
         endtime = getView().findViewById(R.id.ct_endtime);
-        edtMember = getView().findViewById(R.id.ct_member);
         creator = getView().findViewById(R.id.ct_creator);
         destination = getView().findViewById(R.id.ct_destination);
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);

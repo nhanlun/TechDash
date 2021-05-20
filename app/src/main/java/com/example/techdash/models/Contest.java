@@ -4,6 +4,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.example.techdash.viewmodels.ContestViewModel;
 import com.example.techdash.viewmodels.UserViewModel;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.PolyUtil;
@@ -35,7 +39,6 @@ public class Contest implements Parcelable {
             startTime = (String) data.get("starttime");
             endTime = (String) data.get("endtime");
             creator_username = (String) data.get("creator");
-            participants = (ArrayList<String>) data.get("participants");
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
@@ -99,13 +102,23 @@ public class Contest implements Parcelable {
 
     public ArrayList<String> getParticipants() { return participants; }
 
+    public void setParticipants(ArrayList<String> value) { this.participants = value; }
+
     public void addParticipants(String value) { this.participants.add(value); }
 
     public void removeParticipants(String value) { this.participants.remove(participants.indexOf(value)); }
 
-    public boolean checkParticipant(String uid) {
+    public boolean isParticipate(String uid) {
         for (String id : participants) {
             if (uid.equals(id)) return true;
+        }
+        return false;
+    }
+
+    public boolean isEnded() {
+        String currentDate = String.valueOf(Calendar.getInstance().getTimeInMillis());
+        if(currentDate.compareTo(endTime) >= 0) {
+            return true;
         }
         return false;
     }
