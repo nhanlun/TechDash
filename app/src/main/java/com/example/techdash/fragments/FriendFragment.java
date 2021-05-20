@@ -17,6 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -113,6 +114,12 @@ public class FriendFragment extends Fragment {
                 friendAdapter.notifyDataSetChanged();
             }
         });
+        friendViewModel.getCurrentUser().observe(getViewLifecycleOwner(), new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                friendAdapter.setCurrentUser(user);
+            }
+        });
 
         return v;
     }
@@ -124,6 +131,7 @@ public class FriendFragment extends Fragment {
             public void onChanged(ArrayList<User> users) {
                 friendAdapter.setFriendArrayList(users);
                 friendAdapter.checkAreFriends();
+                friendAdapter.checkIsCurrentUser();
                 friendAdapter.notifyDataSetChanged();
                 searchResultList.setVisibility(View.VISIBLE);
                 friendList.setVisibility(View.GONE);

@@ -32,5 +32,9 @@ public class FriendViewModel extends ViewModel {
         return userRepository.getFriendList();
     }
 
+    public LiveData<User> getCurrentUser(){
+        return UserRepository.getInstance().getUser();
+    }
+
 
 }

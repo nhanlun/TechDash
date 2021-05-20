@@ -31,26 +31,29 @@ import static android.content.ContentValues.TAG;
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder> {
     ArrayList<User> friends = new ArrayList<User>();
     FriendViewModel friendViewModel;
-    LiveData<ArrayList<User>> listLiveData;
     ArrayList<User> refFriendList = new ArrayList<User>();
     boolean[] isFriend = new boolean[100];
+    boolean[] isCurrentUser = new boolean[100];
+    User currentUser;
 
     public FriendAdapter(ArrayList<User> friends, FriendViewModel friendViewModel) {
         this.friends = friends;
         this.friendViewModel = friendViewModel;
         Arrays.fill(isFriend, false);
-//        listLiveData = friendViewModel.getFriendList().observe(LifecycleOwner owner, new Observer<ArrayList<User>>() {
-//            @Override
-//            public void onChanged(ArrayList<User> users) {
-//                refFriendList = users;
-//                for(int i=0;i<refFriendList.size();++i){
-//                    if(refFriendList.contains(friends.get(i))){
-//                        isFriend[i]=true;
-//                    }
-//                }
-//            }
-//        });
+    }
 
+    public void setCurrentUser(User user) {
+        this.currentUser = user;
+    }
+
+    public void checkIsCurrentUser() {
+        for (int i = 0; i < friends.size(); ++i) {
+            if (friends.get(i).getUid().equals(currentUser.getUid())) {
+                isCurrentUser[i] = true;
+            } else {
+                isCurrentUser[i] = false;
+            }
+        }
     }
 
     public void setRefFriendList(ArrayList<User> refFriendList) {
@@ -60,14 +63,16 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     }
 
     public void checkAreFriends() {
-        Log.d("Hello", String.valueOf(friends.size()));
         for (int i = 0; i < friends.size(); i++) {
             for (int j = 0; j < refFriendList.size(); j++) {
-                Log.d("Friends", friends.get(i).getUid());
-                Log.d("Ref Fr", refFriendList.get(j).getUid());
                 if (friends.get(i).getUid().equals(refFriendList.get(j).getUid())) {
                     isFriend[i] = true;
-                    Log.d("Ye", "Ye");
+                    Log.d("a","a");
+                    break;
+                }
+                else{
+                    isFriend[i]=false;
+                    Log.d("b","b");
                 }
             }
         }
@@ -75,7 +80,6 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
 
     public void setFriendArrayList(ArrayList<User> friends) {
         this.friends = friends;
-        Log.d("size of friend", String.valueOf(friends.size()));
     }
 
     @NonNull
@@ -91,20 +95,24 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         holder.tvFriendName.setText(friends.get(position).getName());
         holder.tvFriendId.setText(friends.get(position).getUid());
         //holder.btnAddFriend.setImageResource(R.drawable.ic_baseline_person_add_24);
+        holder.btnAddFriend.setVisibility(View.VISIBLE);
         Log.d("sth", String.valueOf(position));
         Log.d("isFriend", String.valueOf(isFriend[position]));
         if (isFriend[position]) {
-            holder.btnAddFriend.setImageResource(R.drawable.ic_baseline_check_30);
+            holder.btnAddFriend.setImageResource(R.drawable.check);
         } else {
-            holder.btnAddFriend.setImageResource(R.drawable.add_friend);
-            holder.btnAddFriend.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //goi len firestore addfriend nha
-                    friendViewModel.addFriend(friends.get(position));
-                    ((ImageButton) v).setImageResource(R.drawable.ic_baseline_check_30);
-                }
-            });
+            if (isCurrentUser[position]) {
+                holder.btnAddFriend.setVisibility(View.INVISIBLE);
+            } else {
+                holder.btnAddFriend.setImageResource(R.drawable.add_friend);
+                holder.btnAddFriend.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        friendViewModel.addFriend(friends.get(position));
+                        ((ImageButton) v).setImageResource(R.drawable.check);
+                    }
+                });
+            }
         }
     }
 
