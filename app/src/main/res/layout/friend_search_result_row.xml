@@ -1,38 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="64dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal">
-
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:id="@+id/tvFriendName"
-        app:layout_constraintRight_toLeftOf="@+id/addFriendButton"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:text="Ahuhu"
-        android:textSize="30sp"
-        android:textAlignment="center"/>
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/addFriendButton"
-        android:src="@drawable/ic_baseline_person_add_24"/>
+    android:orientation="horizontal"
+    android:background="@drawable/border"
+    android:layout_marginBottom="5dp">
 
     <TextView
         android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:id="@+id/tvFriendName"
+        android:layout_toLeftOf="@+id/addFriendButton"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:text="Ahuhu"
+        android:textColor="@color/main_color"
+        android:textSize="20sp"
+        android:padding="4dp"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/addFriendButton"
-        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/addFriendButton"
+        android:layout_alignParentRight="true"
+        android:background="@null"
+        android:src="@drawable/add_friend"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="29dp"
+        android:layout_alignParentBottom="true"
         android:id="@+id/tvFriendId"
-        android:textAlignment="viewStart"
-        android:textSize="26sp"/>
+        android:text="id"
+        android:gravity="center_vertical"
+        android:textStyle="italic"
+        android:paddingLeft="4dp"
+        android:textSize="15sp"/>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
 

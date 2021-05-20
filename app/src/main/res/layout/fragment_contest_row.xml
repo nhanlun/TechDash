@@ -19,7 +19,7 @@
             android:id="@+id/imageMap"
             android:layout_width="140dp"
             android:layout_height="140dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginEnd="20dp"
             android:src="@mipmap/ic_launcher" />
 
         <LinearLayout

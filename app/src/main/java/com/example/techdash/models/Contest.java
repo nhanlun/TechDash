@@ -11,6 +11,7 @@ import com.google.maps.android.PolyUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,6 @@ import java.util.Map;
 public class Contest implements Parcelable {
     private String id;
     private String destination;
-    private String date;
     private String name;
     private String creator_username;
     private String startTime;
@@ -32,11 +32,8 @@ public class Contest implements Parcelable {
             id = (String) data.get("id");
             destination = (String) data.get("destination");
             name = (String) data.get("name");
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis((long)data.get("starttime"));
-            startTime = calendar.getTime().toString();
-            calendar.setTimeInMillis((long)data.get("endtime"));
-            endTime = calendar.getTime().toString();
+            startTime = (String) data.get("starttime");
+            endTime = (String) data.get("endtime");
             creator_username = (String) data.get("creator");
             participants = (ArrayList<String>) data.get("participants");
         } catch (NullPointerException e) {
@@ -106,6 +103,13 @@ public class Contest implements Parcelable {
 
     public void removeParticipants(String value) { this.participants.remove(participants.indexOf(value)); }
 
+    public boolean checkParticipant(String uid) {
+        for (String id : participants) {
+            if (uid.equals(id)) return true;
+        }
+        return false;
+    }
+
     @Override
     public int describeContents() { return 0; }
 
@@ -128,7 +132,6 @@ public class Contest implements Parcelable {
         map.put("starttime", startTime);
         map.put("endtime", endTime);
         map.put("creator", creator_username);
-        map.put("participants", participants);
         return map;
     }
 }

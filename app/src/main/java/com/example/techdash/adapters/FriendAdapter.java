@@ -35,10 +35,10 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     ArrayList<User> refFriendList = new ArrayList<User>();
     boolean[] isFriend = new boolean[100];
 
-    public FriendAdapter(ArrayList<User> friends, FriendViewModel friendViewModel){
+    public FriendAdapter(ArrayList<User> friends, FriendViewModel friendViewModel) {
         this.friends = friends;
         this.friendViewModel = friendViewModel;
-        Arrays.fill(isFriend,false);
+        Arrays.fill(isFriend, false);
 //        listLiveData = friendViewModel.getFriendList().observe(LifecycleOwner owner, new Observer<ArrayList<User>>() {
 //            @Override
 //            public void onChanged(ArrayList<User> users) {
@@ -53,29 +53,29 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
 
     }
 
-    public void setRefFriendList(ArrayList<User> refFriendList){
+    public void setRefFriendList(ArrayList<User> refFriendList) {
         this.refFriendList = refFriendList;
-        Log.d("Size of ref",String.valueOf(refFriendList.size()));
+        Log.d("Size of ref", String.valueOf(refFriendList.size()));
         checkAreFriends();
     }
 
     public void checkAreFriends() {
         Log.d("Hello", String.valueOf(friends.size()));
         for (int i = 0; i < friends.size(); i++) {
-            for(int j=0;j<refFriendList.size();j++){
-                Log.d("Friends",friends.get(i).getUid());
-                Log.d("Ref Fr",refFriendList.get(j).getUid());
-                if(friends.get(i).getUid().equals(refFriendList.get(j).getUid())){
-                    isFriend[i]=true;
-                    Log.d("Ye","Ye");
+            for (int j = 0; j < refFriendList.size(); j++) {
+                Log.d("Friends", friends.get(i).getUid());
+                Log.d("Ref Fr", refFriendList.get(j).getUid());
+                if (friends.get(i).getUid().equals(refFriendList.get(j).getUid())) {
+                    isFriend[i] = true;
+                    Log.d("Ye", "Ye");
                 }
             }
         }
     }
 
-    public void setFriendArrayList(ArrayList<User> friends){
-        this.friends=friends;
-        Log.d("size of friend",String.valueOf(friends.size()));
+    public void setFriendArrayList(ArrayList<User> friends) {
+        this.friends = friends;
+        Log.d("size of friend", String.valueOf(friends.size()));
     }
 
     @NonNull
@@ -88,26 +88,24 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull FriendAdapter.ViewHolder holder, int position) {
-            holder.tvFriendName.setText(friends.get(position).getName());
-            holder.tvFriendId.setText(friends.get(position).getUid());
-            //holder.btnAddFriend.setImageResource(R.drawable.ic_baseline_person_add_24);
-        Log.d("sth",String.valueOf(position));
-        Log.d("isFriend",String.valueOf(isFriend[position]));
-            if(isFriend[position]){
-                holder.btnAddFriend.setImageResource(R.drawable.ic_baseline_check_30);
-            }
-            else{
-                holder.btnAddFriend.setImageResource(R.drawable.ic_baseline_person_add_24);
-                holder.btnAddFriend.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //goi len firestore addfriend nha
-                        friendViewModel.addFriend(friends.get(position));
-                        ((ImageButton) v).setImageResource(R.drawable.ic_baseline_check_30);
-                    }
-                });
-            }
-
+        holder.tvFriendName.setText(friends.get(position).getName());
+        holder.tvFriendId.setText(friends.get(position).getUid());
+        //holder.btnAddFriend.setImageResource(R.drawable.ic_baseline_person_add_24);
+        Log.d("sth", String.valueOf(position));
+        Log.d("isFriend", String.valueOf(isFriend[position]));
+        if (isFriend[position]) {
+            holder.btnAddFriend.setImageResource(R.drawable.ic_baseline_check_30);
+        } else {
+            holder.btnAddFriend.setImageResource(R.drawable.add_friend);
+            holder.btnAddFriend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //goi len firestore addfriend nha
+                    friendViewModel.addFriend(friends.get(position));
+                    ((ImageButton) v).setImageResource(R.drawable.ic_baseline_check_30);
+                }
+            });
+        }
     }
 
     @Override
@@ -115,7 +113,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         return friends.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvFriendName, tvFriendId;
         ImageButton btnAddFriend;
 
