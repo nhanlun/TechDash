@@ -47,11 +47,7 @@
         android:name="com.example.techdash.fragments.ContestAddFragment"
         android:label="ContestAdd"
         tools:layout="@layout/fragment_contest_add" />
-    <fragment
-        android:id="@+id/friendFragment"
-        android:name="com.example.techdash.fragments.FriendFragment"
-        android:label="@string/friend"
-        tools:layout="@layout/fragment_friend" />
+
 
 
     <activity
@@ -77,5 +73,27 @@
         <argument
             android:name="history"
             app:argType="com.example.techdash.models.History" />
+    </fragment>
+    <fragment
+        android:id="@+id/friendFragment"
+        android:name="com.example.techdash.fragments.FriendFragment"
+        android:label="@string/friend"
+        tools:layout="@layout/fragment_friend" >
+        <action
+            android:id="@+id/search_friend_action"
+            app:destination="@id/friendSearchFragment" >
+            <argument
+                android:name="keyword"
+                app:argType="string" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/friendSearchFragment"
+        android:name="com.example.techdash.fragments.FriendSearchFragment"
+        android:label="Results"
+        tools:layout="@layout/fragment_search_friend" >
+        <argument
+            android:name="keyword"
+            app:argType="string" />
     </fragment>
 </navigation>

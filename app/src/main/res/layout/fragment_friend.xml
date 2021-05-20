@@ -7,61 +7,52 @@
     android:orientation="vertical"
     tools:context=".fragments.FriendFragment">
 
-    <ImageButton
-        android:id="@+id/searchButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/search"
-        android:layout_margin="5dp"
-        app:layout_constraintEnd_toStartOf="@+id/searchBar"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintHeight_default="spread"
-        app:layout_constraintWidth_percent="0.12"
-        app:layout_constraintWidth_default="spread"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHeight_percent="0.1"
-        app:layout_constraintVertical_bias="0"/>
-         <!-- app:layout_constraintHeight_percent="0.08"-->
+    <!--    <ImageButton-->
+    <!--        android:id="@+id/searchButton"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:background="@drawable/search"-->
+    <!--        android:layout_margin="5dp"-->
+    <!--        app:layout_constraintEnd_toStartOf="@+id/searchBar"-->
+    <!--        app:layout_constraintHorizontal_bias="0.5"-->
+    <!--        app:layout_constraintHorizontal_chainStyle="packed"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintHeight_default="spread"-->
+    <!--        app:layout_constraintWidth_percent="0.12"-->
+    <!--        app:layout_constraintWidth_default="spread"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintHeight_percent="0.1"-->
+    <!--        app:layout_constraintVertical_bias="0"/>-->
+    <!--         &lt;!&ndash; app:layout_constraintHeight_percent="0.08"&ndash;&gt;-->
 
 
-    <EditText
-        android:id="@+id/searchBar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/searchButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/searchButton"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textAlignment="viewStart"
-        android:textColor="@color/black"
-        android:maxLines="1"
-        android:lines="1"
-        android:layout_margin="5dp"
-        android:backgroundTint="@color/main_color"
-        android:hint="Enter your friend's name or ID here"
-        android:imeOptions="actionSearch"
-        android:inputType="text"
-        />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:id="@+id/searchResultfriendList"
-        app:layout_constraintTop_toBottomOf="@+id/searchButton"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_margin="5dp"
-        android:visibility="gone"/>
+    <!--    <EditText-->
+    <!--        android:id="@+id/searchBar"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        app:layout_constraintBottom_toBottomOf="@+id/searchButton"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.5"-->
+    <!--        app:layout_constraintStart_toEndOf="@+id/searchButton"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        android:textAlignment="viewStart"-->
+    <!--        android:textColor="@color/black"-->
+    <!--        android:maxLines="1"-->
+    <!--        android:lines="1"-->
+    <!--        android:layout_margin="5dp"-->
+    <!--        android:backgroundTint="@color/main_color"-->
+    <!--        android:hint="Enter your friend's name or ID here"-->
+    <!--        android:imeOptions="actionSearch"-->
+    <!--        android:inputType="text"-->
+    <!--        />-->
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
         android:id="@+id/friendList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_margin="15dp"
-        app:layout_constraintTop_toBottomOf="@+id/searchButton"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

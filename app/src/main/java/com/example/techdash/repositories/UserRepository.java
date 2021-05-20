@@ -37,6 +37,8 @@ public class UserRepository {
     private FirebaseAuth auth;
     private MutableLiveData<User> user = new MutableLiveData<>(null);
 
+    private MutableLiveData<ArrayList<User>> friends = new MutableLiveData<>();
+
     private UserRepository() {
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
@@ -205,8 +207,11 @@ public class UserRepository {
     }
 
     public LiveData<ArrayList<User>> getFriendList() {
+        return friends;
+    }
+
+    public void fetchFriendList() {
         ArrayList<User> friendList = new ArrayList<>();
-        MutableLiveData<ArrayList<User>> liveDataFriendList = new MutableLiveData<>();
         db.collection("users").document(user.getValue().getUid()).collection("friends").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -215,12 +220,11 @@ public class UserRepository {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 friendList.add(new User(document.getData()));
                             }
-                            liveDataFriendList.postValue(friendList);
+                            friends.postValue(friendList);
                         } else {
                             Log.d(TAG, "U have no friend");
                         }
                     }
                 });
-        return liveDataFriendList;
     }
 }
