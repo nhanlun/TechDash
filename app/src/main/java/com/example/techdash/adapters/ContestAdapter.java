@@ -54,8 +54,8 @@ public class ContestAdapter extends RecyclerView.Adapter<ContestAdapter.ViewHold
             int position = viewHolder.getAdapterPosition();
             Contest contest = contestList.get(position);
 
-            ContestFragmentDirections.DisplayContest action = ContestFragmentDirections.displayContest(contest);
-            Navigation.findNavController(v).navigate(action);
+//            ContestFragmentDirections.DisplayContest action = ContestFragmentDirections.displayContest(contest);
+//            Navigation.findNavController(v).navigate(action);
         });
         return viewHolder;
     }

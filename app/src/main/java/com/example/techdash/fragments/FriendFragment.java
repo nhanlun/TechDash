@@ -1,6 +1,7 @@
 package com.example.techdash.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -51,7 +52,7 @@ public class FriendFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setHasOptionsMenu(true);
         friendViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
     }
 
@@ -61,35 +62,35 @@ public class FriendFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_friend, container, false);
 
-        searchBar = v.findViewById(R.id.searchBar);
-        searchBar.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    search();
-                    return true;
-                }
-                return false;
-            }
-        });
-        searchButton = v.findViewById(R.id.searchButton);
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                search();
-                String key = searchBar.getText().toString();
-                UserRepository.getInstance().searchUserToAddFriend(key);
-                friendViewModel.searchFriendToAdd(key).observe(getViewLifecycleOwner(), new Observer<ArrayList<User>>() {
-                    @Override
-                    public void onChanged(ArrayList<User> users) {
-                        friendAdapter.setFriendArrayList(users);
-                        friendAdapter.notifyDataSetChanged();
-                        searchResultList.setVisibility(View.VISIBLE);
-                        friendList.setVisibility(View.GONE);
-                    }
-                });
-            }
-        });
+//        searchBar = v.findViewById(R.id.searchBar);
+//        searchBar.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+////                    search();
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
+//        searchButton = v.findViewById(R.id.searchButton);
+//        searchButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                search();
+//                String key = searchBar.getText().toString();
+//                UserRepository.getInstance().searchUserToAddFriend(key);
+//                friendViewModel.searchFriendToAdd(key).observe(getViewLifecycleOwner(), new Observer<ArrayList<User>>() {
+//                    @Override
+//                    public void onChanged(ArrayList<User> users) {
+//                        friendAdapter.setFriendArrayList(users);
+//                        friendAdapter.notifyDataSetChanged();
+//                        searchResultList.setVisibility(View.VISIBLE);
+//                        friendList.setVisibility(View.GONE);
+//                    }
+//                });
+//            }
+//        });
 
         searchResultList = v.findViewById(R.id.searchResultfriendList);
         ArrayList<User> friendArrayList = new ArrayList<User>();
@@ -124,8 +125,8 @@ public class FriendFragment extends Fragment {
         return v;
     }
 
-    private void search() {
-        String key = searchBar.getText().toString();
+    private void search(String key) {
+//        String key = searchBar.getText().toString();
         friendViewModel.searchFriendToAdd(key).observe(getViewLifecycleOwner(), new Observer<ArrayList<User>>() {
             @Override
             public void onChanged(ArrayList<User> users) {
@@ -137,6 +138,29 @@ public class FriendFragment extends Fragment {
                 friendList.setVisibility(View.GONE);
             }
         });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NotNull Menu menu, @NotNull MenuInflater inflater) {
+        Log.d(TAG, "created search view");
+        inflater.inflate(R.menu.contest_search_menu, menu);
+        MenuItem menuItem = menu.findItem(R.id.search_icon);
+        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView.setQueryHint("Enter your friend's name or ID here");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                Log.d(TAG, "Testing");
+                search(s);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     /*ArrayList<Contest> filter(String s) {
