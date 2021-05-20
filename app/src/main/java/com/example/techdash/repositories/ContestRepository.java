@@ -100,5 +100,15 @@ public class ContestRepository {
             }
         });
     }
+
+    public void addParticipant(String contestID, String uid) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("id", uid);
+        db.collection("contests").document(contestID).collection("participants").document(uid).set(map);
+    }
+
+    public void removeParticipant(String contestID, String uid) {
+        db.collection("contests").document(contestID).collection("participants").document(uid).delete();
+    }
 }
 

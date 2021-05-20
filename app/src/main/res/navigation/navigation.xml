@@ -41,6 +41,9 @@
         <action
             android:id="@+id/action_contestFragment_to_contestAddFragment"
             app:destination="@id/contestAddFragment" />
+        <action
+            android:id="@+id/display_contest"
+            app:destination="@id/displayContestFragment" />
     </fragment>
     <fragment
         android:id="@+id/contestAddFragment"
@@ -77,5 +80,14 @@
         <argument
             android:name="history"
             app:argType="com.example.techdash.models.History" />
+    </fragment>
+    <fragment
+        android:id="@+id/displayContestFragment"
+        android:name="com.example.techdash.fragments.DisplayContestFragment"
+        android:label="Display Contest"
+        tools:layout="@layout/fragment_display_contest">
+        <argument
+            android:name="contest"
+            app:argType="com.example.techdash.models.Contest" />
     </fragment>
 </navigation>

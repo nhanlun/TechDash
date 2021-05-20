@@ -11,9 +11,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.techdash.fragments.ContestFragmentDirections;
+import com.example.techdash.viewmodels.ContestViewModel;
 import com.google.firebase.storage.FirebaseStorage;
 
 import com.example.techdash.R;
@@ -28,9 +32,9 @@ import java.util.Date;
 import java.util.Locale;
 
 public class ContestAdapter extends RecyclerView.Adapter<ContestAdapter.ViewHolder>{
-    ArrayList<Contest> contestList;
-    Context context;
-    int layout;
+    private ArrayList<Contest> contestList;
+    private Context context;
+    private int layout;
     FirebaseStorage firebaseStorage;
 
     public ContestAdapter(ArrayList<Contest> contestList, Context context, int layout) {
@@ -98,8 +102,7 @@ public class ContestAdapter extends RecyclerView.Adapter<ContestAdapter.ViewHold
         holder.name.setText(contest.getName());
         holder.creator_username.setText(String.format("Created by: %s",contest.getCreator()));
 
-        String currentDate = Calendar.getInstance().getTime().toString();
-        if(currentDate.compareTo(contest.getEndTime()) >= 0) {
+        if(contest.isEnded()) {
             holder.imageView.setAlpha((float) 0.5);
             holder.destination.setAlpha((float) 0.5);
             holder.name.setAlpha((float) 0.5);

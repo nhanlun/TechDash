@@ -20,7 +20,7 @@
             android:id="@+id/ct_name"
             android:text="CONTEST DETAIL"
             android:textColor="@color/main_color"
-            android:textSize="55px"
+            android:textSize="30sp"
             android:textStyle="bold" />
 
         <TextView
@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:text="Created by username"
             android:gravity="right"
+            android:textSize="17sp"
             android:textStyle="italic"
             android:paddingVertical="5dp"/>
 
@@ -111,16 +112,16 @@
             android:padding="4dp"
             android:layout_marginVertical="10dp"/>
 
-        <ListView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/ct_participants"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/border"
-            android:id="@+id/ct_participants"
             android:padding="4dp"
-            android:gravity="top"
             android:overScrollMode="always"
             android:scrollbarStyle="insideInset"
-            android:scrollbars="vertical"/>
+            android:scrollbars="vertical"
+            android:gravity="top"/>
     </LinearLayout>
 
     <Button

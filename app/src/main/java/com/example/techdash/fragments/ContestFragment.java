@@ -1,7 +1,5 @@
 package com.example.techdash.fragments;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,11 +8,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -27,10 +23,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.techdash.R;
 import com.example.techdash.adapters.ContestAdapter;
 import com.example.techdash.models.Contest;
-import com.example.techdash.models.User;
 import com.example.techdash.viewmodels.ContestViewModel;
 import com.example.techdash.viewmodels.UserViewModel;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -42,8 +36,8 @@ public class ContestFragment extends Fragment {
     private static final String TAG = ContestFragment.class.getSimpleName();
     View v;
     boolean showEndedContests = true, showOnlyUserContests = false;
-    ArrayList<Contest> contestList = new ArrayList<>();
-    ContestAdapter contestAdapter;
+    private ArrayList<Contest> contestList = new ArrayList<>();
+    private ContestAdapter contestAdapter;
     private UserViewModel userViewModel;
     private ContestViewModel contestViewModel;
     private ImageButton addContestBtn;
@@ -75,21 +69,21 @@ public class ContestFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(contestAdapter);
 
-        addContestBtn = v.findViewById(R.id.addContestBtn);
-        addContestBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final NavController navController = Navigation.findNavController(view);
-                navController.navigate(R.id.contestAddFragment);
-            }
-        });
-
         contestViewModel = new ViewModelProvider(requireActivity()).get(ContestViewModel.class);
         contestViewModel.getContests().observe(getViewLifecycleOwner(), new Observer<ArrayList<Contest>>() {
             @Override
             public void onChanged(ArrayList<Contest> contests) {
                 contestAdapter.setContestArrayList(contests);
                 contestAdapter.notifyDataSetChanged();
+            }
+        });
+
+        addContestBtn = v.findViewById(R.id.addContestBtn);
+        addContestBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final NavController navController = Navigation.findNavController(view);
+                navController.navigate(R.id.contestAddFragment);
             }
         });
         return v;
@@ -99,6 +93,7 @@ public class ContestFragment extends Fragment {
         if (showEndedContests && !showOnlyUserContests) return contestList;
         ArrayList<Contest> tempList = new ArrayList<Contest>();
         String currentDate = Calendar.getInstance().getTime().toString();
+        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         String uid = userViewModel.getUser().getValue().getUid();
 
         if(contestList != null) {
@@ -106,7 +101,7 @@ public class ContestFragment extends Fragment {
             int i=0;
             while(i < length){
                 Contest item = contestList.get(i);
-                if ((showEndedContests || currentDate.compareTo(item.getEndTime()) < 0) && (!showOnlyUserContests || item.checkParticipant(uid)))
+                if ((showEndedContests || !item.isEnded()) && (!showOnlyUserContests || item.isParticipate(uid)))
                     tempList.add(item);
                 i++;
             }

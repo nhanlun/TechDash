@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.techdash.models.Contest;
 import com.example.techdash.models.User;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
@@ -187,7 +188,6 @@ public class UserRepository {
         Log.d("Friend lits", friendArrayList.toString());
         return friend;
     }
-
 
     public void addFriend(User friend) {
         db.collection("users").document(user.getValue().getUid()).collection("friends")

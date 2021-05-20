@@ -18,6 +18,18 @@ public class ContestViewModel extends ViewModel {
         return ContestRepository.getInstance().fetch();
     }
 
+    public LiveData<ArrayList<String>> fetchParticipants(String contestId) {
+        return ContestRepository.getInstance().fetchParticipants(contestId);
+    }
+
+    public void addParticipant(String contestId, String uid) {
+        ContestRepository.getInstance().addParticipant(contestId, uid);
+    }
+
+    public void removeParticipant(String contestId, String uid) {
+        ContestRepository.getInstance().removeParticipant(contestId, uid);
+    }
+
     public void save(Contest contest) {
         ContestRepository.getInstance().save(contest);
     }
