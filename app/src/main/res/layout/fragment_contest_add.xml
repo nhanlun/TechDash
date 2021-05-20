@@ -1,125 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.ContestAddFragment">
+    tools:context=".fragments.ContestAddFragment"
+    android:layout_margin="20dp"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_above="@+id/ct_save"
-        android:layout_margin="20dp">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="PROVIDE CONTEST INFORMATION"
-            android:textColor="@color/main_color"
-            android:textSize="55px"
-            android:textStyle="bold" />
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="PROVIDE CONTEST INFORMATION"
+        android:gravity="center"
+        android:textColor="@color/main_color"
+        android:textSize="55px"
+        android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/ct_creator"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Created by username"
-            android:gravity="right"
-            android:textStyle="italic"
-            android:paddingVertical="5dp"/>
+    <TextView
+        android:id="@+id/ct_creator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Created by username"
+        android:gravity="right"
+        android:textStyle="italic"
+        android:paddingVertical="5dp"/>
 
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_marginTop="20dp"
-            android:stretchColumns="1">
-            <TableRow
-                android:background="@drawable/border"
-                android:layout_marginVertical="30dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="NAME"
-                    android:gravity="center"
-                    android:background="@drawable/border2"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:padding="4dp"/>
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="40px"
-                    android:background="@null"
-                    android:gravity="center"
-                    android:id="@+id/ct_name"/>
-            </TableRow>
-            <TableRow
-                android:background="@drawable/border"
-                android:layout_marginVertical="30dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="START TIME"
-                    android:textColor="@color/white"
-                    android:background="@drawable/border2"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:padding="4dp" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textSize="40px"
-                    android:text="DD-MM-YYYY HH:MM"
-                    android:id="@+id/ct_starttime"/>
-            </TableRow>
-            <TableRow
-                android:background="@drawable/border"
-                android:layout_marginVertical="30dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="END TIME"
-                    android:textColor="@color/white"
-                    android:background="@drawable/border2"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:padding="4dp" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textSize="40px"
-                    android:text="DD-MM-YYYY HH:MM"
-                    android:id="@+id/ct_endtime"/>
-            </TableRow>
-            <TableRow
-                android:background="@drawable/border"
-                android:layout_marginVertical="30dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="DESTINATION"
-                    android:textColor="@color/white"
-                    android:background="@drawable/border2"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:padding="4dp" />
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="25dp"
+        android:stretchColumns="1">
+        <TableRow
+            android:background="@drawable/border"
+            android:layout_marginVertical="15dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NAME"
+                android:gravity="center"
+                android:background="@drawable/border2"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:padding="4dp"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="40px"
+                android:background="@null"
+                android:gravity="center"
+                android:id="@+id/ct_name"/>
+        </TableRow>
+        <TableRow
+            android:background="@drawable/border"
+            android:layout_marginVertical="15dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="START TIME"
+                android:textColor="@color/white"
+                android:background="@drawable/border2"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:padding="4dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="40px"
+                android:text="DD-MM-YYYY HH:MM"
+                android:id="@+id/ct_starttime"/>
+        </TableRow>
+        <TableRow
+            android:background="@drawable/border"
+            android:layout_marginVertical="15dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="END TIME"
+                android:textColor="@color/white"
+                android:background="@drawable/border2"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:padding="4dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="40px"
+                android:text="DD-MM-YYYY HH:MM"
+                android:id="@+id/ct_endtime"/>
+        </TableRow>
+        <TableRow
+            android:background="@drawable/border"
+            android:layout_marginVertical="15dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DESTINATION"
+                android:textColor="@color/white"
+                android:background="@drawable/border2"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:padding="4dp" />
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="40px"
-                    android:background="@null"
-                    android:gravity="center"
-                    android:id="@+id/ct_destination"/>
-
-            </TableRow>
-        </TableLayout>
-    </LinearLayout>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="40px"
+                android:background="@null"
+                android:gravity="center"
+                android:id="@+id/ct_destination"/>
+        </TableRow>
+    </TableLayout>
     
     <Button
         android:layout_width="wrap_content"
@@ -127,8 +121,7 @@
         android:backgroundTint="@color/main_color"
         android:text="SAVE"
         android:id="@+id/ct_save"
-        android:layout_margin="20dp"
-        android:textColor="@color/white"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"/>
-</RelativeLayout>
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/white"/>
+</LinearLayout>
