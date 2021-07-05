@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +18,7 @@ import com.example.techdash.R;
 import com.example.techdash.adapters.HistoryAdapter;
 import com.example.techdash.models.History;
 import com.example.techdash.repositories.RecordRunRepository;
+import com.example.techdash.viewmodels.HistoryViewModel;
 import com.example.techdash.viewmodels.UserViewModel;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -30,10 +32,8 @@ public class HistoryFragment extends Fragment {
     private UserViewModel userViewModel;
     RecyclerView recyclerView;
     HistoryAdapter historyAdapter;
-    private FloatingActionButton fab;
-    private BottomAppBar bottomAppBar;
-    private BottomNavigationView bottomNavigationView;
     private View v;
+    private HistoryViewModel historyViewModel;
 
     public HistoryFragment() {
         // Required empty public constructor
@@ -54,9 +54,7 @@ public class HistoryFragment extends Fragment {
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         String uid = userViewModel.getUser().getValue().getUid();
 
-        fab = requireActivity().findViewById(R.id.runButton);
-        bottomAppBar = requireActivity().findViewById(R.id.bottomAppBar);
-        bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
+        historyViewModel = new ViewModelProvider(requireActivity()).get(HistoryViewModel.class);
 
         if (uid != null) {
 
@@ -70,7 +68,7 @@ public class HistoryFragment extends Fragment {
             recyclerView.setLayoutManager(linearLayoutManager);
             recyclerView.setAdapter(historyAdapter);
 
-            RecordRunRepository.getInstance().fetch(uid).observe(getViewLifecycleOwner(), new Observer<ArrayList<History>>() {
+            historyViewModel.getHistories(uid).observe(getViewLifecycleOwner(), new Observer<ArrayList<History>>() {
                 @Override
                 public void onChanged(ArrayList<History> histories) {
                     historyAdapter.setHistoryArrayList(histories);
